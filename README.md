@@ -21,6 +21,9 @@ Wireframe:
 
 React tree:
 
+![Alt text](Tree.drawio.png)
+
+
 
 
 
@@ -59,6 +62,12 @@ API Routes:
 | PATCH    | /conversations/:id | **PATCH**     | {'id', 'conversation_name'}                                                          |
 | DELETE   | /conversations/:id | **DELETE**    | {}                                                                                   |
 | RETRIEVE | /conversations/:id | **GET**       | {'id', 'conversation_name'}                                                          |
+
+Stretch Goals:
+-Encryption of messages
+-Read Receipts
+-Message reactions
+
 Board:
 
 ![Alt text](image-2.png)
