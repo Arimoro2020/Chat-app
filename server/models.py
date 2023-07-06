@@ -20,6 +20,8 @@ class User(db.Model, SerializerMixin):
     participants = db.relationship('Participant', backref=backref("user"), cascade="all, delete-orphan")
     messages = db.relationship('Message', backref=backref("user"), cascade="all, delete-orphan")
 
+    serialize_rules = ('-participants.user', '-messages.user', '-created_at', '-updated_at')
+
 
 
 class Participant(db.Model, SerializerMixin):
@@ -28,6 +30,8 @@ class Participant(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     conversation_id = db.Column(db.Integer, db.ForeignKey('conversations.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    serialize_rules = ('-user.participants', '-conversation.participants')
 
    
 
@@ -42,6 +46,8 @@ class Conversation(db.Model, SerializerMixin):
     participants = db.relationship('Participant', backref=backref("conversation"), cascade="all, delete-orphan")
     messages = db.relationship('Message', backref=backref("conversation"), cascade="all, delete-orphan")
 
+    serialize_rules = ('-participants.conversation', '-messages.conversation')
+
 class Message(db.Model, SerializerMixin):
     __tablename__ = "messages"
 
@@ -52,6 +58,8 @@ class Message(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     created_at = db.Column(db.DateTime, default_server= db.func.now())
     updated_at = db.Column(db.DateTime, onupdated=db.func.now())
+
+    serialize_rules = ('-user.messages', '-conversation.messages', '-updated_at')
 
     
 
