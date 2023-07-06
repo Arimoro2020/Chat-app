@@ -17,21 +17,21 @@ class User(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, default_server= db.func.now())
     updated_at = db.Column(db.DateTime, onupdated=db.func.now())
 
-    participants = db.relationship('Participant', backref=backref("user"), cascade="all, delete-orphan")
+    user_conversations = db.relationship('UserConversation', backref=backref("user"), cascade="all, delete-orphan")
     messages = db.relationship('Message', backref=backref("user"), cascade="all, delete-orphan")
 
-    serialize_rules = ('-participants.user', '-messages.user', '-created_at', '-updated_at')
+    serialize_rules = ('-user_conversations.user', '-messages.user', '-created_at', '-updated_at')
 
 
 
-class Participant(db.Model, SerializerMixin):
-    __tablename__ = "participants"
+class UserConversation(db.Model, SerializerMixin):
+    __tablename__ = "user_conversations"
 
     id = db.Column(db.Integer, primary_key=True)
     conversation_id = db.Column(db.Integer, db.ForeignKey('conversations.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    serialize_rules = ('-user.participants', '-conversation.participants')
+    serialize_rules = ('-user.user_conversations', '-conversation.user_conversations')
 
    
 
@@ -43,10 +43,10 @@ class Conversation(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     conversation_name = db.Column(db.String, nullable=False)
 
-    participants = db.relationship('Participant', backref=backref("conversation"), cascade="all, delete-orphan")
+    user_conversations = db.relationship('UserConversation', backref=backref("conversation"), cascade="all, delete-orphan")
     messages = db.relationship('Message', backref=backref("conversation"), cascade="all, delete-orphan")
 
-    serialize_rules = ('-participants.conversation', '-messages.conversation')
+    serialize_rules = ('-user_conversations.conversation', '-messages.conversation')
 
 class Message(db.Model, SerializerMixin):
     __tablename__ = "messages"
