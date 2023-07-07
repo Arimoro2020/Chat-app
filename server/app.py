@@ -70,6 +70,20 @@ class UserById(Resource):
             response = make_response(user.to_dict(only=('id', 'name', 'username', 'background', 'online_status', 'avatar')), 202)
 
             return response
+    
+    def delete(self,id):
+        user = User.query.filter(User.id == id).first()
+
+        try:
+            db.session.delete(user)
+            db.session.commit()
+
+        except:
+            pass
+
+        response = make_response({}, 204)
+        return response 
+
         
     
 api.add_resource(UserById, '/users/<int:id>')
@@ -143,6 +157,20 @@ class MessageById(Resource):
 
         return response
     
+    def delete(self,id):
+        message = Message.query.filter(Message.id == id).first()
+
+        try:
+            db.session.delete(message)
+            db.session.commit()
+
+        except:
+            pass
+
+        response = make_response({}, 204)
+        return response 
+
+    
 api.add_resource(MessageById, '/messages/<int:id>')
 
 
@@ -209,6 +237,20 @@ class UserConversationById(Resource):
         response = make_response(user_conversation.to_dict(only=('id', 'conversation_id', 'user_id')), 202)
 
         return response
+
+    def delete(self,id):
+        user_conversation = UserConversation.query.filter(UserConversation.id == id).first()
+
+        try:
+            db.session.delete(user_conversation)
+            db.session.commit()
+
+        except:
+            pass
+
+        response = make_response({}, 204)
+        return response 
+
     
 api.add_resource(UserConversationById, '/user_conversations/<int:id>')
 
@@ -254,6 +296,21 @@ class ConversationById(Resource):
         response = make_response(conversation.to_dict(only=('id', 'conversation_name')), 202)
 
         return response
+    
+    def delete(self,id):
+        conversation = Conversation.query.filter(Conversation.id == id).first()
+
+        try:
+            db.session.delete(conversation)
+            db.session.commit()
+
+        except:
+            pass
+
+        response = make_response({}, 204)
+        return response 
+
+
     
 api.add_resource(ConversationById, '/conversations/<int:id>')
 
