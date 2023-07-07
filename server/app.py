@@ -8,6 +8,9 @@ class Users(Resource):
     def get(self):
         q = User.query.all()
 
+        if not q:
+            return make_response({'error':'User not found'}, 404)
+
         q_dict = [user.to_dict(only=('id', 'name', 'username', 'background', 'online_status', 'avatar')) for user in q]
 
         response = make_response(q_dict, 200)
@@ -56,9 +59,12 @@ class UserById(Resource):
     def patch(self,id):
             user = User.query.filter(User.id == id).first()
 
-            try:
-                data = request.get_json()
+            if not user:
+                return make_response({'error':'User not found'}, 404)
 
+            
+            data = request.get_json()
+            try:
                 for attr in data:
                     setattr(user, attr, data.get(attr))
 
@@ -74,12 +80,12 @@ class UserById(Resource):
     def delete(self,id):
         user = User.query.filter(User.id == id).first()
 
-        try:
-            db.session.delete(user)
-            db.session.commit()
+        if not user:
+            return make_response({'error':'User not found'}, 404)
 
-        except:
-            pass
+
+        db.session.delete(user)
+        db.session.commit()
 
         response = make_response({}, 204)
         return response 
@@ -92,6 +98,10 @@ api.add_resource(UserById, '/users/<int:id>')
 class Messages(Resource):
     def get(self):
         q = Message.query.all()
+
+        if not q:
+            return make_response({'error': 'Message not found'}, 404)
+
 
         q_dict = [message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'sender_id')) for message in q]
 
@@ -142,8 +152,14 @@ class MessageById(Resource):
     def patch(self,id):
         message = Message.query.filter(Message.id == id).first()
 
+        if not message:
+            return make_response({'error':'Message not found'}, 404)
+
+
+        
+        data = request.get_json()
+
         try:
-            data = request.get_json()
 
             for attr in data:
                 setattr(message, attr, data.get(attr))
@@ -160,12 +176,13 @@ class MessageById(Resource):
     def delete(self,id):
         message = Message.query.filter(Message.id == id).first()
 
-        try:
-            db.session.delete(message)
-            db.session.commit()
+        if not message:
+            return make_response({'error':'Message not found'}, 404)
 
-        except:
-            pass
+
+    
+        db.session.delete(message)
+        db.session.commit()
 
         response = make_response({}, 204)
         return response 
@@ -177,6 +194,10 @@ api.add_resource(MessageById, '/messages/<int:id>')
 class UserConversations(Resource):
     def get(self):
         q = UserConversation.query.all()
+
+        if not q:
+            return make_response({'error':'UserConversation not found'}, 404)
+
 
         q_dict = [user_conversation.to_dict(only=('id', 'conversation_id', 'user_id')) for user_conversation in q]
 
@@ -223,6 +244,9 @@ class UserConversationById(Resource):
     def patch(self,id):
         user_conversation = UserConversation.query.filter(UserConversation.id == id).first()
 
+        if not user_conversation:
+            return make_response({'error':'UserConversation not found'}, 404)
+
         try:
             data = request.get_json()
 
@@ -241,13 +265,14 @@ class UserConversationById(Resource):
     def delete(self,id):
         user_conversation = UserConversation.query.filter(UserConversation.id == id).first()
 
-        try:
-            db.session.delete(user_conversation)
-            db.session.commit()
+        if not user_conversation:
+            return make_response({'error':'UserConversation not found'}, 404)
 
-        except:
-            pass
+        
+        db.session.delete(user_conversation)
+        db.session.commit()
 
+       
         response = make_response({}, 204)
         return response 
 
@@ -259,6 +284,9 @@ class Conversations(Resource):
     def get(self):
         q = Conversation.query.all()
 
+        if not q:
+            return make_response({'error': 'Conversation not found'}, 404)
+        
         q_dict = [conversation.to_dict(only=('id', 'conversation_name')) for conversation in q]
 
         response = make_response(q_dict, 200)
@@ -282,6 +310,9 @@ class ConversationById(Resource):
     def patch(self,id):
         conversation = Conversation.query.filter(Conversation.id == id).first()
 
+        if not conversation:
+            return make_response({'error':'Conversation not found'}, 404)
+
         try:
             data = request.get_json()
 
@@ -299,6 +330,9 @@ class ConversationById(Resource):
     
     def delete(self,id):
         conversation = Conversation.query.filter(Conversation.id == id).first()
+
+        if not conversation:
+            return make_response({'error':'Conversation not found'}, 404)
 
         try:
             db.session.delete(conversation)
