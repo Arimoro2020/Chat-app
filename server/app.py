@@ -349,6 +349,22 @@ class ConversationById(Resource):
 api.add_resource(ConversationById, '/conversations/<int:id>')
 
 
+class Signup(Resource):
+    def post(self):
+        data = request.get_json()
+        new_user = User(name=data.get('name'), username=data.get('username'))
+        # 6b. hash the given password and save it to _password_hash
+        new_user.password_hash = data.get('password')
+        # db.session add and commit
+        db.session.add(new_user)
+        db.session.commit()
+        # 6c. save the user_id in session
+        session['user_id'] = new_user.id
+        #return response
+        return make_response(new_user.to_dict(rules=('-_password_hash', )), 201)
+api.add_resource(Signup, '/signup')
+
+
 class Login(Resource):
 
     def post(self):

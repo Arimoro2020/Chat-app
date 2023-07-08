@@ -22,12 +22,15 @@ class User(db.Model, SerializerMixin):
 
     serialize_rules = ('-user_conversations.user', '-messages.user', '-created_at', '-updated_at')
 
+    def __init__(self, username=None, password=None):
+        self.username = username
+
     @hybrid_property
     def password_hash(self):
         return self._password_hash
 
     @password_hash.setter
-    def password_hash(self, password):
+    def set_password_hash(self, password):
         # utf-8 encoding and decoding is required in python 3
         password_hash = bcrypt.generate_password_hash(
             password.encode('utf-8'))
