@@ -5,6 +5,17 @@ name = "pypi"
 
 [packages]
 flask-sqlalchemy = "*"
+honcho = "*"
+flask-restful = "*"
+flask-bcrypt = "*"
+sqlalchemy-serializer = "*"
+flask-cors = "*"
+flask-migrate = "*"
+flask = "*"
+gunicorn = "*"
+psycopg2-binary = "*"
+bcrypt = "*"
+faker = "*"
 
 [dev-packages]
 

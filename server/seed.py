@@ -2,72 +2,88 @@
 
 from faker import Faker
 import random
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
-from models import User, UserConversation, Message, Conversation
+from config import bcrypt
+from app import app
+from models import db, User, UserConversation, Message, Conversation
 
 fake = Faker()
 
 if __name__ == '__main__':
     
-    engine = create_engine('postgresql://localhost:5432/chat.db')
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    
-    session.query(User).delete()
-    session.query(UserConversation).delete()
-    session.query(Message).delete()
-    session.query(Conversation).delete()
-    session.commit()
+    with app.app_context():
+        User.query.delete()
+        UserConversation.query.delete()
+        Message.query.delete()
+        Conversation.query.delete()
 
-    status = ['online', 'offline', 'Busy']
 
-    users = [
-    User(
-        name=fake.name(),
-        username=fake.Username(),
-        _password_hash=fake.password(),
-          background=fake.profession(),
-        online_status=random.choice(status)
+        status = ['online', 'offline', 'Busy']
+        pictures = [ "https://img.freepik.com/free-photo/worldface-spanish-guy-white-background_53876-137665.jpg",
+                
+        "https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg"
+        ,
+        "https://img.freepik.com/free-photo/worldface-british-guy-white-background_53876-14467.jpg",
+
+        "https://img.freepik.com/free-photo/handsome-adult-male-posing_23-2148729713.jpg",
+
+        "https://img.freepik.com/free-photo/front-view-handsome-man-posing_23-2148692174.jpg",
+
+        "https://img.freepik.com/free-photo/happy-woman-gray-polo-shirt-with-pink-pin-button_53876-102858.jpg"
+        ,
+        "https://img.freepik.com/free-photo/smiling-stubble-young-man-white-t-shirt-against-plain-wall_23-2148213411.jpg",
+
+        "https://img.freepik.com/free-photo/portrait-young-african-american-man_23-2148932869.jpg",
+        "https://img.freepik.com/free-photo/worldface-australian-girl-white-background_53876-139752.jpg",
+
+        "https://img.freepik.com/free-photo/worldface-british-guy-white-background_53876-14467.jpg"]
+        password = random.choice(status)
+        users = [
+        User(
+            name=fake.name(),
+            username=fake.word(),
+            avatar=random.choice(pictures),
+            _password_hash= bcrypt.generate_password_hash(
+            password.encode('utf-8')).decode('utf-8'),
+            background= fake.sentence(),
+            online_status=random.choice(status)
             )
-        for _ in range(10)]
-    
-    session.add_all(users)
-    session.commit()
+            for _ in range(10)]
+        
+        db.session.add_all(users)
+        db.session.commit()
 
-    
-    conversations = [
-    Conversation(
-        conversation_name=fake.name()
-            )
-        for _ in range(10)]
-    
-    session.add_all(conversations)
-    session.commit()
+        
+        conversations = [
+        Conversation(
+            conversation_name=fake.name()
+                )
+            for _ in range(10)]
+        
+        db.session.add_all(conversations)
+        db.session.commit()
 
-    
-    user_conversations = [
-    UserConversation(
-        conversation_id=random.randint(0, 10),
-        user_id = random.randint(0, 10)
-            )
-        for _ in range(10)]
-    
-    session.add_all(user_conversations)
-    session.commit()
+        
+        user_conversations = [
+        UserConversation(
+            conversation_id=random.randint(0, 10),
+            user_id = random.randint(0, 10)
+                )
+            for _ in range(10)]
+        
+        db.session.add_all(user_conversations)
+        db.session.commit()
 
-    
-    messages = [
-    Message(
-        content_data=fake.sentence(),
-        content_type= 'String',
-        conversation_id = random.randint(1, 10),
-        user_id = random.randint(1, 10)
-            )
-        for _ in range(10)]
+        
+        messages = [
+        Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = random.randint(1, 10),
+            user_id = random.randint(1, 10)
+                )
+            for _ in range(10)]
 
-    session.add_all(Message)
-    session.commit()
+        db.session.add_all(messages)
+        db.session.commit()
 
 

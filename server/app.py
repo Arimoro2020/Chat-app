@@ -1,5 +1,8 @@
-from flask import make_response, request, session
-from flask_restful import Resource
+from flask import Flask, jsonify, make_response, request, abort, session
+from flask_migrate import Migrate 
+# 1b. import bcrypt
+from flask_bcrypt import Bcrypt
+from flask_restful import Api, Resource
 from models import User, UserConversation, Conversation, Message
 from config import app, db, api
 
@@ -50,7 +53,7 @@ class UserById(Resource):
         if not user:
             return make_response({'error':'User not found'}, 404)
         
-        response = make_response(user.to_dict(), 200)
+        response = make_response(user.to_dict(only=('id', 'name', 'username', 'background', 'online_status', 'avatar')), 200)
 
         return response
 
@@ -103,7 +106,7 @@ class Messages(Resource):
             return make_response({'error': 'Message not found'}, 404)
 
 
-        q_dict = [message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'sender_id')) for message in q]
+        q_dict = [message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id')) for message in q]
 
         response = make_response(q_dict, 200)
 
@@ -120,7 +123,8 @@ class Messages(Resource):
                 content_data = data.get('content_data'),
                 content_type = data.get('content_type'),
                 Conversation_id = data.get('conversation_id'),
-                sender_id = data.get('sender_id')
+                sender_id = data.get('user_id')
+                
 
             )
 
@@ -130,7 +134,7 @@ class Messages(Resource):
         except:
             return make_response({ "errors": ["validation errors"]}, 400)
             
-        response = make_response(data.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'sender_id')), 201)
+        response = make_response(data.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id')), 201)
 
         return response
 
@@ -145,7 +149,7 @@ class MessageById(Resource):
         if not message:
             return make_response({'error':'Message not found'}, 404)
         
-        response = make_response(message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'sender_id')), 200)
+        response = make_response(message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id')), 200)
 
         return response
     
@@ -169,7 +173,7 @@ class MessageById(Resource):
         except:
                return make_response({ "errors": ["validation errors"]}, 400)
         
-        response = make_response(message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'sender_id')), 202)
+        response = make_response(message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id')), 202)
 
         return response
     
@@ -369,16 +373,18 @@ class Login(Resource):
 
     def post(self):
 
-        username = request.get_json()['username']
-        user = User.query.filter(User.username == username)
+        try:
+        # 7a. check if user exists
+            data = request.get_json()
+            user = User.query.filter_by(username=data.get('username')).first()
+            # 7b. check if password is authentic
+            if user.authenticate(data.get('password')):
+                # 7c. set session's user id
+                session['user_id'] = user.id 
+                return make_response(user.to_dict(), 200)
 
-        password = request.get_json()['password']
-
-        if user.authenticate(password):
-            session['user_id'] = user.id
-            return user.to_dict(), 200
-
-        return {'error': 'Invalid username or password'}, 401
+        except:
+            return make_response ({'error': 'Invalid username or password'}, 401)
 
 
 api.add_resource(Login, '/login')
