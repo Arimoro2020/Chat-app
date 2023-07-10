@@ -96,6 +96,16 @@ class Conversation(db.Model, SerializerMixin):
 
     serialize_rules = ('-user_conversations.conversation', '-messages.conversation')
 
+    @validates('conversation_name')
+    def validate_conversation_name(self, key, conversation_name):
+        if conversation_name == '':
+            raise ValueError("conversation_name cannot be empty")
+        elif len(conversation_name)>20:
+            raise ValueError('conversation_name must be less than 20 characters')
+        else:
+            return conversation_name 
+
+
 class Message(db.Model, SerializerMixin):
     __tablename__ = "messages"
 
