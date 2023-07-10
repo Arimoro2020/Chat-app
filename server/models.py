@@ -23,13 +23,13 @@ class User(db.Model, SerializerMixin):
 
     serialize_rules = ('-user_conversations.user', '-messages.user', '-created_at', '-updated_at')
 
-    def __init__(self, username=None, name=None, _password_hash=None, background=None,online_status=None, avatar=None, password=None):
-        self.username = username
-        self.name = name
-        self._password_hash = _password_hash
-        self.background = background
-        self.online_status = online_status
-        self.avatar = avatar
+    # def __init__(self, username=None, name=None, _password_hash=None, background=None,online_status=None, avatar=None, password=None):
+    #     self.username = username
+    #     self.name = name
+    #     self._password_hash = _password_hash
+    #     self.background = background
+    #     self.online_status = online_status
+    #     self.avatar = avatar
 
 
     @hybrid_property

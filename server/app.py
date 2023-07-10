@@ -373,9 +373,10 @@ class Login(Resource):
 
     def post(self):
 
-        try:
+        
         # 7a. check if user exists
-            data = request.get_json()
+        data = request.get_json()
+        try:
             user = User.query.filter_by(username=data.get('username')).first()
             # 7b. check if password is authentic
             if user.authenticate(data.get('password')):
