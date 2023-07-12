@@ -1,11 +1,15 @@
 
-function Home({user, messages}) {
 
- 
-	console.log(messages)
+
+function Home({appUser, messages}) {
     
-    const newMessage = messages.filter(message => parseInt(message.user_id) === parseInt(user.id))
+	
+
+	
+    
+    const newMessages = messages.filter(message=> (message.user_id) ===6)
         // .sort((a, b) => a.created_at.localeCompare(b.created_at))
+	.map((item,i) => <li key={i}>{item.content_data}</li>)
 
 
  
@@ -14,13 +18,14 @@ function Home({user, messages}) {
 	return (
 		<div>
 			<section>
-				<h2>Welcome, {user.name} to your Chat App</h2>
+				<h2>Welcome,to your Chat App</h2>
 			</section>
             <section>
 			<ul>
 				
+			{newMessages}
+     
 			
-            {newMessage.map(el =><li key={el.id}>{el.content_data}</li>)}	
             
 			</ul>
             </section>

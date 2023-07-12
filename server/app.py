@@ -6,7 +6,6 @@ from flask_restful import Api, Resource
 from models import User, UserConversation, Conversation, Message
 from config import app, db, api, cors
 
-
 class Users(Resource):
     def get(self):
         q = User.query.all()
@@ -377,7 +376,7 @@ class Login(Resource):
             if user.authenticate(data.get('password')):
                 # 7c. set session's user id
                 session['user_id'] = user.id 
-                return make_response(user.to_dict(), 200)
+                return make_response(user.to_dict(only=('id', 'name', 'username', 'background', 'online_status', 'avatar')), 200)
 
         except:
             return make_response ({'error': 'Invalid username or password'}, 401)
@@ -388,10 +387,16 @@ api.add_resource(Login, '/login')
 class CheckSession(Resource):
 
     def get(self):
-        user = User.query.filter(User.id == session.get('user_id')).first()
-        if user:
-            return make_response(user.to_dict(only=('id', 'name', 'username', 'background', 'online_status', 'avatar')), 200)
-        else:
+        try:
+            user = User.query.filter(User.id == session.get('user_id')).first()
+            response = make_response(user.to_dict(only=('id', 'name', 'username', 'background', 'online_status', 'avatar')), 200)
+            response.headers.add("Access-Control-Allow-Origin", '*')
+            response.headers.add("Access-Control-Allow-Methods","GET")
+            response.headers.add("Access-Control-Allow-Methods","OPTIONS")
+            response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+            return response
+
+        except:
             return make_response({'message': '401: Not Authorized'}, 401)
 
 api.add_resource(CheckSession, '/check_session')
@@ -407,7 +412,7 @@ api.add_resource(Logout, '/logout')
 
 
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+    app.run(host="0.0.0.0",port=5555, debug=True)
 
 
 

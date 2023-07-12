@@ -57,7 +57,15 @@ set user state to null
 function App() {
 	const [conversations, setConversations] = useState([]);
 	const [messages, setMessages] = useState([]);
-	const [user, setUser] = useState(null)
+	const [appUser, setAppUser] = useState(null);
+
+	const forSession = {   method: "GET", 
+	'credentials': 'include',
+	 headers: new Headers({
+		 'Accept': 'application/json',
+		 'Access-Control-Allow-Origin':'http://localhost:5555/check_session',
+		 'Content-Type': 'application/json',
+	 })};
 	
 	useEffect(() => {
 		fetch("http://localhost:5555/conversations")
@@ -66,19 +74,24 @@ function App() {
 		fetch("http://localhost:5555/messages")
 			.then((res) => res.json())
 			.then(data => setMessages([...messages, data]));
-		fetch("http://localhost:5555/check_session")
-			.then((res)=> {if (res.ok) {
-				res.json()
-			.then((data)=> setUser(data))}});
-		
-	
+		fetch("http://localhost:5555/check_session", forSession)
+			.then((res)=>{
+				if (res.ok) {
+					res.json().then((data)=>setAppUser(data));
+					console.log(appUser);	
+				} else {
+					setAppUser(null);
+				}
+			});
+				
 	}, []);
 
 								
-							
-		
-	const updateUser = (user) => {
-		setUser(user)
+	
+			
+	
+	const updateUser = (appUser) => {
+		setAppUser(appUser)
 	}
 	
 
@@ -87,20 +100,21 @@ function App() {
 	
 	
 	// here is what we render if there is no user
-	if (!user){
-		return (
-			<div className="Chat App">
-				<Navigation updateUser={updateUser} user={user} />
-				<Login updateUser={updateUser} user={user}/>
-			</div>
-		)
-	}
+	// if (!user){
+	// 	return (
+	// 		<div className="Chat App">
+	// 			<Navigation updateUser={updateUser} user={user} />
+	// 			<Login updateUser={updateUser} user={user}/>
+	// 		</div>
+	// 	)
+	// }
 	return (
 		<div className="Chat App">
-			<Navigation updateUser={updateUser} user={user} />
+			<Navigation updateUser={updateUser} appUser={appUser}/>
 			<Routes>
-        		<Route exact path="/home" element={<Home messages={messages} user={user}/>} />
-				< Route exact path = "/signup" element={<Signup updateUser={updateUser} user={user} />} />
+        		<Route exact path="/home" element={<Home messages={messages} appUser={appUser} />}  />
+				< Route exact path = "/signup" element={<Signup updateUser={updateUser} appUser={appUser} />} />
+				< Route exact path = "/" element={<Login updateUser={updateUser} appUser={appUser} />} />
 			</Routes>
 		</div>
 	);

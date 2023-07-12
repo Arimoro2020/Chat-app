@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function Signup({ updateUser, user}) {
+function Signup({ updateUser, appUser}) {
 	const [signUp, setSignUp] = useState(false);
 	// 8a. create state error
 
@@ -38,7 +38,7 @@ function Signup({ updateUser, user}) {
 					res.json().then((data) => {
 						actions.resetForm();
 						updateUser(data);
-						navigate("/login");
+						navigate("/");
 				
 					});
 				} 
@@ -140,7 +140,7 @@ function Signup({ updateUser, user}) {
 				</form>
 			<section>
 				<button className="button" onClick={toggleSignup}>
-					{(signUp || user)? "" : "Sign Up"}
+					{(signUp || appUser)? "" : "Sign Up"}
 				</button>
 			</section>
 		</section>

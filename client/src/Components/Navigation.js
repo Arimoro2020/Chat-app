@@ -11,7 +11,7 @@ function Navigation({ updateUser, user }) {
 		},}).then((res) => {
 			if (res.ok){
 				updateUser(null);
-				navigate("/login");
+				navigate("/");
 			}
 		});
 	}
@@ -37,7 +37,7 @@ function Navigation({ updateUser, user }) {
 				<NavLink className="button" to="/signup" >
 					Sign Up
 				</NavLink>
-				<NavLink className="button" to="/login" >
+				<NavLink className="button" to="/" >
 					Log In
 				</NavLink>
 				<NavLink className="button" to="/logout" >
