@@ -47,7 +47,7 @@ if __name__ == '__main__':
             background= fake.sentence(),
             online_status=random.choice(status)
             )
-            for _ in range(10)]
+            for _ in range(5)]
         
         db.session.add_all(users)
         db.session.commit()
@@ -57,7 +57,7 @@ if __name__ == '__main__':
         Conversation(
             conversation_name=fake.name()
                 )
-            for _ in range(10)]
+            for _ in range(20)]
         
         db.session.add_all(conversations)
         db.session.commit()
@@ -65,10 +65,10 @@ if __name__ == '__main__':
         
         user_conversations = [
         UserConversation(
-            conversation_id=random.randint(0, 10),
-            user_id = random.randint(0, 10)
+            conversation_id=random.randint(1, 11),
+            user_id = random.randint(1, 6)
                 )
-            for _ in range(10)]
+            for _ in range(20)]
         
         db.session.add_all(user_conversations)
         db.session.commit()
@@ -78,10 +78,10 @@ if __name__ == '__main__':
         Message(
             content_data=fake.sentence(),
             content_type= 'String',
-            conversation_id = random.randint(1, 10),
-            user_id = random.randint(1, 10)
+            conversation_id = random.randint(1, 11),
+            user_id = random.randint(1, 6)
                 )
-            for _ in range(10)]
+            for _ in range(50)]
 
         db.session.add_all(messages)
         db.session.commit()

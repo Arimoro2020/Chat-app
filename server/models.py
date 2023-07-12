@@ -21,40 +21,40 @@ class User(db.Model, SerializerMixin):
     user_conversations = db.relationship('UserConversation', backref=backref("user"), cascade="all, delete-orphan")
     messages = db.relationship('Message', backref=backref("user"), cascade="all, delete-orphan")
 
-    serialize_rules = ('-user_conversations.user', '-messages.user', '-created_at', '-updated_at', '-_password_hash')
+    serialize_rules = ('-user_conversations.user', '-messages.user', '-created_at', '-updated_at', )
 
-    @validates('background')
-    def validate_background(self, key, background):
-        if len(background)>800:
-            raise ValueError('background must not be more than 800 characters')
-        else:
-            return background 
+    # @validates('background')
+    # def validate_background(self, key, background):
+    #     if len(background)>800:
+    #         raise ValueError('background must not be more than 800 characters')
+    #     else:
+    #         return background 
         
-    @validates('username')
-    def validate_username(self, key, username):
-        if username == '':
-            raise ValueError("username cannot be empty")
-        elif username in User.username:
-            raise ValueError('username must be unique')
-        else:
-            return username 
+    # @validates('username')
+    # def validate_username(self, key, username):
+    #     if username == '':
+    #         raise ValueError("username cannot be empty")
+    #     elif username in User.username:
+    #         raise ValueError('username must be unique')
+    #     else:
+    #         return username 
         
 
-    @validates('avatar')
-    def validate_avatar(self, key, avatar):
-        if avatar == '':
-            raise ValueError("avatar cannot be empty")
-        elif('jpg' not in avatar and 'png' not in avatar and 'jpeg' not in avatar):
-            raise ValueError('avatar must be png or jpg')
-        else:
-            return avatar 
+    # @validates('avatar')
+    # def validate_avatar(self, key, avatar):
+    #     if avatar == '':
+    #         raise ValueError("avatar cannot be empty")
+    #     elif('jpg' not in avatar and 'png' not in avatar and 'jpeg' not in avatar):
+    #         raise ValueError('avatar must be png or jpg')
+    #     else:
+    #         return avatar 
         
-    @validates('online_status')
-    def validate_online_status(self, key, status):
-        if status not in ['online', 'offline', 'busy']:
-            raise ValueError('status must be one of online, offline, or busy')
-        else:
-            return status 
+    # @validates('online_status')
+    # def validate_online_status(self, key, status):
+    #     if status not in ['online', 'offline', 'busy']:
+    #         raise ValueError('status must be one of online, offline, or busy')
+    #     else:
+    #         return status 
 
     @hybrid_property
     def password_hash(self):
@@ -96,14 +96,14 @@ class Conversation(db.Model, SerializerMixin):
 
     serialize_rules = ('-user_conversations.conversation', '-messages.conversation')
 
-    @validates('conversation_name')
-    def validate_conversation_name(self, key, conversation_name):
-        if conversation_name == '':
-            raise ValueError("conversation_name cannot be empty")
-        elif len(conversation_name)>20:
-            raise ValueError('conversation_name must be less than 20 characters')
-        else:
-            return conversation_name 
+    # @validates('conversation_name')
+    # def validate_conversation_name(self, key, conversation_name):
+    #     if conversation_name == '':
+    #         raise ValueError("conversation_name cannot be empty")
+    #     elif len(conversation_name)>20:
+    #         raise ValueError('conversation_name must be less than 20 characters')
+    #     else:
+    #         return conversation_name 
 
 
 class Message(db.Model, SerializerMixin):
@@ -119,14 +119,14 @@ class Message(db.Model, SerializerMixin):
 
     serialize_rules = ('-user.messages', '-conversation.messages', '-updated_at')
 
-    @validates('content_data')
-    def validate_content_data(self, key, content):
-        if content == '':
-            raise ValueError("content cannot be empty")
-        elif len(content)>2000:
-            raise ValueError('content must be less than 2000 characters')
-        else:
-            return content 
+    # @validates('content_data')
+    # def validate_content_data(self, key, content):
+    #     if content == '':
+    #         raise ValueError("content cannot be empty")
+    #     elif len(content)>2000:
+    #         raise ValueError('content must be less than 2000 characters')
+    #     else:
+    #         return content 
 
     
 

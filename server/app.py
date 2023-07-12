@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from flask_restful import Api, Resource
 from models import User, UserConversation, Conversation, Message
-from config import app, db, api
+from config import app, db, api, cors
 
 
 class Users(Resource):
@@ -45,6 +45,7 @@ class Users(Resource):
     
 api.add_resource(Users, '/users')
 
+
 class UserById(Resource):
     def get(self, id):
 
@@ -53,7 +54,7 @@ class UserById(Resource):
         if not user:
             return make_response({'error':'User not found'}, 404)
         
-        response = make_response(user.to_dict(only=('id', 'name', 'username', 'background', 'online_status', 'avatar')), 200)
+        response = make_response(user.to_dict(only=('id', 'name', 'username', 'background', 'online_status', 'avatar', '_password_hash')), 200)
 
         return response
 
@@ -97,7 +98,6 @@ class UserById(Resource):
     
 api.add_resource(UserById, '/users/<int:id>')
 
-
 class Messages(Resource):
     def get(self):
         q = Message.query.all()
@@ -139,7 +139,6 @@ class Messages(Resource):
         return response
 
 api.add_resource(Messages, '/messages')
-
 
 
 class MessageById(Resource):
@@ -233,7 +232,6 @@ class UserConversations(Resource):
 api.add_resource(UserConversations, '/user_conversations')
     
 
-
 class UserConversationById(Resource):
     def get(self, id):
         user_conversation = UserConversation.query.filter(UserConversation.id == id).first()
@@ -283,7 +281,6 @@ class UserConversationById(Resource):
     
 api.add_resource(UserConversationById, '/user_conversations/<int:id>')
 
-
 class Conversations(Resource):
     def get(self):
         q = Conversation.query.all()
@@ -298,7 +295,6 @@ class Conversations(Resource):
         return response
     
 api.add_resource(Conversations, '/conversations')
-    
 
 class ConversationById(Resource):
     def get(self, id):
@@ -352,7 +348,6 @@ class ConversationById(Resource):
     
 api.add_resource(ConversationById, '/conversations/<int:id>')
 
-
 class Signup(Resource):
     def post(self):
         data = request.get_json()
@@ -389,15 +384,15 @@ class Login(Resource):
 
 
 api.add_resource(Login, '/login')
-    
+ 
 class CheckSession(Resource):
 
     def get(self):
         user = User.query.filter(User.id == session.get('user_id')).first()
         if user:
-            return user.to_dict()
+            return make_response(user.to_dict(only=('id', 'name', 'username', 'background', 'online_status', 'avatar')), 200)
         else:
-            return {'message': '401: Not Authorized'}, 401
+            return make_response({'message': '401: Not Authorized'}, 401)
 
 api.add_resource(CheckSession, '/check_session')
 
@@ -405,7 +400,7 @@ class Logout(Resource):
 
     def delete(self): # just add this line!
         session['user_id'] = None
-        return {'message': '204: No Content'}, 204
+        return make_response({'message': '204: No Content'}, 204)
 
 api.add_resource(Logout, '/logout')
     
