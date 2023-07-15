@@ -7,7 +7,7 @@ import{HashLink as Link} from "react-router-hash-link";
 function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit, 
                     handleOnClickButton, handleOnChange, handleOnDelete}){
 
-	const {currentUser} = useContext(UserContext)
+	const {currentUser, setCurrentUser} = useContext(UserContext)
 
     const chatMatInfo = fetch(`/users/${chatMate.name}`)
   

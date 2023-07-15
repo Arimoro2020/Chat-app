@@ -110,7 +110,7 @@ function App() {
             .then((data) =>setConversations([...conversations, data]))
 
 		const filteredName = conversations.filter((el) => {
-			return el.name.toLowerCase() === contact.name.toLowerCase();
+			return el.name.toLowerCase().includes(contact.name.toLowerCase());
 			})  
 
 		fetch(`/user_conversations`, {
@@ -156,19 +156,18 @@ function App() {
 	}, []);
 
 	function getChatList(){						
-		const filteredMessageId = [...messages].filter((el)=>{
-			return el.user_id === parseInt(currentUser.id)}
-			);
-	
+		const filteredMessageId = [...messages].filter((el)=>parseInt(el.user_id) === parseInt(currentUser.id));
 		
-		const filteredParticipants = [...conversations].filter((el)=>{
-			return el.id.includes(parseInt(filteredMessageId.conversation_id))}
-	);	
+		const messagesId = [...filteredMessageId].filter((el)=>parseInt(el.conversation_id));
+		
+		const filteredParticipants = [...conversations].filter((el)=>parseInt(messagesId).includes(parseInt(el.id)));
+		
 		setChatList([...chatList, filteredParticipants]);
 
+		
 
 		const filteredReceivedMessages = [...messages].filter((el)=>{
-				return el.conversation_id.includes(parseInt(filteredParticipants.id))}
+				return parseInt(el.conversation_id) === (parseInt(filteredParticipants.id))}
 				);
 
 		setIncoming([...incoming, filteredReceivedMessages]);
