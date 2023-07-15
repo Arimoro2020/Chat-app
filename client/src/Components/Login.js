@@ -1,17 +1,28 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useFormik } from "formik";
+import { useState, useEffect, useContext } from "react";
 import UserContext from "./UserContext";
-import {useContext} from "react";
+import { useFormik } from "formik";
 import * as yup from "yup";
 
-function Login() {
-	const {user, setUser} = useContext(UserContext);
-	const [logIn, setLogIn] = useState( user? true : false);
-	
 
+
+
+
+function Login(){
+	// const [user, setUser] = useContext(UserContext)
+	const [logInfo, setLogInfo] = useState(null);
+	// const [logIn, setLogIn] = useState( user? true : false);
 	const navigate = useNavigate();
+
+
+	useEffect(() => {
+	fetch(`/users/${logInfo.username}`)
+			.then((res) => localStorage.setItem('user', res.json()))
+
+	},[]);
+
+	
 
     
 
@@ -39,7 +50,7 @@ function Login() {
 				if (res.ok) {
 					res.json().then((data) => { 
 						actions.resetForm();
-						setUser(data);
+						setLogInfo(data);
 						navigate("/home");
 						
 					});

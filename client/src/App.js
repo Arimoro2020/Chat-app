@@ -7,7 +7,7 @@ import ChatRoom from "./components/ChatRoom";
 import Contacts from "./components/Contacts";
 import Navigation from "./components/Navigation";
 import UserProfile from "./components/UserProfile";
-import {UserProvider} from "./components/UserContext";
+
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import UserContext from "./components/UserContext";
@@ -20,18 +20,17 @@ function App() {
 	const [conversations, setConversations] = useState([]);
 	const [userConversations, setUserConversations] = useState([]);
 	const [messages, setMessages] = useState([]);
-	const [appUser, setAppUser] = useState({});
 	const [chatList, setChatList] = useState([]);
 	const [ incoming, setIncoming] = useState([]);
 	const [chatRoom, setChatRoom] = useState(null);
 	const [chatMate, setChatMate] = useState(null);
 	
-	const {user,} = useContext(UserContext);
+	const {currentUser, setCurrentUser} = useContext(UserContext);
 
 
 
     const [formBody, setFormBody] = useState("")
-    const [editBody, setEditBody] = useState("")
+    // const [editBody, setEditBody] = useState("")
     const [isEditing, setIsEditing] = useState(false)
     const [id, setId] = useState(null)
 
@@ -52,7 +51,7 @@ function App() {
         e.preventDefault();
 			if (isEditing) {
 		
-				fetch(`/messages/${id}`, {
+				fetch(`/messages/${parseInt(id)}`, {
 					method: "PATCH",
 					headers: {
 					"Content-Type": "application/json",
@@ -61,7 +60,8 @@ function App() {
 				})
 					.then((r) => r.json())
 					.then((update) =>{ setMessages([...messages, update]);
-						setFormBody("")})
+						setFormBody("")
+						setIsEditing(isEditing=>!isEditing)})
 		
 			}
 			else{
@@ -71,7 +71,7 @@ function App() {
 					"Content-Type": "application/json",
 					},
 					body: JSON.stringify({
-						user_id: user.id,
+						user_id: parseInt(currentUser.id),
 						content_type: "string",
 						content_data: formBody}),
 				})
@@ -84,7 +84,7 @@ function App() {
 			
 
 	function handleOnDelete(chat){
-		fetch(`/messages/${chat.id}`, {
+		fetch(`/messages/${parseInt(chat.id)}`, {
 			method: "DELETE",
 		  });
 
@@ -141,10 +141,10 @@ function App() {
 		fetch("/check_session")
 			.then((res)=>{
 				if (res.ok) {
-					res.json().then((data)=>setAppUser({...appUser, data}));
-					console.log(appUser);	
+					res.json().then((data)=>setCurrentUser(data));
+					console.log(currentUser);	
 				} else {
-					setAppUser(null);
+					setCurrentUser(null);
 				}
 			});
 		getChatList();
@@ -153,18 +153,18 @@ function App() {
 
 	function getChatList(){						
 		const filteredMessageId = [...messages].filter((el)=>{
-			return el.user_id === user.id}
+			return el.user_id === parseInt(currentUser.id)}
 			);
 	
 		
 		const filteredParticipants = [...conversations].filter((el)=>{
-			return el.id.includes(filteredMessageId.conversation_id)}
+			return el.id.includes(parseInt(filteredMessageId.conversation_id))}
 	);	
 		setChatList([...chatList, filteredParticipants]);
 
 
 		const filteredReceivedMessages = [...messages].filter((el)=>{
-				return el.conversation_id.includes(filteredParticipants.id)}
+				return el.conversation_id.includes(parseInt(filteredParticipants.id))}
 				);
 
 		setIncoming([...incoming, filteredReceivedMessages]);
@@ -174,7 +174,7 @@ function App() {
 	function handleNewMessageOnClick(fresh, sender){
 
 		const filteredChatRoom = [...messages].filter((el)=>{
-			return el.conversation_id === fresh.conversation_id});
+			return el.conversation_id === parseInt(fresh.conversation_id)});
 
 			setChatRoom(filteredChatRoom);
 			setChatMate(sender.name);
@@ -187,7 +187,7 @@ function App() {
 
 	function handleButtonOnClick(chat){
 		const filteredListToRoom = [...messages].filter((el)=>{
-			return el.conversation_id === chat.id});
+			return el.conversation_id === parseInt(chat.id)});
 
 			setChatRoom(filteredListToRoom);
 			const participant = chat.name
@@ -204,7 +204,7 @@ function App() {
 	
 
 	return (
-		<UserProvider>
+		
 		<div className="Chat App">
 			<Navigation />
 			<Routes>
@@ -219,7 +219,7 @@ function App() {
 				< Route exact path = "/user_profile" element={<UserProfile />} />
 			</Routes>
 		</div>
-		</UserProvider >
+		
 	);
 	}
 

@@ -1,11 +1,13 @@
 
 import { useContext} from "react";
 import UserContext from "./UserContext";
+import{HashLink as Link} from "react-router-hash-link";
+
 
 function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit, 
                     handleOnClickButton, handleOnChange, handleOnDelete}){
 
-	const {user} = useContext(UserContext)
+	const {currentUser} = useContext(UserContext)
 
     const chatMatInfo = fetch(`/users/${chatMate.name}`)
   
@@ -15,17 +17,20 @@ function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit,
         return  (<div key={chat.id} id={chat.id}>
                 <h4>{ new Date(chat.created_at).toLocaleTimeString()}</h4>
                 <p>{chat.content_body}</p>
+                <Link to="#editForm" smooth>
                 <button onClick={() => handleOnClickButton(chat)}>
                 <span role="img" aria-label="edit">
+                    Edit
                 </span>
                 </button>
+                </Link>
                 <button onClick={()=>handleOnDelete(chat)}>
                     <span role="img" aria-label="delete">
                     🗑
                     </span>
                 </button>
                 </div>) 
-                .sort((a, b) => b.chat.created_at.localeCompare(a.chat.created_at)) 
+               
                 })
       
 
@@ -43,7 +48,7 @@ function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit,
         </li>
         </section>
         <section>
-        <form className="new-message" onSubmit={()=>handleFormSubmit(formBody)}>
+        <form className="new-message" id="editForm" onSubmit={()=>handleFormSubmit(formBody)}>
         <input
             type="text"
             name="formBody"

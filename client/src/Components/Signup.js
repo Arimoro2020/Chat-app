@@ -9,7 +9,7 @@ import * as yup from "yup";
 function Signup() {
 
 	const [signUp, setSignUp] = useState(false);
-	const {user, setUser} = useContext(UserContext);
+	const {user} = useContext(UserContext);
 	// 8a. create state error
 
 	const navigate = useNavigate();

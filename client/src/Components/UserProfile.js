@@ -5,7 +5,7 @@ import * as yup from "yup";
 
 
 function UserProfile() {
-	const {user, setUser} = useContext(UserContext);
+	const {currentUser, setCurrentUser} = useContext(UserContext);
     const [visibleForm, setVisibleForm] = useState(false);
 
 
@@ -30,7 +30,7 @@ function UserProfile() {
 		},
 		validationSchema: formSchema,
 		onSubmit: (values, actions) => {
-			fetch( `/users/${user.id}`, {
+			fetch( `/users/${currentUser.id}`, {
 				method: "PATCH",
 				headers: {
 					"content-type": "application/json",
@@ -40,7 +40,7 @@ function UserProfile() {
 				if (res.ok) {
 					res.json().then((data) => {
 						actions.resetForm();
-						setUser(data);
+						setCurrentUser(data);
                         setVisibleForm(visibleForm =>!visibleForm);
 						
 				
@@ -53,10 +53,10 @@ function UserProfile() {
     return(
         <div>
         <section>
-            <p> Name: {user.name}</p>
-            <p> Background: {user.background} </p>
-            <p> Status: {user.online_status}</p>
-            <p> User ID: {user.id}</p>
+            <p> Name: {currentUser.name}</p>
+            <p> Background: {currentUser.background} </p>
+            <p> Status: {currentUser.online_status}</p>
+            <p> User ID: {currentUser.id}</p>
         </section>
         <section style={{
        visibility: visibleForm ? "visible" : "hidden",

@@ -4,7 +4,7 @@ import UserContext from "./UserContext";
 
 function Home({incoming, handleNewMessageOnClick}) {
 
-	const {user} = useContext(UserContext)
+	const {currentUser} = useContext(UserContext)
 
 	const {id, content_data, conversation_id, user_id, created_at} = incoming;
 
@@ -24,13 +24,12 @@ function Home({incoming, handleNewMessageOnClick}) {
 					<button className="Contacts" id={id} fresh={fresh} sender={sender} onClick={() => handleNewMessageOnClick(fresh, sender)}>
 						Go to ChatRoom</button>
 					</div>
-				</li>)
-				.sort((a, b) => a.created_at.localeCompare(b.created_at))});
+				</li>)});
 
 	return (
 		<div>
 			 <section> 
-				<h1>Welcome, {user.name} to your Chat App</h1>
+				<h1>Welcome, {currentUser.name} to your Chat App</h1>
 			</section>
             <section>
 				<h2> Here are your messages</h2>
