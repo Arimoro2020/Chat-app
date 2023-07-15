@@ -106,25 +106,42 @@ function App() {
             body: JSON.stringify({"conversation_name": contact.name})
 
 		})
-            .then((r) => r.json())
-            .then((data) =>setConversations([...conversations, data]))
-
-		const filteredName = conversations.filter((el) => {
-			return el.name.toLowerCase().includes(contact.name.toLowerCase());
-			})  
-
-		fetch(`/user_conversations`, {
-			method: "POST",
-			headers: {
-			"Content-Type": "application/json",
-			},
-			body: JSON.stringify({"conversation_id": parseInt(filteredName.id),
+            .then((r) =>{
+        
+				if (r.ok) {
+					r.json().then((data) =>setConversations([...conversations, data]));
 				
-									"user_id": parseInt(contact.id)})
+			const filteredName = conversations.filter((el) => {
+				return el.name.toLowerCase().includes(contact.name.toLowerCase())})  ;
 
-		})
-			.then((r) => r.json())
-			.then((data) =>setUserConversations([...userConversations, data]))
+				fetch(`/user_conversations`, {
+					method: "POST",
+					headers: {
+					"Content-Type": "application/json",
+					},
+					body: JSON.stringify({"conversation_id": parseInt(filteredName.id),
+						
+											"user_id": parseInt(contact.id)})
+		
+				})
+					.then((r) => r.json())
+					.then((data) =>setUserConversations([...userConversations, data]))
+
+
+
+
+		
+				
+				}
+					
+				
+				
+				else{
+					setConversations([...conversations])
+				}})
+
+
+		
 
 		
 	}
