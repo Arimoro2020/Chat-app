@@ -11,7 +11,7 @@ function Search({search, handleSearch}){
             name="search"
             value={search}
             placeholder="Type a  name to search..."
-            onChange={(e)=>handleSearch}
+            onChange={(e)=>handleSearch(e)}
             />
         </div>
       );
