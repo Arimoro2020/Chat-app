@@ -54,7 +54,7 @@ function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit,
             name="formBody"
             autoComplete="off"
             value={formBody}
-            onChange={(e) => handleOnChange(e)}/>
+            onChange={(e) => handleOnChange}/>
         <button type="submit">Send</button>
         </form>
         </section>

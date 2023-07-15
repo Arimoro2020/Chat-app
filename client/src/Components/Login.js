@@ -65,14 +65,14 @@ function Login(){
 
 	return (
 		<section>
-				<form className="form" onSubmit={formik.handleSubmit}>
+				<form className="form" onSubmit={()=>formik.handleSubmit}>
 					<label>Username</label>
 					<input
 						type="text"
 						name="username"
 						value={formik.values.username}
-						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
+						onChange={()=>formik.handleChange}
+						onBlur={()=>formik.handleBlur}
 					/>
 					{/* formik.touched is enabled with onBlur */}
 					{/* 
@@ -90,8 +90,8 @@ function Login(){
 						type="password"
 						name="password"
 						value={formik.values.password}
-						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
+						onChange={()=>formik.handleChange}
+						onBlur={()=>formik.handleBlur}
 					/>
 					{formik.touched.password && formik.errors.password ? (
 						<h3>{formik.errors.password}</h3>

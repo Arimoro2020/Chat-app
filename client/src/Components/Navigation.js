@@ -49,7 +49,7 @@ function Navigation() {
 				</NavLink>
 				{ currentUser ? 
 					(<>
-						<button onClick={handleLogout} className="button">
+						<button onClick={()=>handleLogout} className="button">
 							Log Out
 						</button>
 					</>) : 

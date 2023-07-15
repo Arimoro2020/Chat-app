@@ -9,7 +9,8 @@ function UserProfile() {
     const [visibleForm, setVisibleForm] = useState(false);
 
 
-	const toggleForm = () => setVisibleForm(visibleForm => !visibleForm);
+	function toggleForm(){ 
+        setVisibleForm(visibleForm => !visibleForm)};
 
 	const formSchema = yup.object().shape({
 		username: yup.string(),
@@ -61,14 +62,14 @@ function UserProfile() {
         <section style={{
        visibility: visibleForm ? "visible" : "hidden",
     }}>
-        <form className="form" onSubmit={formik.handleSubmit}>
+        <form className="form" onSubmit={()=>formik.handleSubmit}>
                 <label>Name</label>
 					<input
 						type="text"
 						name="name"
-						value={formik.values.name}
-						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
+						value={()=>formik.values.name}
+						onChange={()=>formik.handleChange}
+						onBlur={()=>formik.handleBlur}
 					/>
 				
 					{formik.touched.username && formik.errors.name ? (
@@ -81,8 +82,8 @@ function UserProfile() {
 						type="text"
 						name="username"
 						value={formik.values.username}
-						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
+						onChange={()=>formik.handleChange}
+						onBlur={()=>formik.handleBlur}
 					/>
 				
 					{formik.touched.username && formik.errors.username ? (
@@ -95,8 +96,8 @@ function UserProfile() {
 						type="text"
 						name="online_status"
 						value={formik.values.online_status}
-						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
+						onChange={()=>formik.handleChange}
+						onBlur={()=>formik.handleBlur}
 					/>
 				
 					{formik.touched.online_status && formik.errors.online_status ? (
@@ -108,9 +109,9 @@ function UserProfile() {
 					<input
 						type="text"
 						name="background"
-						value={formik.values.background}
-						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
+						value={()=>formik.values.background}
+						onChange={()=>formik.handleChange}
+						onBlur={()=>formik.handleBlur}
 					/>
 					
 					{formik.touched.background && formik.errors.background ? (
@@ -123,8 +124,8 @@ function UserProfile() {
 						type="text"
 						name="avatar"
 						value={formik.values.avatar}
-						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
+						onChange={()=>formik.handleChange}
+						onBlur={()=>formik.handleBlur}
 					/>
 				
 					{formik.touched.avatar && formik.errors.avatar ? (
@@ -138,8 +139,8 @@ function UserProfile() {
 						type="password"
 						name="password"
 						value={formik.values.password}
-						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
+						onChange={()=>formik.handleChange}
+						onBlur={()=>formik.handleBlur}
 					/>
 					{formik.touched.password && formik.errors.password ? (
 						<h3>{formik.errors.password}</h3>
@@ -151,7 +152,7 @@ function UserProfile() {
 				</form>
                 </section>
                 <section>
-				<button className="button" onClick={toggleForm}>
+				<button className="button" onClick={()=>toggleForm}>
 					{visibleForm? "" : "Edit Profile"}
 				</button>
 			</section>
