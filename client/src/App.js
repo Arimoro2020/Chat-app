@@ -7,11 +7,13 @@ import ChatRoom from "./components/ChatRoom";
 import Contacts from "./components/Contacts";
 import Navigation from "./components/Navigation";
 import UserProfile from "./components/UserProfile";
+import {UserProvider} from "./components/UserContext";
 
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import UserContext from "./components/UserContext";
-import {useContext} from "react";
+// import UserContext from "./components/UserContext";
+// import {useContext} from "react";
+
 import { useNavigate } from "react-router-dom";
 
 
@@ -25,7 +27,9 @@ function App() {
 	const [chatRoom, setChatRoom] = useState(null);
 	const [chatMate, setChatMate] = useState(null);
 	
-	const {currentUser, setCurrentUser} = useContext(UserContext);
+	const [currentUser, setCurrentUser ] = useState({"id": 1, "name": "Melissa Mejia",
+	"username": "suddenly", "background": "Pattern century arrive", 
+	"online_status": "online", "created_at": "2023-07-12 12:20:28", avatar: "https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg"})
 
 
 
@@ -138,15 +142,15 @@ function App() {
 		fetch("/messages")
 			.then((res) => res.json())
 			.then(data => setMessages([...messages, data]));
-		fetch("/check_session")
-			.then((res)=>{
-				if (res.ok) {
-					res.json().then((data)=>setCurrentUser(data));
-					console.log(currentUser);	
-				} else {
-					setCurrentUser(null);
-				}
-			});
+		// fetch("/check_session")
+		// 	.then((res)=>{
+		// 		if (res.ok) {
+		// 			res.json().then((data)=>setCurrentUser(data));
+		// 			console.log(currentUser);	
+		// 		} else {
+		// 			setCurrentUser(null);
+		// 		}
+		// 	});
 		getChatList();
 				
 	}, []);
@@ -199,13 +203,22 @@ function App() {
 	}
 	
     
-	
+	if (!currentUser){
+		return (
+			<div className="Not Authorized">
+				<Navigation />
+				<Login />
+			</div>
+		)
+	}
 	
 	
 
 	return (
 		
 		<div className="Chat App">
+			
+			<UserProvider>
 			<Navigation />
 			<Routes>
         		<Route exact path="/home" element={<Home incoming={incoming} handleNewMessageOnClick={handleNewMessageOnClick}/>}  />
@@ -218,6 +231,7 @@ function App() {
 				handleOnChange={handleOnChange} handleOnDelete={handleOnDelete}/>} />
 				< Route exact path = "/user_profile" element={<UserProfile />} />
 			</Routes>
+			</UserProvider>
 		</div>
 		
 	);

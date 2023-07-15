@@ -1,4 +1,4 @@
-
+import { v4 } from "uuid";
 
 function ChatList({chatList, handleButtonOnClick}) {
 
@@ -6,7 +6,7 @@ function ChatList({chatList, handleButtonOnClick}) {
       <div className="chat_list">
         <ul>
           {chatList.map((chat) => (
-            <div key={chat.id} id={chat.id}>
+            <div key={v4()} id={chat.id}>
                 <p>Name: {chat.conversation_name}</p>
             <section>
                 <button className="primary" onClick={()=>handleButtonOnClick(chat)} >ChatRoom</button>

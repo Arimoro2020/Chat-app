@@ -15,7 +15,7 @@ function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit,
 
     const roomChats = chatRoom.map((chat)=> {
         return  (<div key={chat.id} id={chat.id}>
-                <h4>{ new Date(chat.created_at).toLocaleTimeString()}</h4>
+                <h4>{ chat.created_at}</h4>
                 <p>{chat.content_body}</p>
                 <Link to="#editForm" smooth>
                 <button onClick={() => handleOnClickButton(chat)}>
@@ -39,7 +39,7 @@ function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit,
         <div>
         <section>
             <h3>{chatMate.name} </h3>  
-          <img>src={chatMatInfo.avatar} alt={chatMatInfo.name}</img>  
+          <img src={chatMatInfo.avatar} alt={chatMatInfo.name}/>  
         </section>
         <section>
         <li>

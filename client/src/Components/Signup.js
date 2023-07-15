@@ -9,7 +9,7 @@ import * as yup from "yup";
 function Signup() {
 
 	const [signUp, setSignUp] = useState(false);
-	const {user} = useContext(UserContext);
+	const {currentUser, setCurrentUser} = useContext(UserContext);
 	// 8a. create state error
 
 	const navigate = useNavigate();
@@ -145,7 +145,7 @@ function Signup() {
 				</form>
 			<section>
 				<button className="button" onClick={()=>toggleSignup}>
-					{(signUp || user)? "" : "Sign Up"}
+					{(signUp || currentUser)? "" : "Sign Up"}
 				</button>
 			</section>
 		</section>

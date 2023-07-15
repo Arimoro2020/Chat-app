@@ -54,6 +54,7 @@ function UserProfile() {
     return(
         <div>
         <section>
+			<img src={currentUser.avatar} alt={currentUser.name}  />
             <p> Name: {currentUser.name}</p>
             <p> Background: {currentUser.background} </p>
             <p> Status: {currentUser.online_status}</p>
@@ -67,7 +68,7 @@ function UserProfile() {
 					<input
 						type="text"
 						name="name"
-						value={()=>formik.values.name}
+						value={formik.values.name}
 						onChange={()=>formik.handleChange}
 						onBlur={()=>formik.handleBlur}
 					/>
@@ -109,7 +110,7 @@ function UserProfile() {
 					<input
 						type="text"
 						name="background"
-						value={()=>formik.values.background}
+						value={formik.values.background}
 						onChange={()=>formik.handleChange}
 						onBlur={()=>formik.handleBlur}
 					/>
@@ -152,7 +153,7 @@ function UserProfile() {
 				</form>
                 </section>
                 <section>
-				<button className="button" onClick={()=>toggleForm}>
+				<button className="button" onClick={()=>toggleForm()}>
 					{visibleForm? "" : "Edit Profile"}
 				</button>
 			</section>

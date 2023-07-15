@@ -11,14 +11,14 @@ import * as yup from "yup";
 
 function Login(){
 	// const [user, setUser] = useContext(UserContext)
-	const [logInfo, setLogInfo] = useState(null);
+	const [logInfo, setLogInfo] = useState({});
 	// const [logIn, setLogIn] = useState( user? true : false);
 	const navigate = useNavigate();
 
 
 	useEffect(() => {
 	fetch(`/users/${logInfo.username}`)
-			.then((res) =>res.json())
+			.then(res=>res.json())
 			.then((data) =>localStorage.setItem("user", JSON.stringify(data)));
 
 	},[]);
@@ -55,6 +55,8 @@ function Login(){
 						navigate("/home");
 						
 					});
+				}else{
+					navigate("/signup");
 				} 
 			});
 		},
@@ -65,14 +67,14 @@ function Login(){
 
 	return (
 		<section>
-				<form className="form" onSubmit={()=>formik.handleSubmit}>
+				<form className="form" onSubmit={formik.handleSubmit}>
 					<label>Username</label>
 					<input
 						type="text"
 						name="username"
 						value={formik.values.username}
-						onChange={()=>formik.handleChange}
-						onBlur={()=>formik.handleBlur}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
 					/>
 					{/* formik.touched is enabled with onBlur */}
 					{/* 
@@ -90,8 +92,8 @@ function Login(){
 						type="password"
 						name="password"
 						value={formik.values.password}
-						onChange={()=>formik.handleChange}
-						onBlur={()=>formik.handleBlur}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
 					/>
 					{formik.touched.password && formik.errors.password ? (
 						<h3>{formik.errors.password}</h3>
@@ -101,7 +103,6 @@ function Login(){
 					<button type="submit">Submit</button>
 					{/* 8c. use conditional rendering to display the error to user */}
 				</form>
-			
 			
 		</section>
 	);

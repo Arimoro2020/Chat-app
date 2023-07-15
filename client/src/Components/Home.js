@@ -1,14 +1,24 @@
 
-import { useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import UserContext from "./UserContext";
+import { v4 } from 'uuid';
 
 function Home({incoming, handleNewMessageOnClick}) {
 
+	const [sender, setSender] = useState({})
+
 	const {currentUser} = useContext(UserContext)
 
-	const {id, content_data, conversation_id, user_id, created_at} = incoming;
+	const {user_id,} = incoming;
 
-	const sender = fetch(`/users/${user_id}`).then(res=>res.json())
+	useEffect(()=>{
+		fetch(`/users/${parseInt(user_id)}`)
+		.then(res=>res.json())
+		.then(data=>setSender(data));
+
+
+	}, [])
+	
 
     
 	
@@ -16,15 +26,16 @@ function Home({incoming, handleNewMessageOnClick}) {
 	
     
     const newMessages = incoming.map(fresh=>{
-		return		(<li >
-					<div key={conversation_id} id={id} fresh={fresh} sender={sender}>
-					<img> src={sender.avatar} alt={sender.name}</img>
-					<h4>{ new Date(created_at).toLocaleTimeString()}  {sender.name}</h4>
-					<p>{content_data}</p>
-					<button className="Contacts" id={id} fresh={fresh} sender={sender} onClick={() => handleNewMessageOnClick(fresh, sender)}>
-						Go to ChatRoom</button>
-					</div>
-				</li>)});
+			return(	<>
+						<li key={v4()}>
+						<img src={sender.avatar} alt={sender.name}/>
+						<h4>{fresh.created_at}  {sender.name}</h4>
+						<p>{fresh.content_data}</p>
+						<button className="Contacts" onClick={() => handleNewMessageOnClick(fresh, sender)}>
+							Go to ChatRoom</button>
+						</li></>
+				
+				)});
 
 	return (
 		<div>
