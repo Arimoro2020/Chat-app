@@ -1,10 +1,15 @@
+import React from 'react';
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useFormik } from "formik";
+import UserContext from "./UserContext";
+
 import * as yup from "yup";
 
-function Signup({ updateUser, appUser}) {
+function Signup() {
+
 	const [signUp, setSignUp] = useState(false);
+	const {user, setUser} = useContext(UserContext);
 	// 8a. create state error
 
 	const navigate = useNavigate();
@@ -27,7 +32,7 @@ function Signup({ updateUser, appUser}) {
 		},
 		validationSchema: formSchema,
 		onSubmit: (values, actions) => {
-			fetch( "http://localhost:5555/signup", {
+			fetch( "/signup", {
 				method: "POST",
 				headers: {
 					"content-type": "application/json",
@@ -37,7 +42,6 @@ function Signup({ updateUser, appUser}) {
 				if (res.ok) {
 					res.json().then((data) => {
 						actions.resetForm();
-						updateUser(data);
 						navigate("/");
 				
 					});
@@ -140,7 +144,7 @@ function Signup({ updateUser, appUser}) {
 				</form>
 			<section>
 				<button className="button" onClick={toggleSignup}>
-					{(signUp || appUser)? "" : "Sign Up"}
+					{(signUp || user)? "" : "Sign Up"}
 				</button>
 			</section>
 		</section>

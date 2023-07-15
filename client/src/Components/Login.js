@@ -1,16 +1,22 @@
+import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useFormik } from "formik";
+import UserContext from "./UserContext";
+import {useContext} from "react";
 import * as yup from "yup";
 
-function Login({updateUser}) {
-	const [logIn, setLogIn] = useState(false);
-	// 8a. create state error
+function Login() {
+	const {user, setUser} = useContext(UserContext);
+	const [logIn, setLogIn] = useState( user? true : false);
+	
 
 	const navigate = useNavigate();
 
-	const toggleSignup = () => setLogIn((prev) => !prev);
-	
+    
+
+	// 8a. create state error
+
 
 	const formSchema = yup.object().shape({
 		username: yup.string().required(),
@@ -23,7 +29,7 @@ function Login({updateUser}) {
 		},
 		validationSchema: formSchema,
 		onSubmit: (values, actions) => {
-			fetch( "http://localhost:5555/login", {
+			fetch( "/login", {
 				method: "POST",
 				headers: {
 					"content-type": "application/json",
@@ -31,9 +37,9 @@ function Login({updateUser}) {
 				body: JSON.stringify(values),
 			}).then((res) => {
 				if (res.ok) {
-					res.json().then((data) => {
+					res.json().then((data) => { 
 						actions.resetForm();
-						updateUser(data);
+						setUser(data);
 						navigate("/home");
 						
 					});
@@ -83,12 +89,7 @@ function Login({updateUser}) {
 					<button type="submit">Submit</button>
 					{/* 8c. use conditional rendering to display the error to user */}
 				</form>
-				<section>
-				<p>{logIn ? "Already have an account?" : "Not a member?"}</p>
-				<button className="button" onClick={toggleSignup}>
-					{logIn ? "Login" : ""}
-				</button>
-			</section>
+			
 			
 		</section>
 	);

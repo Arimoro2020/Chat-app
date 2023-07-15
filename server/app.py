@@ -56,6 +56,7 @@ class UserById(Resource):
         response = make_response(user.to_dict(only=('id', 'name', 'username', 'background', 'online_status', 'avatar', '_password_hash')), 200)
 
         return response
+    
 
 
 
@@ -96,6 +97,22 @@ class UserById(Resource):
         
     
 api.add_resource(UserById, '/users/<int:id>')
+
+
+class UserByUsername(Resource):
+    def get(self, username):
+
+        user = User.query.filter(User.username == username).first()
+
+        if not user:
+            return make_response({'error':'User not found'}, 404)
+        
+        response = make_response(user.to_dict(only=('id', 'name', 'username', 'background', 'online_status', 'avatar', '_password_hash')), 200)
+
+        return response
+    
+api.add_resource(UserByUsername, '/users/<string:username>')
+
 
 class Messages(Resource):
     def get(self):
@@ -390,10 +407,6 @@ class CheckSession(Resource):
         try:
             user = User.query.filter(User.id == session.get('user_id')).first()
             response = make_response(user.to_dict(only=('id', 'name', 'username', 'background', 'online_status', 'avatar')), 200)
-            response.headers.add("Access-Control-Allow-Origin", '*')
-            response.headers.add("Access-Control-Allow-Methods","GET")
-            response.headers.add("Access-Control-Allow-Methods","OPTIONS")
-            response.headers.add("Access-Control-Allow-Headers", "Content-Type")
             return response
 
         except:
@@ -412,7 +425,7 @@ api.add_resource(Logout, '/logout')
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=5555, debug=True)
+    app.run(port=5555, debug=True)
 
 
 

@@ -1,16 +1,20 @@
+import React from 'react';
 import { NavLink, useNavigate } from "react-router-dom";
+import UserContext from "./UserContext";
+import {useContext} from "react";
 
-function Navigation({ updateUser, user }) {
+function Navigation() {
 	const navigate = useNavigate();
+	const {user, setUser} = useContext(UserContext);
 
 	function handleLogout() {
-		fetch("http://localhost:5555/logout",{
+		fetch("/logout",{
 		method: "DELETE",
 		headers: {
 			"content-type": "application/json",
 		},}).then((res) => {
 			if (res.ok){
-				updateUser(null);
+				setUser(null);
 				navigate("/");
 			}
 		});
