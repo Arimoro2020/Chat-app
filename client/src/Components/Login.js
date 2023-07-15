@@ -18,7 +18,8 @@ function Login(){
 
 	useEffect(() => {
 	fetch(`/users/${logInfo.username}`)
-			.then((res) => localStorage.setItem('user', res.json()))
+			.then((res) =>res.json())
+			.then((data) =>localStorage.setItem("user", JSON.stringify(data)));
 
 	},[]);
 

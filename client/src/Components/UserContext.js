@@ -8,7 +8,7 @@ const UserContext = createContext(null);
 export const UserProvider  = ({children}) => {
     const [currentUser, setCurrentUser ] = useState(null)
 
-    const user = localStorage.getItem('user');
+    const user = JSON.parse(localStorage.getItem("user"));
     setCurrentUser(user);
 	if (!user) {
 		return null}
