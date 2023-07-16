@@ -157,7 +157,7 @@ function App() {
 								if(formBody !== ""){setFormBody("")}	
 									
 					})
-		}
+		}}
 		
 
 		function handleOnDelete(chat){
@@ -166,7 +166,8 @@ function App() {
 			});
 
 			const removedDeleted = [...messages].filter(message => message.id !== parseInt(chat.id));
-			if(messages !== removedDeleted){setMessages(removedDeleted)}; 
+			if(messages !== removedDeleted){
+				setMessages(removedDeleted)}; 
 		}
 
 		function handleOnClick(contact){
@@ -212,7 +213,7 @@ function App() {
 			
 
 			
-		}}
+		}
 
 	
 		
@@ -250,7 +251,9 @@ function App() {
 		</div>
 		
 	);
-	}
+}
+
 
 export default App;
+
 

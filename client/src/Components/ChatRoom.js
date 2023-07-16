@@ -13,8 +13,8 @@ function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit,
 
     useEffect(()=>{
         fetch(`/users/${chatMate}`).then(res=>res.json())
-        .then(data=>setChatMateInfo(data))
-    },[chatMate])
+        .then(data=>{if(chatMateInfo !== data){setChatMateInfo(data)}})
+    },[])
 
    
   
