@@ -7,7 +7,7 @@ function ChatList({chatList, handleButtonOnClick}) {
         <ul>
           {chatList.map(chat =>
             <ChatDetail key={chatList.content_data} chat={chat}
-                           handleButtonOnClick={()=>handleButtonOnClick()}/>)}        
+                           handleButtonOnClick={handleButtonOnClick}/>)}        
         </ul>
       </div>
       

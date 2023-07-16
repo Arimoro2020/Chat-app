@@ -33,7 +33,7 @@ function Home({incoming, handleNewMessageOnClick}) {
           <IncomingDetail
             key={fresh.content_data}
             fresh={fresh}
-			handleNewMessageOnClick={()=>handleNewMessageOnClick(fresh)}
+			handleNewMessageOnClick={handleNewMessageOnClick}
           />
         ))}
 			</ul>

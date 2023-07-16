@@ -57,18 +57,19 @@ function App() {
 		fetch(`/messages/`)
 			.then((res) => res.json())
 			.then(data => setAllMessages([...allMessages, data]));
-		getChatList();
-		handleNewMessageOnClick();
 	
-	}, [allMessages, conversations,currentUser, messages, userConversations]);
+		
+	
+	}, []);
 
-	function getChatList(){						
+					
 	
 		
 		const messageConversationsId = [...messages].map(message =>parseInt(message.conversation_id));
 		const participants = [...userConversations].filter(userConversation => parseInt(userConversation.user_id) !== parseInt(currentUser.id));
 		
-		setChatList(participants);
+		if (chatList !== participants){
+			setChatList(participants)};
 
 		const receivedMessages = [...allMessages].filter((el)=>{
 			return messageConversationsId.includes(parseInt(el.conversation_id))
@@ -76,19 +77,20 @@ function App() {
 
 
 				
-
-		setIncoming([...incoming, receivedMessages])};
+		if (incoming !== [...incoming, receivedMessages]){
+			setIncoming([...incoming, receivedMessages])
+		}
+	
 		
 	function handleNewMessageOnClick(fresh){
 
-		const filteredChatRoom = [...messages].filter((el)=>{
-			return parseInt(el.conversation_id) === parseInt(fresh.conversation_id)});
+		const filteredChatRoom = [...messages].filter((el)=>parseInt(el.conversation_id) === parseInt(fresh.conversation_id));
 
-				fetch(`/users/${parseInt(fresh.user_id)}`).then(res=>res.json()).then(data=>setChatMate(data.name))
+				fetch(`/users/${parseInt(fresh.user_id)}`).then(res=>res.json()).then(data=>{if(chatMate !== data.name){setChatMate(data.name)}})
 
 			
-			
-			setChatRoom(filteredChatRoom);
+			if (chatRoom !== filteredChatRoom){
+			setChatRoom(filteredChatRoom)};
 			navigate("/chat_room");
 			
 		
@@ -100,9 +102,11 @@ function App() {
 			const filteredListToRoom = [...messages].filter((el)=>{
 				return el.conversation_id === parseInt(chat.id)});
 
-				setChatRoom(filteredListToRoom);
-				const participant = chat.name
-				setChatMate(participant);
+				if(chatRoom !== filteredListToRoom){
+				setChatRoom(filteredListToRoom)};
+				const participant = chat.name;
+				if (chatMate !== participant){
+					setChatMate(participant)};
 				navigate("/chat_room");
 
 
@@ -110,12 +114,14 @@ function App() {
 		}
 
 		function handleOnClickButton(chat){
-			setIsEditing(isEditing=>!isEditing)
-			setFormBody(chat.content_body)
-			setId(parseInt(chat.id))
+			setIsEditing(isEditing=>!isEditing);
+			if(formBody !== chat.content_body){
+				setFormBody(chat.content_body)};
+			if(id !== parseInt(chat.id)){setId(parseInt(chat.id))}
 		}
 		function handleOnChange(e){
-			setFormBody(e.target.value)
+			if(formBody !== e.target.value){
+			setFormBody(e.target.value)};
 		}
 
 		function handleFormSubmit(e) {
@@ -130,8 +136,8 @@ function App() {
 						body: JSON.stringify({content_data: formBody}),
 					})
 						.then((r) => r.json())
-						.then((update) =>{ setMessages([...messages, update]);
-							setFormBody("")
+						.then((update) =>{ if(messages !== [...messages, update]){setMessages([...messages, update])};
+							if(formBody !== ""){setFormBody("")};
 							setIsEditing(isEditing=>!isEditing)})
 			
 				}
@@ -147,10 +153,10 @@ function App() {
 							content_data: formBody}),
 					})
 						.then((r) => r.json())
-						.then((update) =>{ setMessages([...messages, update]);
-								setFormBody("")})	
+						.then((update) =>{ if(messages !== [...messages, update]){setMessages([...messages, update])};
+								if(formBody !== ""){setFormBody("")}	
 									
-					}
+					})
 		}
 		
 
@@ -160,7 +166,7 @@ function App() {
 			});
 
 			const removedDeleted = [...messages].filter(message => message.id !== parseInt(chat.id));
-			setMessages(removedDeleted); 
+			if(messages !== removedDeleted){setMessages(removedDeleted)}; 
 		}
 
 		function handleOnClick(contact){
@@ -176,10 +182,9 @@ function App() {
 				.then((r) =>{
 			
 					if (r.ok) {
-						r.json().then((data) =>setConversations([...conversations, data]));
+						r.json().then((data) =>{if(conversations !== [...conversations, data]){setConversations([...conversations, data])}});
 					
-				const filteredName = conversations.filter((el) => {
-					return el.name.toLowerCase().includes(contact.name.toLowerCase())})  ;
+				const filteredName = conversations.filter(el => el.name.toLowerCase().includes(contact.name.toLowerCase()))  ;
 
 					fetch(`/user_conversations`, {
 						method: "POST",
@@ -192,26 +197,22 @@ function App() {
 			
 					})
 						.then((r) => r.json())
-						.then((data) =>setUserConversations([...userConversations, data]))
+						.then((data) =>{if(userConversations !== [...userConversations, data]){setUserConversations([...userConversations, data])}})
 
-
-
-
-			
 					
 					}
 						
 					
 					
 					else{
-						setConversations([...conversations])
+						if(conversations !== [...conversations]){setConversations([...conversations])}
 					}})
 
 
 			
 
 			
-		}
+		}}
 
 	
 		
