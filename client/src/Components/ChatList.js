@@ -3,13 +3,11 @@ import ChatDetail from "./ChatDetail";
 function ChatList({chatList, handleButtonOnClick}) {
 
     return (
-      <div className="chat_list">
+      <div>
         <ul>
-          {chatList.map(chat =>{
-          return(
-          <div>
-             <ChatDetail key={chatList.conversation_id} chat={chat} handleButtonOnClick={handleButtonOnClick}></ChatDetail>
-          </div>) })}        
+          {chatList.map(chat =>
+            <ChatDetail key={chatList.content_data} chat={chat}
+                           handleButtonOnClick={()=>handleButtonOnClick()}/>)}        
         </ul>
       </div>
       

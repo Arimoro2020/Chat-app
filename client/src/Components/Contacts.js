@@ -48,7 +48,7 @@ function Contacts({handleOnClick}) {
         <main className="allUsers">
             <Search 
             search={search}
-            handleSearch={handleSearch}
+            handleSearch={(e)=>handleSearch(e)}
             />
             <h2>Here are a list of possible Contacts:</h2>
             {mappedUsers}

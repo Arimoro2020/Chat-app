@@ -1,5 +1,5 @@
 
-import { useContext, useState} from "react";
+import { useContext, useState, useEffect} from "react";
 import UserContext from "./UserContext";
 import{HashLink as Link} from "react-router-hash-link";
 
@@ -11,7 +11,12 @@ function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit,
 
 	const {currentUser, setCurrentUser} = useContext(UserContext)
 
-    fetch(`/users/${chatMate}`).then(res=>res.json()).then(data=>setChatMateInfo(data))
+    useEffect(()=>{
+        fetch(`/users/${chatMate}`).then(res=>res.json())
+        .then(data=>setChatMateInfo(data))
+    },[chatMate])
+
+   
   
   
 
@@ -56,7 +61,7 @@ function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit,
             name="formBody"
             autoComplete="off"
             value={formBody}
-            onChange={(e) => handleOnChange}/>
+            onChange={(e) => handleOnChange(e)}/>
         <button type="submit">Send</button>
         </form>
         </section>

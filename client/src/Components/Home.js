@@ -31,9 +31,9 @@ function Home({incoming, handleNewMessageOnClick}) {
 	
 		 {incoming.map((fresh) => (
           <IncomingDetail
-            key={v4()}
+            key={fresh.content_data}
             fresh={fresh}
-			handleNewMessageOnClick={handleNewMessageOnClick}
+			handleNewMessageOnClick={()=>handleNewMessageOnClick(fresh)}
           />
         ))}
 			</ul>

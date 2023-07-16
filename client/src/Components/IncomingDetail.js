@@ -4,17 +4,6 @@
 function IncomingDetail({fresh, handleNewMessageOnClick}) {
 
 
-
-	
-
-	
-
-    
-	
-
-	
-
-
 			return(	<>
 						<li>
 						<h4>{fresh.created_at}</h4>

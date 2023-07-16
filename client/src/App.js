@@ -42,111 +42,6 @@ function App() {
 
 
 
-    function handleOnClickButton(chat){
-        setIsEditing(isEditing=>!isEditing)
-        setFormBody(chat.content_body)
-        setId(parseInt(chat.id))
-    }
-    function handleOnChange(e){
-        setFormBody(e.target.value)
-    }
-
-    function handleFormSubmit(e) {
-        e.preventDefault();
-			if (isEditing) {
-		
-				fetch(`/messages/${parseInt(id)}`, {
-					method: "PATCH",
-					headers: {
-					"Content-Type": "application/json",
-					},
-					body: JSON.stringify({content_data: formBody}),
-				})
-					.then((r) => r.json())
-					.then((update) =>{ setMessages([...messages, update]);
-						setFormBody("")
-						setIsEditing(isEditing=>!isEditing)})
-		
-			}
-			else{
-				fetch("/messages", {
-					method: "POST",
-					headers: {
-					"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						user_id: parseInt(currentUser.id),
-						content_type: "string",
-						content_data: formBody}),
-				})
-					.then((r) => r.json())
-					.then((update) =>{ setMessages([...messages, update]);
-							setFormBody("")})	
-								
-				}
-	}
-			
-
-	function handleOnDelete(chat){
-		fetch(`/messages/${parseInt(chat.id)}`, {
-			method: "DELETE",
-		  });
-
-		  const removedDeleted = [...messages].filter(message => message.id !== parseInt(chat.id));
-		  setMessages(removedDeleted); 
-	}
-
-	function handleOnClick(contact){
-		
-        fetch(`/conversations/${parseInt(currentUser.id)}`, {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json",
-            },
-            body: JSON.stringify({"conversation_name": contact.name})
-
-		})
-            .then((r) =>{
-        
-				if (r.ok) {
-					r.json().then((data) =>setConversations([...conversations, data]));
-				
-			const filteredName = conversations.filter((el) => {
-				return el.name.toLowerCase().includes(contact.name.toLowerCase())})  ;
-
-				fetch(`/user_conversations`, {
-					method: "POST",
-					headers: {
-					"Content-Type": "application/json",
-					},
-					body: JSON.stringify({"conversation_id": parseInt(filteredName.id),
-						
-											"user_id": parseInt(contact.id)})
-		
-				})
-					.then((r) => r.json())
-					.then((data) =>setUserConversations([...userConversations, data]))
-
-
-
-
-		
-				
-				}
-					
-				
-				
-				else{
-					setConversations([...conversations])
-				}})
-
-
-		
-
-		
-	}
-	
-
 	
 	
 	useEffect(() => {
@@ -162,18 +57,10 @@ function App() {
 		fetch(`/messages/`)
 			.then((res) => res.json())
 			.then(data => setAllMessages([...allMessages, data]));
-		// fetch("/check_session")
-		// 	.then((res)=>{
-		// 		if (res.ok) {
-		// 			res.json().then((data)=>setCurrentUser(data));
-		// 			console.log(currentUser);	
-		// 		} else {
-		// 			setCurrentUser(null);
-		// 		}
-		// 	});
 		getChatList();
-				
-	}, []);
+		handleNewMessageOnClick();
+	
+	}, [allMessages, conversations,currentUser, messages, userConversations]);
 
 	function getChatList(){						
 	
@@ -190,38 +77,144 @@ function App() {
 
 				
 
-		setIncoming([...incoming, receivedMessages]);
+		setIncoming([...incoming, receivedMessages])};
 		
-	}
-	
 	function handleNewMessageOnClick(fresh){
 
 		const filteredChatRoom = [...messages].filter((el)=>{
-			return el.conversation_id === parseInt(fresh.conversation_id)});
+			return parseInt(el.conversation_id) === parseInt(fresh.conversation_id)});
 
+				fetch(`/users/${parseInt(fresh.user_id)}`).then(res=>res.json()).then(data=>setChatMate(data.name))
 
-			fetch(`/users/${fresh.user_id}`).then(res=>res.json()).then(data=>setChatMate(data.name))
-
+			
+			
 			setChatRoom(filteredChatRoom);
 			navigate("/chat_room");
 			
 		
 
-	}
+		}
 
 
-	function handleButtonOnClick(chat){
-		const filteredListToRoom = [...messages].filter((el)=>{
-			return el.conversation_id === parseInt(chat.id)});
+		function handleButtonOnClick(chat){
+			const filteredListToRoom = [...messages].filter((el)=>{
+				return el.conversation_id === parseInt(chat.id)});
 
-			setChatRoom(filteredListToRoom);
-			const participant = chat.name
-			setChatMate(participant);
-			navigate("/chat_room");
+				setChatRoom(filteredListToRoom);
+				const participant = chat.name
+				setChatMate(participant);
+				navigate("/chat_room");
 
 
 
-	}
+		}
+
+		function handleOnClickButton(chat){
+			setIsEditing(isEditing=>!isEditing)
+			setFormBody(chat.content_body)
+			setId(parseInt(chat.id))
+		}
+		function handleOnChange(e){
+			setFormBody(e.target.value)
+		}
+
+		function handleFormSubmit(e) {
+			e.preventDefault();
+				if (isEditing) {
+			
+					fetch(`/messages/${parseInt(id)}`, {
+						method: "PATCH",
+						headers: {
+						"Content-Type": "application/json",
+						},
+						body: JSON.stringify({content_data: formBody}),
+					})
+						.then((r) => r.json())
+						.then((update) =>{ setMessages([...messages, update]);
+							setFormBody("")
+							setIsEditing(isEditing=>!isEditing)})
+			
+				}
+				else{
+					fetch("/messages", {
+						method: "POST",
+						headers: {
+						"Content-Type": "application/json",
+						},
+						body: JSON.stringify({
+							user_id: parseInt(currentUser.id),
+							content_type: "string",
+							content_data: formBody}),
+					})
+						.then((r) => r.json())
+						.then((update) =>{ setMessages([...messages, update]);
+								setFormBody("")})	
+									
+					}
+		}
+		
+
+		function handleOnDelete(chat){
+			fetch(`/messages/${parseInt(chat.id)}`, {
+				method: "DELETE",
+			});
+
+			const removedDeleted = [...messages].filter(message => message.id !== parseInt(chat.id));
+			setMessages(removedDeleted); 
+		}
+
+		function handleOnClick(contact){
+			
+			fetch(`/conversations/${parseInt(currentUser.id)}`, {
+				method: "POST",
+				headers: {
+				"Content-Type": "application/json",
+				},
+				body: JSON.stringify({"conversation_name": contact.name})
+
+			})
+				.then((r) =>{
+			
+					if (r.ok) {
+						r.json().then((data) =>setConversations([...conversations, data]));
+					
+				const filteredName = conversations.filter((el) => {
+					return el.name.toLowerCase().includes(contact.name.toLowerCase())})  ;
+
+					fetch(`/user_conversations`, {
+						method: "POST",
+						headers: {
+						"Content-Type": "application/json",
+						},
+						body: JSON.stringify({"conversation_id": parseInt(filteredName.id),
+							
+												"user_id": parseInt(contact.id)})
+			
+					})
+						.then((r) => r.json())
+						.then((data) =>setUserConversations([...userConversations, data]))
+
+
+
+
+			
+					
+					}
+						
+					
+					
+					else{
+						setConversations([...conversations])
+					}})
+
+
+			
+
+			
+		}
+
+	
+		
 	
     
 	if (!currentUser){

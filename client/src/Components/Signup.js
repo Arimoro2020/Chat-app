@@ -53,14 +53,14 @@ function Signup() {
 
 	return (
 		<section>
-				<form className="form" onSubmit={()=>formik.handleSubmit}>
+				<form className="form" onSubmit={formik.handleSubmit}>
                 <label>Name</label>
 					<input
 						type="text"
 						name="name"
 						value={formik.values.name}
-						onChange={()=>formik.handleChange}
-						onBlur={()=>formik.handleBlur}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
 					/>
 					{/* formik.touched is enabled with onBlur */}
 					{/* 
@@ -77,8 +77,8 @@ function Signup() {
 						type="text"
 						name="username"
 						value={formik.values.username}
-						onChange={()=>formik.handleChange}
-						onBlur={()=>formik.handleBlur}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
 					/>
 					{/* formik.touched is enabled with onBlur */}
 					{/* 
@@ -95,8 +95,8 @@ function Signup() {
 						type="text"
 						name="background"
 						value={formik.values.background}
-						onChange={()=>formik.handleChange}
-						onBlur={()=>formik.handleBlur}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
 					/>
 					{/* formik.touched is enabled with onBlur */}
 					{/* 
@@ -113,8 +113,8 @@ function Signup() {
 						type="text"
 						name="avatar"
 						value={formik.values.avatar}
-						onChange={()=>formik.handleChange}
-						onBlur={()=>formik.handleBlur}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
 					/>
 					{/* formik.touched is enabled with onBlur */}
 					{/* 
@@ -132,8 +132,8 @@ function Signup() {
 						type="password"
 						name="password"
 						value={formik.values.password}
-						onChange={()=>formik.handleChange}
-						onBlur={()=>formik.handleBlur}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
 					/>
 					{formik.touched.password && formik.errors.password ? (
 						<h3>{formik.errors.password}</h3>
@@ -144,7 +144,7 @@ function Signup() {
 					{/* 8c. use conditional rendering to display the error to user */}
 				</form>
 			<section>
-				<button className="button" onClick={()=>toggleSignup}>
+				<button className="button" onClick={()=>toggleSignup()}>
 					{(signUp || currentUser)? "" : "Sign Up"}
 				</button>
 			</section>
