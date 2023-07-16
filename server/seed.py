@@ -16,7 +16,7 @@ if __name__ == '__main__':
         Message.query.delete()
         Conversation.query.delete()
 
-
+        names = ['Jerry Jones', 'Peter Duck', 'John Doe', 'Mel Needle', 'Ian Smith']
         status = ['online', 'offline', 'Busy']
         pictures = [ "https://img.freepik.com/free-photo/worldface-spanish-guy-white-background_53876-137665.jpg",
                 
@@ -39,7 +39,8 @@ if __name__ == '__main__':
         password = random.choice(status)
         users = [
         User(
-            name=fake.name(),
+            
+            name=name,
             username=fake.word(),
             avatar=random.choice(pictures),
             _password_hash= bcrypt.generate_password_hash(
@@ -47,7 +48,7 @@ if __name__ == '__main__':
             background= fake.sentence(),
             online_status=random.choice(status)
             )
-            for _ in range(5)]
+            for name in names]
         
         db.session.add_all(users)
         db.session.commit()
@@ -55,9 +56,9 @@ if __name__ == '__main__':
         
         conversations = [
         Conversation(
-            conversation_name=fake.name()
-                )
-            for _ in range(20)]
+            conversation_name="John Doe",
+                ),  Conversation(
+            conversation_name='Mel Needle')]
         
         db.session.add_all(conversations)
         db.session.commit()
@@ -65,10 +66,12 @@ if __name__ == '__main__':
         
         user_conversations = [
         UserConversation(
-            conversation_id=random.randint(1, 11),
-            user_id = random.randint(1, 6)
-                )
-            for _ in range(20)]
+            conversation_id=1,
+            user_id = 3
+                ),  UserConversation(
+            conversation_id=2,
+            user_id = 4
+                )]
         
         db.session.add_all(user_conversations)
         db.session.commit()
@@ -78,10 +81,76 @@ if __name__ == '__main__':
         Message(
             content_data=fake.sentence(),
             content_type= 'String',
-            conversation_id = random.randint(1, 11),
-            user_id = random.randint(1, 6)
+            conversation_id = 1,
+            user_id = 4
+                ),   Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 1,
+            user_id = 3
+                ),   Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 1,
+            user_id = 4
+                ),   Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 1,
+            user_id = 3
+                ),
+                  Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 1,
+            user_id = 4
+                ),   Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 1,
+            user_id = 4
+                ),   Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 1,
+            user_id = 3
+                ),  Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 2,
+            user_id = 2
+                ),  Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 2,
+            user_id = 4
+                ), Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 2,
+            user_id = 2,
+                ),  Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 2,
+            user_id = 2,
+                ), Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 2,
+            user_id = 4,
+                ), Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 2,
+            user_id = 2,
+                ),  Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 2,
+            user_id = 4,
                 )
-            for _ in range(50)]
+            ]
 
         db.session.add_all(messages)
         db.session.commit()

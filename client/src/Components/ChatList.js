@@ -1,22 +1,19 @@
-import { v4 } from "uuid";
+import ChatDetail from "./ChatDetail";
 
 function ChatList({chatList, handleButtonOnClick}) {
 
     return (
       <div className="chat_list">
         <ul>
-          {chatList.map((chat) => (
-            <div key={v4()} id={chat.id}>
-                <p>Name: {chat.conversation_name}</p>
-            <section>
-                <button className="primary" onClick={()=>handleButtonOnClick(chat)} >ChatRoom</button>
-          </section>
-          </div>
-          ))}
-  
+          {chatList.map(chat =>{
+          return(
+          <div>
+             <ChatDetail key={chatList.conversation_id} chat={chat} handleButtonOnClick={handleButtonOnClick}></ChatDetail>
+          </div>) })}        
         </ul>
       </div>
       
     );
   }
-  export default ChatList;
+  
+ export default ChatList;

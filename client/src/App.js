@@ -26,11 +26,11 @@ function App() {
 	const [ incoming, setIncoming] = useState([]);
 	const [chatRoom, setChatRoom] = useState(null);
 	const [chatMate, setChatMate] = useState(null);
+	const [allMessages, setAllMessages] = useState([]);
 	
-	const [currentUser, setCurrentUser ] = useState({"id": 1, "name": "Melissa Mejia",
-	"username": "suddenly", "background": "Pattern century arrive", 
-	"online_status": "online", "created_at": "2023-07-12 12:20:28", avatar: "https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg"})
-
+	const [currentUser, setCurrentUser ] = useState({"id": 4, "name": "Mel Needle",
+     "username": "however", "background": "Memory front really factor anyone culture.", 
+     "online_status": "online", "online": "2023-07-15 23:59:30", "avatar": "https://img.freepik.com/free-photo/worldface-british-guy-white-background_53876-14467.jpg"})
 
 
     const [formBody, setFormBody] = useState("")
@@ -98,7 +98,7 @@ function App() {
 
 	function handleOnClick(contact){
 		
-        fetch(`/conversations`, {
+        fetch(`/conversations/${parseInt(currentUser.id)}`, {
             method: "POST",
             headers: {
             "Content-Type": "application/json",
@@ -150,15 +150,18 @@ function App() {
 	
 	
 	useEffect(() => {
-		fetch("/user_conversations")
+		fetch(`/user_conversations/${parseInt(currentUser.id)}`)
 			.then((res) => res.json())
 			.then(data => setUserConversations([...userConversations, data]));
-		fetch("/conversations")
+		fetch(`/conversations/${parseInt(currentUser.id)}`)
 			.then((res) => res.json())
 			.then(data => setConversations([...conversations, data]));
-		fetch("/messages")
+		fetch(`/messages/${parseInt(currentUser.id)}`)
 			.then((res) => res.json())
 			.then(data => setMessages([...messages, data]));
+		fetch(`/messages/`)
+			.then((res) => res.json())
+			.then(data => setAllMessages([...allMessages, data]));
 		// fetch("/check_session")
 		// 	.then((res)=>{
 		// 		if (res.ok) {
@@ -173,31 +176,33 @@ function App() {
 	}, []);
 
 	function getChatList(){						
-		const filteredMessageId = [...messages].filter((el)=>parseInt(el.user_id) === parseInt(currentUser.id));
+	
 		
-		const messagesId = [...filteredMessageId].filter((el)=>parseInt(el.conversation_id));
+		const messageConversationsId = [...messages].map(message =>parseInt(message.conversation_id));
+		const participants = [...userConversations].filter(userConversation => parseInt(userConversation.user_id) !== parseInt(currentUser.id));
 		
-		const filteredParticipants = [...conversations].filter((el)=>parseInt(messagesId).includes(parseInt(el.id)));
-		
-		setChatList([...chatList, filteredParticipants]);
+		setChatList(participants);
 
-		
+		const receivedMessages = [...allMessages].filter((el)=>{
+			return messageConversationsId.includes(parseInt(el.conversation_id))
+				 && el.user_id !==parseInt(currentUser.id)})
 
-		const filteredReceivedMessages = [...messages].filter((el)=>{
-				return parseInt(el.conversation_id) === (parseInt(filteredParticipants.id))}
-				);
 
-		setIncoming([...incoming, filteredReceivedMessages]);
+				
+
+		setIncoming([...incoming, receivedMessages]);
 		
 	}
 	
-	function handleNewMessageOnClick(fresh, sender){
+	function handleNewMessageOnClick(fresh){
 
 		const filteredChatRoom = [...messages].filter((el)=>{
 			return el.conversation_id === parseInt(fresh.conversation_id)});
 
+
+			fetch(`/users/${fresh.user_id}`).then(res=>res.json()).then(data=>setChatMate(data.name))
+
 			setChatRoom(filteredChatRoom);
-			setChatMate(sender.name);
 			navigate("/chat_room");
 			
 		

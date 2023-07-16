@@ -1,5 +1,5 @@
 
-import { useContext} from "react";
+import { useContext, useState} from "react";
 import UserContext from "./UserContext";
 import{HashLink as Link} from "react-router-hash-link";
 
@@ -7,9 +7,11 @@ import{HashLink as Link} from "react-router-hash-link";
 function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit, 
                     handleOnClickButton, handleOnChange, handleOnDelete}){
 
+    const [chatMateInfo, setChatMateInfo] = useState(null)
+
 	const {currentUser, setCurrentUser} = useContext(UserContext)
 
-    const chatMatInfo = fetch(`/users/${chatMate.name}`)
+    fetch(`/users/${chatMate}`).then(res=>res.json()).then(data=>setChatMateInfo(data))
   
   
 
@@ -38,8 +40,8 @@ function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit,
     return (
         <div>
         <section>
-            <h3>{chatMate.name} </h3>  
-          <img src={chatMatInfo.avatar} alt={chatMatInfo.name}/>  
+            <h3>{chatMateInfo.name} </h3>  
+          <img src={chatMateInfo.avatar} alt={chatMateInfo.name}/>  
         </section>
         <section>
         <li>

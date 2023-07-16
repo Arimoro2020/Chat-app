@@ -6,9 +6,9 @@ const UserContext = createContext();
 
 
 export const UserProvider  = ({children}) => {
-    const [currentUser, setCurrentUser ] = useState({"id": 1, "name": "Melissa Mejia",
-     "username": "suddenly", "background": "Pattern century arrive", 
-     "online_status": "online", "created_at": "2023-07-12 12:20:28", "avatar": "https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg"})
+    const [currentUser, setCurrentUser ] = useState({"id": 4, "name": "Mel Needle",
+     "username": "however", "background": "Memory front really factor anyone culture.", 
+     "online_status": "online", "online": "2023-07-15 23:59:30", "avatar": "https://img.freepik.com/free-photo/worldface-british-guy-white-background_53876-14467.jpg"})
 
     // const user = JSON.parse(localStorage.getItem("user"));
 	// if (!user) {
