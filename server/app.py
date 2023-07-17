@@ -157,6 +157,7 @@ class Messages(Resource):
 api.add_resource(Messages, '/messages')
 
 
+
 class MessageById(Resource):
     def get(self, id):
         message = Message.query.filter(Message.id == id).first()
@@ -191,6 +192,8 @@ class MessageById(Resource):
         response = make_response(message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id', "created_at")), 202)
 
         return response
+    
+
     
     def delete(self,id):
         message = Message.query.filter(Message.id == id).first()
@@ -246,7 +249,8 @@ class UserConversations(Resource):
         return response
 
 api.add_resource(UserConversations, '/user_conversations')
-    
+
+
 
 class UserConversationById(Resource):
     def get(self, id):
@@ -258,7 +262,7 @@ class UserConversationById(Resource):
         response = make_response(user_conversation.to_dict(only=('id', 'conversation_id', 'user_id')), 200)
 
         return response
-    
+   
     def patch(self,id):
         user_conversation = UserConversation.query.filter(UserConversation.id == id).first()
 
@@ -311,6 +315,18 @@ class Conversations(Resource):
         return response
     
 api.add_resource(Conversations, '/conversations')
+
+class ConversationByName(Resource):
+    def get(self, conversation_name):
+        conversation = Conversation.query.filter(Conversation.conversation_name == conversation_name).first()
+
+        if not conversation:
+            return make_response({'error':'Conversation not found'}, 404)
+        
+        response = make_response(conversation.to_dict(only=('id', 'conversation_name')), 200)
+
+        return response
+api.add_resource(ConversationByName, '/conversations/<string:conversation_name>')
 
 class ConversationById(Resource):
     def get(self, id):

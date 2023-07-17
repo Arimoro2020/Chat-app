@@ -23,7 +23,6 @@ function App() {
 	const [userConversations, setUserConversations] = useState([]);
 	const [messages, setMessages] = useState([]);
 	const [chatList, setChatList] = useState([]);
-	const [ incoming, setIncoming] = useState([]);
 	const [chatRoom, setChatRoom] = useState([]);
 	const [chatMate, setChatMate] = useState("");
 	const [allMessages, setAllMessages] = useState([]);
@@ -45,42 +44,35 @@ function App() {
 	
 	
 	useEffect(() => {
-		fetch(`/user_conversations/${currentUser.id}`)
+
+
+
+		fetch(`/user_conversations`)
 			.then((res) => res.json())
-			.then(data =>{if(userConversations !== [...userConversations, data]){ setUserConversations([...userConversations, data])}});
-		fetch(`/conversations/${currentUser.id}`)
+			.then(data =>{
+				if(userConversations !== data){setUserConversations(data)}});
+		fetch(`/conversations/${currentUser.name}`)
 			.then((res) => res.json())
-			.then(data => {if(conversations !== [...conversations, data] ){setConversations([...conversations, data])}});
-		fetch(`/messages/${currentUser.id}`)
-			.then((res) => res.json())
-			.then(data =>{if(messages !== [...messages, data]){ setMessages([...messages, data])}});
+			.then(data =>{
+				if(conversations !== data){setConversations(data)}});
+	
 		fetch(`/messages`)
 			.then((res) => res.json())
-			.then(data =>{if(allMessages !== [...allMessages, data]){ setAllMessages([...allMessages, data])}});
+			.then(data =>{
+				if(allMessages !== data){setAllMessages(data)}});
 		getList();
-		
 	
 	}, []);
 
-					
-	
-		function getList(){
-			const messageConversationsId = [...messages].map(message =>parseInt(message.conversation_id));
-			const participants = [...userConversations].filter(userConversation => parseInt(userConversation.user_id) !== currentUser.id);
-			
-			if (chatList !== participants){
-				setChatList(participants)};
+	function getList(){			
+		const  getMessages = [...allMessages].filter((message) => {
+			return (message.user_id === currentUser.id)})
 
-			const receivedMessages = [...allMessages].filter((el)=>{
-				return messageConversationsId.includes(parseInt(el.conversation_id))
-					&& parseInt(el.user_id) !==currentUser.id})
+			if(messages !== getMessages){
+				setMessages(getMessages)};
 
-
-					
-			if (incoming !== [...incoming, receivedMessages]){
-				setIncoming([...incoming, receivedMessages])
-			}
 		}
+		
 		
 	function handleNewMessageOnClick(fresh){
 
@@ -172,7 +164,7 @@ function App() {
 
 		function handleOnClick(contact){
 			
-			fetch(`/conversations/${parseInt(currentUser.id)}`, {
+			fetch(`/conversations`, {
 				method: "POST",
 				headers: {
 				"Content-Type": "application/json",
@@ -216,7 +208,9 @@ function App() {
 		}
 
 	
-		
+	
+	console.log(messages)
+	console.log(chatList)
 	
     
 	if (!currentUser){
@@ -237,11 +231,11 @@ function App() {
 			<UserProvider>
 			<Navigation />
 			<Routes>
-        		<Route exact path="/home" element={<Home incoming={incoming} handleNewMessageOnClick={handleNewMessageOnClick}/>}  />
+        		<Route exact path="/home" element={<Home messages={messages} handleNewMessageOnClick={handleNewMessageOnClick}/>}  />
 				< Route exact path = "/signup" element={<Signup />} />
 				< Route exact path = "/" element={<Login />} />
 				< Route exact path = "/contacts" element={<Contacts handleOnClick={handleOnClick}/>} />
-				< Route exact path = "/chat_list" element={<ChatList  chatList={chatList} handleButtonOnClick={handleButtonOnClick}/>} />
+				< Route exact path = "/chat_list" element={<ChatList  chatList={messages} allMessages={allMessages} handleButtonOnClick={handleButtonOnClick}/>} />
 				< Route exact path = "/chat_room" element={<ChatRoom  chatRooM={chatRoom} chatMate={chatMate} formBody={formBody} 
 				handleFormSubmit={handleFormSubmit} handleOnClickButton={handleOnClickButton} 
 				handleOnChange={handleOnChange} handleOnDelete={handleOnDelete}/>} />

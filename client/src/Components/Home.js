@@ -5,7 +5,7 @@ import UserContext from "./UserContext";
 // import IncomingDetail from "./IncomingDetail";
 
 
-function Home({incoming, handleNewMessageOnClick}) {
+function Home({messages, handleNewMessageOnClick}) {
 
 
 	const {currentUser} = useContext(UserContext)
@@ -16,15 +16,16 @@ function Home({incoming, handleNewMessageOnClick}) {
 
     
 	
-    const mappedIncoming = [...incoming].map((fresh) => {
+    const mappedIncoming = messages.map((fresh) => {
         return (
 
-	<ul>
+	<div key={fresh.id}>
 	<h4>{fresh.created_at}</h4>
+	<h4>ID: {fresh.conversation_id}</h4>
 	<p>{fresh.content_data}</p>
 	<button className="Contacts" onClick={() => handleNewMessageOnClick(fresh)}>
 		Go to ChatRoom</button>
-	</ul>)
+	</div>)
 
 		})
     
@@ -36,7 +37,8 @@ function Home({incoming, handleNewMessageOnClick}) {
 			</section>
             <section>
 				<h2> Here are your messages</h2>
-			{mappedIncoming}
+				<ul>{mappedIncoming}</ul>
+			
             </section>
 		</div>
 	);

@@ -1,14 +1,19 @@
 import ChatDetail from "./ChatDetail";
 
-function ChatList({chatList, handleButtonOnClick}) {
+function ChatList({chatList, allMessages,handleButtonOnClick}) {
+
+          
+
+
 
     return (
       <div>
-      
-          {[...chatList].map(chat =>
-            <ChatDetail key={chatList.content_data} chat={chat}
-                           handleButtonOnClick={handleButtonOnClick}/>)}        
-        
+        <ul>
+        {chatList.map(chat =>
+  <ChatDetail key={chatList.content_data} chat={chat}
+                   handleButtonOnClick={handleButtonOnClick} allMessages={allMessages}/>)}     
+
+        </ul>
       </div>
       
     );
