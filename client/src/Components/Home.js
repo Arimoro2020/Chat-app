@@ -36,7 +36,7 @@ function Home({received, handleNewMessageOnClick}) {
 				<h1>Welcome, {currentUser.name} to your Chat App</h1>
 			</section>
             <section>
-				<h2> Here are your received</h2>
+				<h2> Here are your received Messages!</h2>
 				<ul>{mappedIncoming}</ul>
 			
             </section>

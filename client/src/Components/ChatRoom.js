@@ -1,15 +1,23 @@
 
 import { useContext} from "react";
 import UserContext from "./UserContext";
+import {useEffect, useState} from "react";
 import{HashLink as Link} from "react-router-hash-link";
 // import {v4} from "uuid";
 
-function ChatRoom({chatRoom,formBody, handleFormSubmit, 
+function ChatRoom({chatRoom, mateId,formBody, handleFormSubmit, 
                     handleOnClickButton, handleOnChange, handleOnDelete}){
 
-    
+    const [mate, setMate] = useState();
 
-	const {currentUser} = useContext(UserContext)
+	const {currentUser} = useContext(UserContext);
+
+    useEffect(() =>{
+        fetch(`/users/${mateId}`).then(res=>res.json())
+        .then(data =>{
+            if(mate !== data){setMate(data)}});
+
+    }, [])
 
     
    
@@ -18,12 +26,13 @@ function ChatRoom({chatRoom,formBody, handleFormSubmit,
 
     const roomChats = [...chatRoom].map((chat)=> {
         return(  
-        <ul key={chat.id}>
-              <div id={chat.id}>
+        <ul key={parseInt(chat.id)}>
+              <div id={parseInt(chat.id)}>
               <section>
 
-              <h3>{currentUser.name } </h3>  
-               <img src={chat.avatar} alt={currentUser.name}/>  
+              <h3>{currentUser.name } </h3> 
+              if (currentUser.id !== parseInt(chat.user_id) &&( mate === true) ){
+               <img src={mate.avatar} alt={mate.name}/>} 
               </section>
                 <h4>{ chat.created_at}</h4>
                 <p>{chat.content_body}</p>

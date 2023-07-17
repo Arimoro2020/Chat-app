@@ -36,7 +36,7 @@ function ChatList({messages, handleNewMessageOnClick}) {
 				<h1>Welcome, {currentUser.name} to your Chat App</h1>
 			</section>
             <section>
-				<h2> Here are your sent messages</h2>
+				<h2> Here are your sent messages!</h2>
 				<ul>{mappedSending}</ul>
 			
             </section>

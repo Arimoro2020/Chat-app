@@ -25,6 +25,7 @@ function App() {
 	const [messages, setMessages] = useState([]);
 	const [received, setReceived] = useState([]);
 	const [chatRoom, setChatRoom] = useState([]);
+	const [mateId, setMateId] = useState([]);
 	// const [chatMate, setChatMate] = useState("");
 	const [allMessages, setAllMessages] = useState([]);
 	
@@ -35,7 +36,7 @@ function App() {
     const [formBody, setFormBody] = useState("")
     // const [editBody, setEditBody] = useState("")
     const [isEditing, setIsEditing] = useState(false)
-    const [id, setId] = useState(null)
+    const [newId, setNewId] = useState(null)
 
 	const navigate = useNavigate();
 
@@ -65,7 +66,7 @@ function App() {
 
 	function getList(){			
 		const  getMessages = [...allMessages].filter((message) => {
-			return (message.user_id === currentUser.id)})
+			return (parseInt(message.user_id) === currentUser.id)})
 
 			if(messages !== getMessages){
 				setMessages(getMessages)};
@@ -77,7 +78,7 @@ function App() {
 			
 
 			const incomingMessages = [...allMessages].filter(incoming=>{
-			return (filteredConversations.includes(incoming.conversation_id) && (parseInt(incoming.user_id) !== currentUser.id))})
+			return (filteredConversations.includes(parseInt(incoming.conversation_id)) && (parseInt(incoming.user_id) !== currentUser.id))})
 			
 			if(received !== incomingMessages){
 				setReceived(incomingMessages)};
@@ -91,6 +92,11 @@ function App() {
 			
 			if (chatRoom !== filteredChatRoom){
 			setChatRoom(filteredChatRoom)};
+			if (parseInt(fresh.user_id) !== currentUser.id){
+				if(mateId !== parseInt(fresh.user_id)){
+					setMateId(parseInt(fresh.user_id))
+				}
+			}
 			navigate("/chat_room");
 			
 		
@@ -103,7 +109,7 @@ function App() {
 			setIsEditing(isEditing=>!isEditing);
 			if(formBody !== chat.content_body){
 				setFormBody(chat.content_body)};
-			if(parseInt(id) !== parseInt(chat.id)){setId(parseInt(chat.id))}
+			if(parseInt(newId) !== parseInt(chat.id)){setNewId(parseInt(chat.id))}
 		}
 		function handleOnChange(e){
 			if(formBody !== e.target.value){
@@ -114,7 +120,7 @@ function App() {
 			e.preventDefault();
 				if (isEditing) {
 			
-					fetch(`/messages/${parseInt(id)}`, {
+					fetch(`/messages/${parseInt(newId)}`, {
 						method: "PATCH",
 						headers: {
 						"Content-Type": "application/json",
@@ -232,7 +238,7 @@ function App() {
 				< Route exact path = "/chat_list" element={<ChatList  messages={messages}  handleNewMessageOnClick={handleNewMessageOnClick}/>} />
 				< Route exact path = "/chat_room" element={<ChatRoom  chatRooM={chatRoom}  formBody={formBody} 
 				handleFormSubmit={handleFormSubmit} handleOnClickButton={handleOnClickButton} 
-				handleOnChange={handleOnChange} handleOnDelete={handleOnDelete}/>} />
+				handleOnChange={handleOnChange} handleOnDelete={handleOnDelete} mateId={mateId}/>} />
 				< Route exact path = "/user_profile" element={<UserProfile />} />
 			</Routes>
 			</UserProvider>
