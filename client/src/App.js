@@ -24,8 +24,8 @@ function App() {
 	const [messages, setMessages] = useState([]);
 	const [chatList, setChatList] = useState([]);
 	const [ incoming, setIncoming] = useState([]);
-	const [chatRoom, setChatRoom] = useState(null);
-	const [chatMate, setChatMate] = useState(null);
+	const [chatRoom, setChatRoom] = useState([]);
+	const [chatMate, setChatMate] = useState("");
 	const [allMessages, setAllMessages] = useState([]);
 	
 	const [currentUser, setCurrentUser ] = useState({"id": 4, "name": "Mel Needle",
@@ -45,48 +45,48 @@ function App() {
 	
 	
 	useEffect(() => {
-		fetch(`/user_conversations/${parseInt(currentUser.id)}`)
+		fetch(`/user_conversations/${currentUser.id}`)
 			.then((res) => res.json())
-			.then(data => setUserConversations([...userConversations, data]));
-		fetch(`/conversations/${parseInt(currentUser.id)}`)
+			.then(data =>{if(userConversations !== [...userConversations, data]){ setUserConversations([...userConversations, data])}});
+		fetch(`/conversations/${currentUser.id}`)
 			.then((res) => res.json())
-			.then(data => setConversations([...conversations, data]));
-		fetch(`/messages/${parseInt(currentUser.id)}`)
+			.then(data => {if(conversations !== [...conversations, data] ){setConversations([...conversations, data])}});
+		fetch(`/messages/${currentUser.id}`)
 			.then((res) => res.json())
-			.then(data => setMessages([...messages, data]));
-		fetch(`/messages/`)
+			.then(data =>{if(messages !== [...messages, data]){ setMessages([...messages, data])}});
+		fetch(`/messages`)
 			.then((res) => res.json())
-			.then(data => setAllMessages([...allMessages, data]));
-	
+			.then(data =>{if(allMessages !== [...allMessages, data]){ setAllMessages([...allMessages, data])}});
+		getList();
 		
 	
 	}, []);
 
 					
 	
-		
-		const messageConversationsId = [...messages].map(message =>parseInt(message.conversation_id));
-		const participants = [...userConversations].filter(userConversation => parseInt(userConversation.user_id) !== parseInt(currentUser.id));
-		
-		if (chatList !== participants){
-			setChatList(participants)};
+		function getList(){
+			const messageConversationsId = [...messages].map(message =>parseInt(message.conversation_id));
+			const participants = [...userConversations].filter(userConversation => parseInt(userConversation.user_id) !== currentUser.id);
+			
+			if (chatList !== participants){
+				setChatList(participants)};
 
-		const receivedMessages = [...allMessages].filter((el)=>{
-			return messageConversationsId.includes(parseInt(el.conversation_id))
-				 && el.user_id !==parseInt(currentUser.id)})
+			const receivedMessages = [...allMessages].filter((el)=>{
+				return messageConversationsId.includes(parseInt(el.conversation_id))
+					&& parseInt(el.user_id) !==currentUser.id})
 
 
-				
-		if (incoming !== [...incoming, receivedMessages]){
-			setIncoming([...incoming, receivedMessages])
+					
+			if (incoming !== [...incoming, receivedMessages]){
+				setIncoming([...incoming, receivedMessages])
+			}
 		}
-	
 		
 	function handleNewMessageOnClick(fresh){
 
 		const filteredChatRoom = [...messages].filter((el)=>parseInt(el.conversation_id) === parseInt(fresh.conversation_id));
 
-				fetch(`/users/${parseInt(fresh.user_id)}`).then(res=>res.json()).then(data=>{if(chatMate !== data.name){setChatMate(data.name)}})
+			fetch(`/users/${parseInt(fresh.user_id)}`).then(res=>res.json()).then(data=>{if(chatMate !== data.name){setChatMate(data.name)}})
 
 			
 			if (chatRoom !== filteredChatRoom){
@@ -100,7 +100,7 @@ function App() {
 
 		function handleButtonOnClick(chat){
 			const filteredListToRoom = [...messages].filter((el)=>{
-				return el.conversation_id === parseInt(chat.id)});
+				return parseInt(el.conversation_id) === parseInt(chat.id)});
 
 				if(chatRoom !== filteredListToRoom){
 				setChatRoom(filteredListToRoom)};
@@ -117,7 +117,7 @@ function App() {
 			setIsEditing(isEditing=>!isEditing);
 			if(formBody !== chat.content_body){
 				setFormBody(chat.content_body)};
-			if(id !== parseInt(chat.id)){setId(parseInt(chat.id))}
+			if(parseInt(id) !== parseInt(chat.id)){setId(parseInt(chat.id))}
 		}
 		function handleOnChange(e){
 			if(formBody !== e.target.value){
@@ -165,7 +165,7 @@ function App() {
 				method: "DELETE",
 			});
 
-			const removedDeleted = [...messages].filter(message => message.id !== parseInt(chat.id));
+			const removedDeleted = [...messages].filter(message => parseInt(message.id) !== parseInt(chat.id));
 			if(messages !== removedDeleted){
 				setMessages(removedDeleted)}; 
 		}

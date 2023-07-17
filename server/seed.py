@@ -78,12 +78,8 @@ if __name__ == '__main__':
 
         
         messages = [
-        Message(
-            content_data=fake.sentence(),
-            content_type= 'String',
-            conversation_id = 1,
-            user_id = 4
-                ),   Message(
+    
+             Message(
             content_data=fake.sentence(),
             content_type= 'String',
             conversation_id = 1,
@@ -117,38 +113,38 @@ if __name__ == '__main__':
                 ),  Message(
             content_data=fake.sentence(),
             content_type= 'String',
-            conversation_id = 2,
-            user_id = 2
+            conversation_id = 1,
+            user_id = 3
                 ),  Message(
             content_data=fake.sentence(),
             content_type= 'String',
-            conversation_id = 2,
+            conversation_id = 1,
             user_id = 4
                 ), Message(
             content_data=fake.sentence(),
             content_type= 'String',
-            conversation_id = 2,
-            user_id = 2,
+            conversation_id = 1,
+            user_id = 3,
                 ),  Message(
             content_data=fake.sentence(),
             content_type= 'String',
-            conversation_id = 2,
-            user_id = 2,
-                ), Message(
-            content_data=fake.sentence(),
-            content_type= 'String',
-            conversation_id = 2,
+            conversation_id = 1,
             user_id = 4,
                 ), Message(
             content_data=fake.sentence(),
             content_type= 'String',
-            conversation_id = 2,
-            user_id = 2,
+            conversation_id = 1,
+            user_id = 3,
+                ), Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 1,
+            user_id = 4,
                 ),  Message(
             content_data=fake.sentence(),
             content_type= 'String',
-            conversation_id = 2,
-            user_id = 4,
+            conversation_id = 1,
+            user_id = 3,
                 )
             ]
 

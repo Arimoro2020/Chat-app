@@ -2,7 +2,7 @@
 import { useContext, useState, useEffect} from "react";
 import UserContext from "./UserContext";
 import{HashLink as Link} from "react-router-hash-link";
-
+import {v4} from "uuid";
 
 function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit, 
                     handleOnClickButton, handleOnChange, handleOnDelete}){
@@ -20,8 +20,10 @@ function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit,
   
   
 
-    const roomChats = chatRoom.map((chat)=> {
-        return  (<div key={chat.id} id={chat.id}>
+    const roomChats = [...chatRoom].map((chat)=> {
+        return(  
+        <ul key={v4()}>
+              <div id={chat.id}>
                 <h4>{ chat.created_at}</h4>
                 <p>{chat.content_body}</p>
                 <Link to="#editForm" smooth>
@@ -36,7 +38,8 @@ function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit,
                     🗑
                     </span>
                 </button>
-                </div>) 
+                </div>
+            </ul>)
                
                 })
       
@@ -49,10 +52,10 @@ function ChatRoom({chatRoom, chatMate, formBody, handleFormSubmit,
           <img src={chatMateInfo.avatar} alt={chatMateInfo.name}/>  
         </section>
         <section>
-        <li>
+        
         {roomChats}
            
-        </li>
+      
         </section>
         <section>
         <form className="new-message" id="editForm" onSubmit={()=>handleFormSubmit(formBody)}>

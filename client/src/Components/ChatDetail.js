@@ -1,10 +1,14 @@
-
+import { useState, useEffect } from "react";
 
 function ChatDetail({chat, handleButtonOnClick}) {
+    const [user, setUser] = useState()
 
+    useEffect(()=>{
 
+        fetch(`users/${parseInt(chat.user_id)}`)
+        .then(res=>res.json()).then(data =>setUser(data))
+    }, [])
 
-    const user =fetch(`users/${parseInt(chat.user_id)}`);
 
     return (
      

@@ -1,8 +1,8 @@
 
 import {  useContext } from "react";
 import UserContext from "./UserContext";
-import {v4} from "uuid"
-import IncomingDetail from "./IncomingDetail";
+// import {v4} from "uuid"
+// import IncomingDetail from "./IncomingDetail";
 
 
 function Home({incoming, handleNewMessageOnClick}) {
@@ -16,8 +16,17 @@ function Home({incoming, handleNewMessageOnClick}) {
 
     
 	
+    const mappedIncoming = [...incoming].map((fresh) => {
+        return (
 
-	
+	<ul>
+	<h4>{fresh.created_at}</h4>
+	<p>{fresh.content_data}</p>
+	<button className="Contacts" onClick={() => handleNewMessageOnClick(fresh)}>
+		Go to ChatRoom</button>
+	</ul>)
+
+		})
     
  
 	return (
@@ -27,16 +36,7 @@ function Home({incoming, handleNewMessageOnClick}) {
 			</section>
             <section>
 				<h2> Here are your messages</h2>
-			<ul> 
-	
-		 {incoming.map((fresh) => (
-          <IncomingDetail
-            key={fresh.content_data}
-            fresh={fresh}
-			handleNewMessageOnClick={handleNewMessageOnClick}
-          />
-        ))}
-			</ul>
+			{mappedIncoming}
             </section>
 		</div>
 	);
