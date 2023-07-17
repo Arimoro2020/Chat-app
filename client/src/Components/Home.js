@@ -5,7 +5,7 @@ import UserContext from "./UserContext";
 // import IncomingDetail from "./IncomingDetail";
 
 
-function Home({messages, handleNewMessageOnClick}) {
+function Home({received, handleNewMessageOnClick}) {
 
 
 	const {currentUser} = useContext(UserContext)
@@ -16,7 +16,7 @@ function Home({messages, handleNewMessageOnClick}) {
 
     
 	
-    const mappedIncoming = messages.map((fresh) => {
+    const mappedIncoming = received.map((fresh) => {
         return (
 
 	<div key={fresh.id}>
@@ -36,7 +36,7 @@ function Home({messages, handleNewMessageOnClick}) {
 				<h1>Welcome, {currentUser.name} to your Chat App</h1>
 			</section>
             <section>
-				<h2> Here are your messages</h2>
+				<h2> Here are your received</h2>
 				<ul>{mappedIncoming}</ul>
 			
             </section>

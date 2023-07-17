@@ -69,7 +69,7 @@ if __name__ == '__main__':
             conversation_id=1,
             user_id = 3
                 ),  UserConversation(
-            conversation_id=2,
+            conversation_id=1,
             user_id = 4
                 )]
         

@@ -18,19 +18,19 @@ import { useNavigate } from "react-router-dom";
 
 
 
+
 function App() {
 	const [conversations, setConversations] = useState([]);
 	const [userConversations, setUserConversations] = useState([]);
 	const [messages, setMessages] = useState([]);
-	const [chatList, setChatList] = useState([]);
+	const [received, setReceived] = useState([]);
 	const [chatRoom, setChatRoom] = useState([]);
-	const [chatMate, setChatMate] = useState("");
+	// const [chatMate, setChatMate] = useState("");
 	const [allMessages, setAllMessages] = useState([]);
 	
 	const [currentUser, setCurrentUser ] = useState({"id": 4, "name": "Mel Needle",
-     "username": "however", "background": "Memory front really factor anyone culture.", 
-     "online_status": "online", "online": "2023-07-15 23:59:30", "avatar": "https://img.freepik.com/free-photo/worldface-british-guy-white-background_53876-14467.jpg"})
-
+	"username": "summer", "background": "Reveal former skill listen.", 
+	"online_status": "online", "Busy": "2023-07-17 16:49:42", "avatar": "https://img.freepik.com/free-photo/worldface-british-guy-white-background_53876-14467.jpg"})
 
     const [formBody, setFormBody] = useState("")
     // const [editBody, setEditBody] = useState("")
@@ -38,7 +38,6 @@ function App() {
     const [id, setId] = useState(null)
 
 	const navigate = useNavigate();
-
 
 
 	
@@ -71,15 +70,24 @@ function App() {
 			if(messages !== getMessages){
 				setMessages(getMessages)};
 
-		}
+			
+			const filteredConversations = [...userConversations].filter((el)=>{
+				return (parseInt(el.user_id )=== currentUser.id)}).map((el)=>parseInt(el.conversation_id));
+
+			
+
+			const incomingMessages = [...allMessages].filter(incoming=>{
+			return (filteredConversations.includes(incoming.conversation_id) && (parseInt(incoming.user_id) !== currentUser.id))})
+			
+			if(received !== incomingMessages){
+				setReceived(incomingMessages)};
+	}
 		
 		
 	function handleNewMessageOnClick(fresh){
+		
 
-		const filteredChatRoom = [...messages].filter((el)=>parseInt(el.conversation_id) === parseInt(fresh.conversation_id));
-
-			fetch(`/users/${parseInt(fresh.user_id)}`).then(res=>res.json()).then(data=>{if(chatMate !== data.name){setChatMate(data.name)}})
-
+		const filteredChatRoom = [...allMessages].filter((el)=>parseInt(el.conversation_id) === parseInt(fresh.conversation_id));
 			
 			if (chatRoom !== filteredChatRoom){
 			setChatRoom(filteredChatRoom)};
@@ -90,20 +98,6 @@ function App() {
 		}
 
 
-		function handleButtonOnClick(chat){
-			const filteredListToRoom = [...messages].filter((el)=>{
-				return parseInt(el.conversation_id) === parseInt(chat.id)});
-
-				if(chatRoom !== filteredListToRoom){
-				setChatRoom(filteredListToRoom)};
-				const participant = chat.name;
-				if (chatMate !== participant){
-					setChatMate(participant)};
-				navigate("/chat_room");
-
-
-
-		}
 
 		function handleOnClickButton(chat){
 			setIsEditing(isEditing=>!isEditing);
@@ -210,7 +204,7 @@ function App() {
 	
 	
 	console.log(messages)
-	console.log(chatList)
+	console.log(received)
 	
     
 	if (!currentUser){
@@ -231,12 +225,12 @@ function App() {
 			<UserProvider>
 			<Navigation />
 			<Routes>
-        		<Route exact path="/home" element={<Home messages={messages} handleNewMessageOnClick={handleNewMessageOnClick}/>}  />
+        		<Route exact path="/home" element={<Home received={received} handleNewMessageOnClick={handleNewMessageOnClick}/>}  />
 				< Route exact path = "/signup" element={<Signup />} />
 				< Route exact path = "/" element={<Login />} />
 				< Route exact path = "/contacts" element={<Contacts handleOnClick={handleOnClick}/>} />
-				< Route exact path = "/chat_list" element={<ChatList  chatList={messages} allMessages={allMessages} handleButtonOnClick={handleButtonOnClick}/>} />
-				< Route exact path = "/chat_room" element={<ChatRoom  chatRooM={chatRoom} chatMate={chatMate} formBody={formBody} 
+				< Route exact path = "/chat_list" element={<ChatList  messages={messages}  handleNewMessageOnClick={handleNewMessageOnClick}/>} />
+				< Route exact path = "/chat_room" element={<ChatRoom  chatRooM={chatRoom}  formBody={formBody} 
 				handleFormSubmit={handleFormSubmit} handleOnClickButton={handleOnClickButton} 
 				handleOnChange={handleOnChange} handleOnDelete={handleOnDelete}/>} />
 				< Route exact path = "/user_profile" element={<UserProfile />} />
