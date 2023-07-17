@@ -122,7 +122,7 @@ class Messages(Resource):
             return make_response({'error': 'Message not found'}, 404)
 
 
-        q_dict = [message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id')) for message in q]
+        q_dict = [message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id', "created_at")) for message in q]
 
         response = make_response(q_dict, 200)
 
@@ -150,7 +150,7 @@ class Messages(Resource):
         except:
             return make_response({ "errors": ["validation errors"]}, 400)
             
-        response = make_response(data.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id')), 201)
+        response = make_response(data.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id', "created_at")), 201)
 
         return response
 
@@ -164,7 +164,7 @@ class MessageById(Resource):
         if not message:
             return make_response({'error':'Message not found'}, 404)
         
-        response = make_response(message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id')), 200)
+        response = make_response(message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id', "created_at")), 200)
 
         return response
     
@@ -188,7 +188,7 @@ class MessageById(Resource):
         except:
                return make_response({ "errors": ["validation errors"]}, 400)
         
-        response = make_response(message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id')), 202)
+        response = make_response(message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id', "created_at")), 202)
 
         return response
     

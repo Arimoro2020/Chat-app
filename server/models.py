@@ -21,7 +21,7 @@ class User(db.Model, SerializerMixin):
     user_conversations = db.relationship('UserConversation', backref=backref("user"), cascade="all, delete-orphan")
     messages = db.relationship('Message', backref=backref("user"), cascade="all, delete-orphan")
 
-    serialize_rules = ('-user_conversations.user', '-messages.user', '-created_at', '-updated_at', )
+    serialize_rules = ('-user_conversations.user', '-messages.user', '-updated_at', )
 
     # @validates('background')
     # def validate_background(self, key, background):
