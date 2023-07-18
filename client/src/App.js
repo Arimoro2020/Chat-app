@@ -24,7 +24,7 @@ function App() {
 	const [userConversations, setUserConversations] = useState([]);
 	const [messages, setMessages] = useState([]);
 	const [received, setReceived] = useState([]);
-	const [chatRoom, setChatRoom] = useState([]);
+	const [chatRoom, setChatRoom] = useState();
 	const [mateId, setMateId] = useState([]);
 	// const [chatMate, setChatMate] = useState("");
 	const [allMessages, setAllMessages] = useState([]);
@@ -73,7 +73,7 @@ function App() {
 
 			
 			const filteredConversations = [...userConversations].filter((el)=>{
-				return (parseInt(el.user_id )=== currentUser.id)}).map((el)=>parseInt(el.conversation_id));
+				return (parseInt(el.user_id )=== currentUser.id)}).map((another)=>parseInt(another.conversation_id));
 
 			
 
@@ -211,6 +211,7 @@ function App() {
 	
 	console.log(messages)
 	console.log(received)
+	console.log(chatRoom)
 	
     
 	if (!currentUser){
@@ -236,7 +237,7 @@ function App() {
 				< Route exact path = "/" element={<Login />} />
 				< Route exact path = "/contacts" element={<Contacts handleOnClick={handleOnClick}/>} />
 				< Route exact path = "/chat_list" element={<ChatList  messages={messages}  handleNewMessageOnClick={handleNewMessageOnClick}/>} />
-				< Route exact path = "/chat_room" element={<ChatRoom  chatRooM={chatRoom}  formBody={formBody} 
+				< Route exact path = "/chat_room" element={<ChatRoom  mateId={mateId} chatRooM={chatRoom}  formBody={formBody} 
 				handleFormSubmit={handleFormSubmit} handleOnClickButton={handleOnClickButton} 
 				handleOnChange={handleOnChange} handleOnDelete={handleOnDelete} mateId={mateId}/>} />
 				< Route exact path = "/user_profile" element={<UserProfile />} />

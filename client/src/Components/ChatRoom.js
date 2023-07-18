@@ -13,18 +13,18 @@ function ChatRoom({chatRoom, mateId,formBody, handleFormSubmit,
 	const {currentUser} = useContext(UserContext);
 
     useEffect(() =>{
-        fetch(`/users/${mateId}`).then(res=>res.json())
+        fetch(`/users/${parseInt(mateId)}`).then(res=>res.json())
         .then(data =>{
             if(mate !== data){setMate(data)}});
 
-    }, [])
+    }, [mateId,handleOnClickButton,mateId])
 
     
    
   
   
 
-    const roomChats = [...chatRoom].map((chat)=> {
+    const roomChats = chatRoom.map((chat)=> {
         return(  
         <ul key={parseInt(chat.id)}>
               <div id={parseInt(chat.id)}>
