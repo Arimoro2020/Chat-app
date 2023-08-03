@@ -1,8 +1,7 @@
 
 import {  useContext } from "react";
 import UserContext from "./UserContext";
-// import {v4} from "uuid"
-// import IncomingDetail from "./IncomingDetail";
+
 
 
 function ChatList({messages, handleNewMessageOnClick}) {
@@ -21,7 +20,7 @@ function ChatList({messages, handleNewMessageOnClick}) {
 
 	<div key={fresh.id}>
 	<h4>{fresh.created_at}</h4>
-	<h4>ID: {fresh.conversation_id}</h4>
+	<h4>Conversation Name: {fresh.conversation.conversation_name}</h4>
 	<p>{fresh.content_data}</p>
 	<button className="Contacts" onClick={() => handleNewMessageOnClick(fresh)}>
 		Go to ChatRoom</button>

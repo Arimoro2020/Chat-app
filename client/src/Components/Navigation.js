@@ -5,7 +5,7 @@ import {useContext} from "react";
 
 function Navigation() {
 	const navigate = useNavigate();
-	const {currentUser, setCurrentUser} = useContext(UserContext);
+	const {currentUser} = useContext(UserContext);
 
 	function handleLogout() {
 		fetch("/logout",{
@@ -14,7 +14,6 @@ function Navigation() {
 			"content-type": "application/json",
 		},}).then((res) => {
 			if (res.ok){
-				setCurrentUser(null);
 				navigate("/");
 			}
 		});
@@ -43,9 +42,6 @@ function Navigation() {
 				</NavLink>
 				<NavLink className="button" to="/" >
 					Log In
-				</NavLink>
-				<NavLink className="button" to="/logout" >
-					Log out
 				</NavLink>
 				{ currentUser ? 
 					(<>

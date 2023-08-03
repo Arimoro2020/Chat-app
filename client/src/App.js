@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import UserContext from "./Components/UserContext";
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Home from "./components/Home";
-import ChatList from "./components/ChatList";
-import ChatRoom from "./components/ChatRoom";
-import Contacts from "./components/Contacts";
-import Navigation from "./components/Navigation";
-import UserProfile from "./components/UserProfile";
-import {UserProvider} from "./components/UserContext";
+// import Home from "./components/Home";
+import ChatList from "./Components/ChatList";
+// import ChatRoom from "./components/ChatRoom";
+import Contacts from "./Components/Contacts";
+import Navigation from "./Components/Navigation";
+import UserProfile from "./Components/UserProfile";
 
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-// import UserContext from "./components/UserContext";
-// import {useContext} from "react";
+
+import Login from "./Components/Login";
+import Signup from "./Components/Signup";
+
 
 import { useNavigate } from "react-router-dom";
 
@@ -23,15 +23,12 @@ function App() {
 	const [conversations, setConversations] = useState([]);
 	const [userConversations, setUserConversations] = useState([]);
 	const [messages, setMessages] = useState([]);
-	const [received, setReceived] = useState([]);
+	// const [received, setReceived] = useState([]);
 	const [chatRoom, setChatRoom] = useState();
 	const [mateId, setMateId] = useState([]);
 	// const [chatMate, setChatMate] = useState("");
 	const [allMessages, setAllMessages] = useState([]);
-	
-	const [currentUser, setCurrentUser ] = useState({"id": 4, "name": "Mel Needle",
-	"username": "summer", "background": "Reveal former skill listen.", 
-	"online_status": "online", "Busy": "2023-07-17 16:49:42", "avatar": "https://img.freepik.com/free-photo/worldface-british-guy-white-background_53876-14467.jpg"})
+	const {currentUser, setCurrentUser} = useContext(UserContext);
 
     const [formBody, setFormBody] = useState("")
     // const [editBody, setEditBody] = useState("")
@@ -51,7 +48,7 @@ function App() {
 			.then((res) => res.json())
 			.then(data =>{
 				if(userConversations !== data){setUserConversations(data)}});
-		fetch(`/conversations/${currentUser.name}`)
+		fetch(`/conversations`)
 			.then((res) => res.json())
 			.then(data =>{
 				if(conversations !== data){setConversations(data)}});
@@ -72,16 +69,16 @@ function App() {
 				setMessages(getMessages)};
 
 			
-			const filteredConversations = [...userConversations].filter((el)=>{
-				return (parseInt(el.user_id )=== currentUser.id)}).map((another)=>parseInt(another.conversation_id));
+			// const filteredConversations = [...userConversations].filter((el)=>{
+			// 	return (parseInt(el.user_id )=== currentUser.id)}).map((another)=>parseInt(another.conversation_id));
 
 			
 
-			const incomingMessages = [...allMessages].filter(incoming=>{
-			return (filteredConversations.includes(parseInt(incoming.conversation_id)) && (parseInt(incoming.user_id) !== currentUser.id))})
+			// const incomingMessages = [...allMessages].filter(incoming=>{
+			// return (filteredConversations.includes(parseInt(incoming.conversation_id)) && (parseInt(incoming.user_id) !== currentUser.id))})
 			
-			if(received !== incomingMessages){
-				setReceived(incomingMessages)};
+			// if(received !== incomingMessages){
+			// 	setReceived(incomingMessages)};
 	}
 		
 		
@@ -210,8 +207,9 @@ function App() {
 	
 	
 	console.log(messages)
-	console.log(received)
-	console.log(chatRoom)
+	console.log(allMessages)
+	// console.log(received)
+	// console.log(chatRoom)
 	
     
 	if (!currentUser){
@@ -228,21 +226,18 @@ function App() {
 	return (
 		
 		<div className="Chat App">
-			
-			<UserProvider>
 			<Navigation />
 			<Routes>
-        		<Route exact path="/home" element={<Home received={received} handleNewMessageOnClick={handleNewMessageOnClick}/>}  />
+        		{/* <Route exact path="/home" element={<Home received={received} handleNewMessageOnClick={handleNewMessageOnClick}/>}  /> */}
 				< Route exact path = "/signup" element={<Signup />} />
 				< Route exact path = "/" element={<Login />} />
 				< Route exact path = "/contacts" element={<Contacts handleOnClick={handleOnClick}/>} />
 				< Route exact path = "/chat_list" element={<ChatList  messages={messages}  handleNewMessageOnClick={handleNewMessageOnClick}/>} />
-				< Route exact path = "/chat_room" element={<ChatRoom  mateId={mateId} chatRooM={chatRoom}  formBody={formBody} 
+				{/* < Route exact path = "/chat_room" element={<ChatRoom  mateId={mateId} chatRooM={chatRoom}  formBody={formBody} 
 				handleFormSubmit={handleFormSubmit} handleOnClickButton={handleOnClickButton} 
-				handleOnChange={handleOnChange} handleOnDelete={handleOnDelete} mateId={mateId}/>} />
+				handleOnChange={handleOnChange} handleOnDelete={handleOnDelete} mateId={mateId}/>} /> */}
 				< Route exact path = "/user_profile" element={<UserProfile />} />
 			</Routes>
-			</UserProvider>
 		</div>
 		
 	);

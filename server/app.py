@@ -102,7 +102,7 @@ api.add_resource(UserById, '/users/<int:id>')
 class UserByUsername(Resource):
     def get(self, username):
 
-        user = User.query.filter(User.username == username).first()
+        user = User.query.filter(User.username== username).first()
 
         if not user:
             return make_response({'error':'User not found'}, 404)
@@ -113,7 +113,6 @@ class UserByUsername(Resource):
     
 api.add_resource(UserByUsername, '/users/<string:username>')
 
-
 class Messages(Resource):
     def get(self):
         q = Message.query.all()
@@ -122,7 +121,7 @@ class Messages(Resource):
             return make_response({'error': 'Message not found'}, 404)
 
 
-        q_dict = [message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id', "created_at")) for message in q]
+        q_dict = [message.to_dict() for message in q]
 
         response = make_response(q_dict, 200)
 
@@ -165,7 +164,7 @@ class MessageById(Resource):
         if not message:
             return make_response({'error':'Message not found'}, 404)
         
-        response = make_response(message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id', "created_at")), 200)
+        response = make_response(message.to_dict(), 200)
 
         return response
     
@@ -221,7 +220,7 @@ class UserConversations(Resource):
             return make_response({'error':'UserConversation not found'}, 404)
 
 
-        q_dict = [user_conversation.to_dict(only=('id', 'conversation_id', 'user_id')) for user_conversation in q]
+        q_dict = [user_conversation.to_dict() for user_conversation in q]
 
         response = make_response(q_dict, 200)
 
@@ -259,7 +258,7 @@ class UserConversationById(Resource):
         if not user_conversation:
             return make_response({'error':'UserConversation not found'}, 404)
         
-        response = make_response(user_conversation.to_dict(only=('id', 'conversation_id', 'user_id')), 200)
+        response = make_response(user_conversation.to_dict(), 200)
 
         return response
    
@@ -316,17 +315,6 @@ class Conversations(Resource):
     
 api.add_resource(Conversations, '/conversations')
 
-class ConversationByName(Resource):
-    def get(self, conversation_name):
-        conversation = Conversation.query.filter(Conversation.conversation_name == conversation_name).first()
-
-        if not conversation:
-            return make_response({'error':'Conversation not found'}, 404)
-        
-        response = make_response(conversation.to_dict(only=('id', 'conversation_name')), 200)
-
-        return response
-api.add_resource(ConversationByName, '/conversations/<string:conversation_name>')
 
 class ConversationById(Resource):
     def get(self, id):

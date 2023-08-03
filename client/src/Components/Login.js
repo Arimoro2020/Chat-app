@@ -1,27 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
-import UserContext from "./UserContext";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import UserContext from "./UserContext";
+import {useContext} from "react";
+
+
 
 
 
 
 
 function Login(){
-	// const [user, setUser] = useContext(UserContext)
-	const [logInfo, setLogInfo] = useState({});
-	// const [logIn, setLogIn] = useState( user? true : false);
+
 	const navigate = useNavigate();
+	const {initialValues, setInitialValues} = useContext(UserContext);
+	// const [logInfo, setLogInfo] = useState();
+	// const [logIn, setLogIn] = useState( user? true : false);
 
 
-	useEffect(() => {
-	fetch(`/users/${logInfo.username}`)
-			.then(res=>res.json())
-			.then((data) =>localStorage.setItem("user", JSON.stringify(data)));
 
-	},[]);
+
+
 
 	
 
@@ -35,26 +35,25 @@ function Login(){
 		password: yup.string().required(),
 	});
 	const formik = useFormik({
-		initialValues: {
-			username: "",
-			password: "",
-		},
+		initialValues,
 		validationSchema: formSchema,
-		onSubmit: (values, actions) => {
+		onSubmit:(values, actions) => {
 			fetch( "/login", {
 				method: "POST",
+				crossDomain: true,
 				headers: {
 					"content-type": "application/json",
+					Accept: "application/json",
+					"Access-control-Allow-Origin":"*",
 				},
 				body: JSON.stringify(values),
 			}).then((res) => {
 				if (res.ok) {
-					res.json().then((data) => { 
+					
 						actions.resetForm();
-						setLogInfo(data);
-						navigate("/home");
+						navigate("/contacts");
 						
-					});
+				
 				}else{
 					navigate("/signup");
 				} 
@@ -62,7 +61,9 @@ function Login(){
 		},
 	});
 
-	
+	useEffect(() => {
+		setInitialValues(formik.values);
+	  }, [setInitialValues, formik.values]);
 		
 
 	return (

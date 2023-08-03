@@ -21,7 +21,7 @@ class User(db.Model, SerializerMixin):
     user_conversations = db.relationship('UserConversation', backref=backref("user"), cascade="all, delete-orphan")
     messages = db.relationship('Message', backref=backref("user"), cascade="all, delete-orphan")
 
-    serialize_rules = ('-user_conversations.user', '-messages.user', '-updated_at', )
+    serialize_rules = ('-user_conversations.user', '-messages', '-updated_at',)
 
     # @validates('background')
     # def validate_background(self, key, background):
@@ -79,7 +79,12 @@ class UserConversation(db.Model, SerializerMixin):
     conversation_id = db.Column(db.Integer, db.ForeignKey('conversations.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    serialize_rules = ('-user.user_conversations', '-conversation.user_conversations')
+    serialize_rules = ('-user', '-conversation.user_conversations',)
+
+    def to_dict(self, deep=False):
+        serialized = super(UserConversation, self).to_dict(deep)
+        serialized['user'] = self.user.to_dict()  # Add user details to the serialized output
+        return serialized
 
    
 
@@ -94,7 +99,7 @@ class Conversation(db.Model, SerializerMixin):
     user_conversations = db.relationship('UserConversation', backref=backref("conversation"), cascade="all, delete-orphan")
     messages = db.relationship('Message', backref=backref("conversation"), cascade="all, delete-orphan")
 
-    serialize_rules = ('-user_conversations.conversation', '-messages.conversation')
+    serialize_rules = ('-user_conversations.conversation', '-messages', )
 
     # @validates('conversation_name')
     # def validate_conversation_name(self, key, conversation_name):
@@ -117,7 +122,12 @@ class Message(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default= db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    serialize_rules = ('-user.messages', '-conversation.messages', '-updated_at')
+    serialize_rules = ('-user', '-conversation.messages', '-updated_at',)
+
+    def to_dict(self, deep=False):
+        serialized = super(Message, self).to_dict(deep)
+        serialized['user'] = self.user.to_dict()  # Add user details to the serialized output
+        return serialized
 
     # @validates('content_data')
     # def validate_content_data(self, key, content):

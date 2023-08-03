@@ -1,25 +1,57 @@
 import React from 'react';
-import {useState,createContext} from "react";
+import {useEffect, createContext} from "react";
+import Login from './Login';
+import { useLocalStorage} from './useLocalStorage';
+
 
 
 const UserContext = createContext();
 
 
-export const UserProvider  = ({children}) => {
-    const [currentUser, setCurrentUser ] = useState({"id": 4, "name": "Mel Needle",
-     "username": "summer", "background": "Reveal former skill listen.", 
-     "online_status": "online", "Busy": "2023-07-17 16:49:42", "avatar": "https://img.freepik.com/free-photo/worldface-british-guy-white-background_53876-14467.jpg"})
 
-    // const user = JSON.parse(localStorage.getItem("user"));
-	// if (!user) {
-	// 	return {}}
-    // else{
-    //     setCurrentUser();
-    // }
-    // console.log(JSON.parse(localStorage.getItem("user")))
+
+export const UserProvider  = ({children}) => {
+
+    const [initialValues, setInitialValues] = useLocalStorage("isLoggedIn", {
+        'username': "",
+        'password': ""
+    });
+    
+
+    const [currentUser, setCurrentUser ] = useLocalStorage("user", {
+        'id': "",
+        'username': "",
+        'password': "",
+        'name': "",
+        'avatar': "",
+        'background': "",
+        'status': ""
+  });
+
+    useEffect(() => {
+     
+	if (!initialValues) return;
+	if (initialValues.username === currentUser.username) return;
+	fetch(`/users/`+initialValues.username, {
+        method: "GET",
+        crossDomain: true,
+        headers: {
+            "content-type": "application/json",
+            Accept: "application/json",
+            "Access-control-Allow-Origin":"*",
+        }
+    })
+			.then(res=>res.json())
+			.then(data =>setCurrentUser(data))
+            .catch(console.error);
+
+	},[setCurrentUser, setInitialValues]);
+    
+    console.log(currentUser);
+    console.log(initialValues);
     return (
-        <UserContext.Provider value={{currentUser, setCurrentUser}}>
-            {children}
+        <UserContext.Provider value={{currentUser, setCurrentUser, initialValues, setInitialValues}}>
+           {currentUser? children : <Login />}
         </UserContext.Provider>
 
     );
