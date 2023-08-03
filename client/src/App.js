@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import UserContext from "./Components/UserContext";
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
-// import Home from "./components/Home";
+import Home from "./Components/Home";
 import ChatList from "./Components/ChatList";
 // import ChatRoom from "./components/ChatRoom";
 import Contacts from "./Components/Contacts";
@@ -23,7 +23,7 @@ function App() {
 	const [conversations, setConversations] = useState([]);
 	const [userConversations, setUserConversations] = useState([]);
 	const [messages, setMessages] = useState([]);
-	// const [received, setReceived] = useState([]);
+	const [received, setReceived] = useState([]);
 	const [chatRoom, setChatRoom] = useState();
 	const [mateId, setMateId] = useState([]);
 	// const [chatMate, setChatMate] = useState("");
@@ -69,16 +69,17 @@ function App() {
 				setMessages(getMessages)};
 
 			
-			// const filteredConversations = [...userConversations].filter((el)=>{
-			// 	return (parseInt(el.user_id )=== currentUser.id)}).map((another)=>parseInt(another.conversation_id));
-
+			const filteredConversationsId = [...userConversations].filter((el)=>{
+				return (el.user.name === currentUser.name)}).map((another)=>parseInt(another.conversation.id));
+			
+			console.log(filteredConversationsId)	
 			
 
-			// const incomingMessages = [...allMessages].filter(incoming=>{
-			// return (filteredConversations.includes(parseInt(incoming.conversation_id)) && (parseInt(incoming.user_id) !== currentUser.id))})
-			
-			// if(received !== incomingMessages){
-			// 	setReceived(incomingMessages)};
+			const incomingMessages = [...allMessages].filter(incoming=>{
+			return (filteredConversationsId.includes(parseInt(incoming.conversation_id)) && (parseInt(incoming.user_id) !== currentUser.id))})
+			console.log(incomingMessages)
+			if(received !== incomingMessages){
+				setReceived(incomingMessages)};
 	}
 		
 		
@@ -208,7 +209,7 @@ function App() {
 	
 	console.log(messages)
 	console.log(allMessages)
-	// console.log(received)
+	console.log(received)
 	// console.log(chatRoom)
 	
     
@@ -228,7 +229,7 @@ function App() {
 		<div className="Chat App">
 			<Navigation />
 			<Routes>
-        		{/* <Route exact path="/home" element={<Home received={received} handleNewMessageOnClick={handleNewMessageOnClick}/>}  /> */}
+        		<Route exact path="/home" element={<Home received={received} handleNewMessageOnClick={handleNewMessageOnClick}/>}  />
 				< Route exact path = "/signup" element={<Signup />} />
 				< Route exact path = "/" element={<Login />} />
 				< Route exact path = "/contacts" element={<Contacts handleOnClick={handleOnClick}/>} />

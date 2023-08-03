@@ -1,8 +1,7 @@
 
 import {  useContext } from "react";
-import UserContext from "../Components/UserContext";
-// import {v4} from "uuid"
-// import IncomingDetail from "./IncomingDetail";
+import UserContext from "./UserContext";
+
 
 
 function Home({received, handleNewMessageOnClick}) {
@@ -19,9 +18,10 @@ function Home({received, handleNewMessageOnClick}) {
     const mappedIncoming = received.map((fresh) => {
         return (
 
+	
 	<div key={fresh.id}>
-	<h4>{fresh.created_at}</h4>
-	<h4>ID: {fresh.conversation_id}</h4>
+	<h4>{fresh.created_at} From: {fresh.user.name}</h4><img src={fresh.user.avatar} alt={fresh.user.name} width={50} />
+	<h4>Conversation Name: {fresh.conversation.conversation_name}</h4>
 	<p>{fresh.content_data}</p>
 	<button className="Contacts" onClick={() => handleNewMessageOnClick(fresh)}>
 		Go to ChatRoom</button>
