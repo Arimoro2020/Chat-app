@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Home from "./Components/Home";
 import ChatList from "./Components/ChatList";
-// import ChatRoom from "./components/ChatRoom";
+import ChatRoom from "./Components/ChatRoom";
 import Contacts from "./Components/Contacts";
 import Navigation from "./Components/Navigation";
 import UserProfile from "./Components/UserProfile";
@@ -24,16 +24,18 @@ function App() {
 	const [userConversations, setUserConversations] = useState([]);
 	const [messages, setMessages] = useState([]);
 	const [received, setReceived] = useState([]);
-	const [chatRoom, setChatRoom] = useState();
-	const [mateId, setMateId] = useState([]);
+	const [chatsRoom, setChatsRoom] = useState([]);
+	const [filteredChatRoom, setFilteredChatRoom] = useState([]);
+	
+	
 	// const [chatMate, setChatMate] = useState("");
 	const [allMessages, setAllMessages] = useState([]);
 	const {currentUser, setCurrentUser} = useContext(UserContext);
 
-    const [formBody, setFormBody] = useState("")
+    // const [formBody, setFormBody] = useState("")
     // const [editBody, setEditBody] = useState("")
-    const [isEditing, setIsEditing] = useState(false)
-    const [newId, setNewId] = useState(null)
+    // const [isEditing, setIsEditing] = useState(false)
+    // const [newId, setNewId] = useState(null)
 
 	const navigate = useNavigate();
 
@@ -59,9 +61,11 @@ function App() {
 				if(allMessages !== data){setAllMessages(data)}});
 		getList();
 	
+		
+	
 	}, []);
 
-	function getList(){			
+	const getList = () => {	
 		const  getMessages = [...allMessages].filter((message) => {
 			return (parseInt(message.user_id) === currentUser.id)})
 
@@ -83,82 +87,92 @@ function App() {
 	}
 		
 		
-	function handleNewMessageOnClick(fresh){
+	const handleNewMessageOnClick = (fresh)=>{
 		
 
-		const filteredChatRoom = [...allMessages].filter((el)=>parseInt(el.conversation_id) === parseInt(fresh.conversation_id));
-			
-			if (chatRoom !== filteredChatRoom){
-			setChatRoom(filteredChatRoom)};
-			if (parseInt(fresh.user_id) !== currentUser.id){
-				if(mateId !== parseInt(fresh.user_id)){
-					setMateId(parseInt(fresh.user_id))
-				}
-			}
-			navigate("/chat_room");
-			
+		const filteredData = [...allMessages].filter((el)=>fresh && parseInt(el.conversation_id) === parseInt(fresh.conversation_id));
+		if (filteredData !== filteredChatRoom){
+			setFilteredChatRoom(filteredData)}
+		 	
+		// navigate("/chat_room")}
 		
-
-		}
-
-
-
-		function handleOnClickButton(chat){
-			setIsEditing(isEditing=>!isEditing);
-			if(formBody !== chat.content_body){
-				setFormBody(chat.content_body)};
-			if(parseInt(newId) !== parseInt(chat.id)){setNewId(parseInt(chat.id))}
-		}
-		function handleOnChange(e){
-			if(formBody !== e.target.value){
-			setFormBody(e.target.value)};
-		}
-
-		function handleFormSubmit(e) {
-			e.preventDefault();
-				if (isEditing) {
+		
+	
 			
-					fetch(`/messages/${parseInt(newId)}`, {
-						method: "PATCH",
-						headers: {
-						"Content-Type": "application/json",
-						},
-						body: JSON.stringify({content_data: formBody}),
-					})
-						.then((r) => r.json())
-						.then((update) =>{ if(messages !== [...messages, update]){setMessages([...messages, update])};
-							if(formBody !== ""){setFormBody("")};
-							setIsEditing(isEditing=>!isEditing)})
 			
-				}
-				else{
-					fetch("/messages", {
-						method: "POST",
-						headers: {
-						"Content-Type": "application/json",
-						},
-						body: JSON.stringify({
-							user_id: parseInt(currentUser.id),
-							content_type: "string",
-							content_data: formBody}),
-					})
-						.then((r) => r.json())
-						.then((update) =>{ if(messages !== [...messages, update]){setMessages([...messages, update])};
-								if(formBody !== ""){setFormBody("")}	
+		}
+
+
+	const handleMessageOnClick = (fresh) =>{
+		
+		const filteredData = [...allMessages].filter((el)=>fresh && parseInt(el.conversation_id) === parseInt(fresh.conversation_id));
+		if (filteredData !== filteredChatRoom){
+			setFilteredChatRoom(filteredData);
+		}
+
+	}
+
+	useEffect(() =>{
+
+		setChatsRoom(filteredChatRoom)
+
+		}, [filteredChatRoom]);
+		// function handleOnClickButton(chat){
+		// 	setIsEditing(isEditing=>!isEditing);
+		// 	if(formBody !== chat.content_body){
+		// 		setFormBody(chat.content_body)};
+		// 	if(parseInt(newId) !== parseInt(chat.id)){setNewId(parseInt(chat.id))}
+		// }
+		// function handleOnChange(e){
+		// 	if(formBody !== e.target.value){
+		// 	setFormBody(e.target.value)};
+		// }
+
+		// function handleFormSubmit(e) {
+		// 	e.preventDefault();
+		// 		if (isEditing) {
+			
+		// 			fetch(`/messages/${parseInt(newId)}`, {
+		// 				method: "PATCH",
+		// 				headers: {
+		// 				"Content-Type": "application/json",
+		// 				},
+		// 				body: JSON.stringify({content_data: formBody}),
+		// 			})
+		// 				.then((r) => r.json())
+		// 				.then((update) =>{ if(messages !== [...messages, update]){setMessages([...messages, update])};
+		// 					if(formBody !== ""){setFormBody("")};
+		// 					setIsEditing(isEditing=>!isEditing)})
+			
+		// 		}
+		// 		else{
+		// 			fetch("/messages", {
+		// 				method: "POST",
+		// 				headers: {
+		// 				"Content-Type": "application/json",
+		// 				},
+		// 				body: JSON.stringify({
+		// 					user_id: parseInt(currentUser.id),
+		// 					content_type: "string",
+		// 					content_data: formBody}),
+		// 			})
+		// 				.then((r) => r.json())
+		// 				.then((update) =>{ if(messages !== [...messages, update]){setMessages([...messages, update])};
+		// 						if(formBody !== ""){setFormBody("")}	
 									
-					})
-		}}
+		// 			})
+		// }}
 		
 
-		function handleOnDelete(chat){
-			fetch(`/messages/${parseInt(chat.id)}`, {
-				method: "DELETE",
-			});
+		// function handleOnDelete(chat){
+		// 	fetch(`/messages/${parseInt(chat.id)}`, {
+		// 		method: "DELETE",
+		// 	});
 
-			const removedDeleted = [...messages].filter(message => parseInt(message.id) !== parseInt(chat.id));
-			if(messages !== removedDeleted){
-				setMessages(removedDeleted)}; 
-		}
+		// 	const removedDeleted = [...messages].filter(message => parseInt(message.id) !== parseInt(chat.id));
+		// 	if(messages !== removedDeleted){
+		// 		setMessages(removedDeleted)}; 
+		// }
 
 		function handleOnClick(contact){
 			
@@ -210,7 +224,7 @@ function App() {
 	console.log(messages)
 	console.log(allMessages)
 	console.log(received)
-	// console.log(chatRoom)
+	console.log(chatsRoom)
 	
     
 	if (!currentUser){
@@ -233,10 +247,8 @@ function App() {
 				< Route exact path = "/signup" element={<Signup />} />
 				< Route exact path = "/" element={<Login />} />
 				< Route exact path = "/contacts" element={<Contacts handleOnClick={handleOnClick}/>} />
-				< Route exact path = "/chat_list" element={<ChatList  messages={messages}  handleNewMessageOnClick={handleNewMessageOnClick}/>} />
-				{/* < Route exact path = "/chat_room" element={<ChatRoom  mateId={mateId} chatRooM={chatRoom}  formBody={formBody} 
-				handleFormSubmit={handleFormSubmit} handleOnClickButton={handleOnClickButton} 
-				handleOnChange={handleOnChange} handleOnDelete={handleOnDelete} mateId={mateId}/>} /> */}
+				< Route exact path = "/chat_list" element={<ChatList  messages={messages}  handleMessageOnClick={handleMessageOnClick}/>} />
+				< Route exact path = "/chat_room" element={<ChatRoom   chatsRoom={chatsRoom} />} />
 				< Route exact path = "/user_profile" element={<UserProfile />} />
 			</Routes>
 		</div>

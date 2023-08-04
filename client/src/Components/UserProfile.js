@@ -54,7 +54,7 @@ function UserProfile() {
     return(
         <div>
         <section>
-			<img src={currentUser.avatar} alt={currentUser.name}  />
+			<img src={currentUser.avatar} alt={currentUser.name} width={100} />
             <p> Name: {currentUser.name}</p>
             <p> Background: {currentUser.background} </p>
             <p> Status: {currentUser.online_status}</p>

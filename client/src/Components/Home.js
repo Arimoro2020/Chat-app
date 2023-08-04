@@ -23,7 +23,7 @@ function Home({received, handleNewMessageOnClick}) {
 	<h4>{fresh.created_at} From: {fresh.user.name}</h4><img src={fresh.user.avatar} alt={fresh.user.name} width={50} />
 	<h4>Conversation Name: {fresh.conversation.conversation_name}</h4>
 	<p>{fresh.content_data}</p>
-	<button className="Contacts" onClick={() => handleNewMessageOnClick(fresh)}>
+	<button className="Contacts" fresh={fresh} onClick={() => handleNewMessageOnClick(fresh)}>
 		Go to ChatRoom</button>
 	</div>)
 

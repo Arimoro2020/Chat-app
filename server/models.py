@@ -99,8 +99,12 @@ class Conversation(db.Model, SerializerMixin):
     user_conversations = db.relationship('UserConversation', backref=backref("conversation"), cascade="all, delete-orphan")
     messages = db.relationship('Message', backref=backref("conversation"), cascade="all, delete-orphan")
 
-    serialize_rules = ('-user_conversations.conversation', '-messages', )
+    serialize_rules = ('-user_conversations.conversation', '-messages')
+    
 
+    
+
+    
     # @validates('conversation_name')
     # def validate_conversation_name(self, key, conversation_name):
     #     if conversation_name == '':

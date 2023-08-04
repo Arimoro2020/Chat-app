@@ -4,7 +4,7 @@ import UserContext from "./UserContext";
 
 
 
-function ChatList({messages, handleNewMessageOnClick}) {
+function ChatList({messages, handleMessageOnClick}) {
 
 
 	const {currentUser} = useContext(UserContext)
@@ -22,7 +22,7 @@ function ChatList({messages, handleNewMessageOnClick}) {
 	<h4>{fresh.created_at}</h4>
 	<h4>Conversation Name: {fresh.conversation.conversation_name}</h4>
 	<p>{fresh.content_data}</p>
-	<button className="Contacts" onClick={() => handleNewMessageOnClick(fresh)}>
+	<button className="Contacts" fresh={fresh} onClick={() => handleMessageOnClick(fresh)}>
 		Go to ChatRoom</button>
 	</div>)
 
