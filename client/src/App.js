@@ -116,7 +116,7 @@ function App() {
 
 		setChatsRoom(filteredChatRoom)
 
-		}, [filteredChatRoom]);
+		}, []);
 		// function handleOnClickButton(chat){
 		// 	setIsEditing(isEditing=>!isEditing);
 		// 	if(formBody !== chat.content_body){
@@ -224,6 +224,7 @@ function App() {
 	console.log(messages)
 	console.log(allMessages)
 	console.log(received)
+	console.log(filteredChatRoom)
 	console.log(chatsRoom)
 	
     

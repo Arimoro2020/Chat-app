@@ -6,14 +6,13 @@
 function ChatRoom({chatsRoom}){
  
 
-
+    const chatName = chatsRoom && [...chatsRoom].map((el)=>el.conversation.conversation_name)[0];
 
 
     const roomChats = chatsRoom && chatsRoom.map((chat)=> {
         return(  
        
               <div id={parseInt(chat.id)}>
-                <h2>Conversation Name: {chat.conversation.conversation_name}</h2>
                 <h4>{chat.created_at}  {chat.user.name}</h4><img src={chat.user.avatar} alt={chat.user.name} width={30} />
                 <p>{chat.content_data}</p>
                 {/* <Link to="#editForm" smooth> */}
@@ -37,7 +36,7 @@ function ChatRoom({chatsRoom}){
 
     return (
         <div>
-       
+       <h2>Conversation Name: {chatName}</h2>
         <section>
         
         <ul>{roomChats}</ul>
