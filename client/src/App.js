@@ -78,7 +78,7 @@ function App() {
 	if(chatsRoom !== filteredChatRoom ){setChatsRoom(filteredChatRoom)}
 	
 	
-	},[filteredChatRoom]);
+	},[]);
 
 	const getList = () => {	
 		const  getMessages = [...allMessages].filter((message) => {
