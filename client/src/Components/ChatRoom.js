@@ -1,32 +1,34 @@
 
 
-// import{HashLink as Link} from "react-router-hash-link";
+import{HashLink as Link} from "react-router-hash-link";
 
 
-function ChatRoom({chatsRoom}){
+function ChatRoom({chatsRoom, handleFormSubmit, handleOnChange, formBody, handleOnDelete, isEditing, handleOnClickButton}){
  
-
+    // console.log(formBody);
     const chatName = chatsRoom && [...chatsRoom].map((el)=>el.conversation.conversation_name)[0];
 
 
     const roomChats = chatsRoom && chatsRoom.map((chat)=> {
         return(  
        
-              <div id={parseInt(chat.id)}>
+              <div key= {chat.id} id={parseInt(chat.id)}>
                 <h4>{chat.created_at}  {chat.user.name}</h4><img src={chat.user.avatar} alt={chat.user.name} width={30} />
                 <p>{chat.content_data}</p>
-                {/* <Link to="#editForm" smooth> */}
-                <button >
+          
+                <button type="button" className="edit" chat={chat} onClick={()=>handleOnClickButton(chat)}>
+                <Link  to="#editForm" smooth  >
                 <span role="img" aria-label="edit">
-                    Edit
+                    {isEditing? "stopEdit" : "edit"}
                 </span>
+                </Link>
                 </button>
-                {/* </Link> */}
-                <button >
+              
+                <button chat={chat} onClick={() =>handleOnDelete(chat)}>
                     <span role="img" aria-label="delete">
                     🗑
                     </span>
-                </button>
+                </button >
                 </div>
       
                
@@ -43,17 +45,17 @@ function ChatRoom({chatsRoom}){
            
       
         </section>
-        {/* <section>
-        <form className="new-message" id="editForm" onSubmit={()=>handleFormSubmit(formBody)}>
-        <input
+        <section>
+        <form className="new-message" id="editForm" onSubmit={(e)=>handleFormSubmit(e)}>
+        <textarea 
             type="text"
-            name="formBody"
+            name="content_data"
             autoComplete="off"
-            value={formBody}
+            value={formBody.content_data}
             onChange={(e) => handleOnChange(e)}/>
         <button type="submit">Send</button>
         </form>
-        </section> */}
+        </section>
         </div>
     )
 };

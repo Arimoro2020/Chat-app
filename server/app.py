@@ -149,7 +149,7 @@ class Messages(Resource):
         except:
             return make_response({ "errors": ["validation errors"]}, 400)
             
-        response = make_response(data.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id', "created_at")), 201)
+        response = make_response(data.to_dict(), 201)
 
         return response
 
@@ -188,7 +188,7 @@ class MessageById(Resource):
         except:
                return make_response({ "errors": ["validation errors"]}, 400)
         
-        response = make_response(message.to_dict(only=('id','content_data', 'content_type', 'conversation_id', 'user_id', "created_at")), 202)
+        response = make_response(message.to_dict(), 202)
 
         return response
     
@@ -243,7 +243,7 @@ class UserConversations(Resource):
         except:
             return make_response({ "errors": ["validation errors"]}, 400)
             
-        response = make_response(data.to_dict(only=('id', 'conversation_id', 'user_id')), 201)
+        response = make_response(data.to_dict(), 201)
 
         return response
 
@@ -279,7 +279,7 @@ class UserConversationById(Resource):
         except:
                return make_response({ "errors": ["validation errors"]}, 400)
         
-        response = make_response(user_conversation.to_dict(only=('id', 'conversation_id', 'user_id')), 202)
+        response = make_response(user_conversation.to_dict(), 202)
 
         return response
 
