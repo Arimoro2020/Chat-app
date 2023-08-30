@@ -16,6 +16,7 @@ gunicorn = "*"
 psycopg2-binary = "*"
 bcrypt = "*"
 faker = "*"
+jsonify = "*"
 
 [dev-packages]
 

@@ -15,12 +15,12 @@ function ChatList({messages, handleMessageOnClick}) {
 
     
 	
-    const mappedSending = messages.map((fresh) => {
+    const mappedSending = messages && [...messages].map((fresh) => {
         return (
 
 	<div key={fresh.id}>
 	<h4>{fresh.created_at}</h4>
-	<h4>Conversation Name: {fresh.conversation.conversation_name}</h4>
+	<h4>Conversation Name: {fresh.conversation.conversation_name && fresh.conversation.conversation_name}</h4>
 	<p>{fresh.content_data}</p>
 	<button className="Contacts" fresh={fresh} onClick={() => handleMessageOnClick(fresh)}>
 		Go to ChatRoom</button>

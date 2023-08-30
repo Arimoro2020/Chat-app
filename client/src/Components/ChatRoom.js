@@ -1,5 +1,5 @@
 
-import {  useContext } from "react";
+import {  useContext, useEffect, useState } from "react";
 import UserContext from "./UserContext";
 
 
@@ -7,7 +7,16 @@ import UserContext from "./UserContext";
 import{HashLink as Link} from "react-router-hash-link";
 
 
-function ChatRoom({chatsRoom, handleFormSubmit, handleOnChange, formBody, handleOnDelete, isEditing, handleOnClickButton}){
+function ChatRoom({id, handleFormSubmit, handleOnChange, formBody, handleOnDelete, isEditing, handleOnClickButton}){
+
+    const [chatsRoom, setChatsRoom] = useState([])
+
+    useEffect(() =>{
+		fetch(`http:/messages/conversations/${parseInt(id)}`)
+		.then((res) => res.json())
+		.then((data) =>{
+            if(chatsRoom !== data){setChatsRoom(data)}});
+	},[]);
  
     // console.log(formBody);
     const chatName = chatsRoom && [...chatsRoom].map((el)=>el.conversation.conversation_name)[0];

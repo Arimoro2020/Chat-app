@@ -134,24 +134,25 @@ class Messages(Resource):
         data = request.get_json()
     
         try:
-            new = Message(
+            new_message = Message(
                 content_data = data.get('content_data'),
                 content_type = data.get('content_type'),
-                Conversation_id = data.get('conversation_id'),
-                sender_id = data.get('user_id')
+                conversation_id = data.get('conversation_id'),
+                user_id = data.get('user_id')
                 
 
             )
 
-            db.session.add(new.to_dict())
+            db.session.add(new_message)
             db.session.commit()
+
+            new_message_dict = new_message.to_dict()
+            return make_response(new_message_dict, 201)
+    
 
         except:
             return make_response({ "errors": ["validation errors"]}, 400)
             
-        response = make_response(data.to_dict(), 201)
-
-        return response
 
 api.add_resource(Messages, '/messages')
 
@@ -367,6 +368,20 @@ class ConversationById(Resource):
 
     
 api.add_resource(ConversationById, '/conversations/<int:id>')
+
+@app.route('/messages/conversations/<int:id>', methods=['GET'])
+def get_conversations(id):
+    q = Message.query.filter(Message.conversation_id == id).all()
+
+    if not q:
+        return make_response({'error':'Message not found'}, 404)
+    
+    q_dict = [message.to_dict() for message in q]
+    
+    response = make_response(jsonify(q_dict), 200)
+
+    return response
+        
 
 class Signup(Resource):
     def post(self):

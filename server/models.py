@@ -79,7 +79,7 @@ class UserConversation(db.Model, SerializerMixin):
     conversation_id = db.Column(db.Integer, db.ForeignKey('conversations.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    serialize_rules = ('-user', '-conversation.user_conversations',)
+    serialize_rules = ('-conversation.user_conversations',)
 
     def to_dict(self, deep=False):
         serialized = super(UserConversation, self).to_dict(deep)
@@ -120,18 +120,25 @@ class Message(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     content_data = db.Column(db.String, nullable=False)
-    content_type = db.Column(db.String)
-    conversation_id = db.Column(db.Integer, db.ForeignKey('conversations.id'))
+    content_type = db.Column(db.String,  nullable=False)
+    conversation_id = db.Column(db.Integer, db.ForeignKey('conversations.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     created_at = db.Column(db.DateTime, server_default= db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    serialize_rules = ('-user', '-conversation.messages', '-updated_at',)
+    serialize_rules = ('-conversation.messages', '-updated_at',)
+
 
     def to_dict(self, deep=False):
         serialized = super(Message, self).to_dict(deep)
-        serialized['user'] = self.user.to_dict()  # Add user details to the serialized output
+        if deep:
+            serialized['user'] = self.user.to_dict()
         return serialized
+
+    # def to_dict(self, deep=False):
+    #     serialized = super(Message, self).to_dict(deep)
+    #     serialized['user'] = self.user.to_dict()  # Add user details to the serialized output
+    #     return serialized
 
     # @validates('content_data')
     # def validate_content_data(self, key, content):

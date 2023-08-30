@@ -15,15 +15,15 @@ function Home({received, handleNewMessageOnClick}) {
 
     
 	
-    const mappedIncoming = received.map((fresh) => {
+    const mappedIncoming = received && [...received].map((freshNew) => {
         return (
 
 	
-	<div key={fresh.id}>
-	<h4>{fresh.created_at} From: {fresh.user.name}</h4><img src={fresh.user.avatar} alt={fresh.user.name} width={50} />
-	<h4>Conversation Name: {fresh.conversation.conversation_name}</h4>
-	<p>{fresh.content_data}</p>
-	<button className="Contacts" fresh={fresh} onClick={() => handleNewMessageOnClick(fresh)}>
+	<div key={freshNew.id}>
+	<h4>{freshNew.created_at} From: {freshNew.user.name}</h4><img src={freshNew.user.avatar} alt={freshNew.user.name} width={50} />
+	<h4>Conversation Name: {freshNew.conversation.conversation_name}</h4>
+	<p>{freshNew.content_data}</p>
+	<button className="Contacts" freshNew={freshNew} onClick={() => handleNewMessageOnClick(freshNew)}>
 		Go to ChatRoom</button>
 	</div>)
 

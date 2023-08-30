@@ -16,8 +16,7 @@ import Signup from "./Components/Signup";
 
 import { useNavigate } from "react-router-dom";
 
-const formOutline = {id: null, content_type:"", content_data: "", created_at: null, conversation_id: null, user_id: null,
-		}
+
 	
 
 
@@ -28,10 +27,13 @@ function App() {
 	const [userConversations, setUserConversations] = useState([]);
 	const [messages, setMessages] = useState([]);
 	const [received, setReceived] = useState([]);
-	const [filteredChatRoom, setFilteredChatRoom] = useState([]);
-	const [chatsRoom, setChatsRoom] = useState(filteredChatRoom);
+	const [id, setId] = useState(null);
 	const [isEditing, setIsEditing] = useState(false)
 	const [newId, setNewId] = useState(null)
+
+	const {currentUser} = useContext(UserContext);
+	const formOutline = {"content_type":"String", "content_data": "","conversation_id": parseInt(id), "user_id": parseInt(currentUser.id),
+		}
 	const [formBody, setFormBody] = useState(formOutline)
 
 	
@@ -39,7 +41,7 @@ function App() {
 	
 	// const [chatMate, setChatMate] = useState("");
 
-	const {currentUser, setCurrentUser} = useContext(UserContext);
+
 
  
     // const [editBody, setEditBody] = useState("")
@@ -57,28 +59,34 @@ function App() {
 	
 	useEffect(() => {
 
-
-
 		fetch(`/user_conversations`)
 			.then((res) => res.json())
-			.then(data =>{
+			.then((data) =>{
 				if(userConversations !== data){setUserConversations(data)}});
-		fetch(`/conversations`)
-			.then((res) => res.json())
-			.then(data =>{
-				if(conversations !== data){setConversations(data)}});
-	
-		fetch(`/messages`)
-			.then((res) => res.json())
-			.then(data =>{
-				if(allMessages !== data){setAllMessages(data)}});
-		getList();
-				
-		
-	if(chatsRoom !== filteredChatRoom ){setChatsRoom(filteredChatRoom)}
-	
-	
 	},[]);
+
+
+	useEffect(() =>{
+
+		fetch(`/conversations`)
+		.then((res) => res.json())
+		.then((data) =>{
+			if(conversations !== data){setConversations(data)}});
+	},[]);
+
+
+	useEffect(() =>{
+		fetch(`/messages`)
+		.then((res) => res.json())
+		.then((data) =>{
+			if(allMessages !== data){setAllMessages(data)}});
+		getList();
+	},[]);
+
+
+	
+
+
 
 	const getList = () => {	
 		const  getMessages = [...allMessages].filter((message) => {
@@ -101,29 +109,18 @@ function App() {
 				setReceived(incomingMessages)};
 	}
 		
-		
+
 	function handleNewMessageOnClick(fresh){
 		
-
-		const filteredData = [...allMessages].filter((el)=>fresh && parseInt(el.conversation_id) === parseInt(fresh.conversation_id));
-		if (filteredData !== filteredChatRoom){
-			setFilteredChatRoom(filteredData)}
-		 	
-		// navigate("/chat_room")}
-		
-		
-	
-			
+		setId(fresh.conversation_id);
+		navigate("/chat_room")
 			
 		}
 
 
-	function handleMessageOnClick (fresh){
-		
-		const filteredData = [...allMessages].filter((el)=>fresh && parseInt(el.conversation_id) === parseInt(fresh.conversation_id));
-		if (filteredData !== filteredChatRoom){
-			setFilteredChatRoom(filteredData);
-		}
+	function handleMessageOnClick (freshNew){
+		setId(freshNew.conversation_id);
+		navigate("/chat_room")
 
 	}
 
@@ -144,7 +141,7 @@ function App() {
 
 	function handleFormSubmit(e) {
 		e.preventDefault();
-			if (isEditing) {
+			isEditing ? 
 				
 				fetch(`/messages/${parseInt(newId)}`, {
 					method: "PATCH",
@@ -158,15 +155,15 @@ function App() {
 				})
 					.then((r) => r.json())
 					.then(() =>{
-						if(formBody !== ""){setFormBody("")};
+						if(formBody.content_data !== ""){setFormBody(formOutline)};
 						setIsEditing(isEditing=>!isEditing)
 						setNewId(null);
 					})
-					.catch(console.error);
+					.catch(console.error)
 		
-			}
-			else{
-				fetch("/messages", {
+			
+			:
+				fetch("http://localhost:5555/messages", {
 					method: "POST",
 					crossDomain: true,
 					headers: {
@@ -178,12 +175,13 @@ function App() {
 				})
 					.then((r) => r.json())
 					.then((update) =>{ 
-						const data = [...messages, update];
-						if(messages !== data){setMessages(data)};
-							if(formBody !== ""){setFormBody("")}	
+
+							console.log(update);
+							if(formBody.content_data !== ""){setFormBody(formOutline)};	
 								
-				})
-	}}
+				})	
+				.catch(console.error)
+	}
 		
 
 		function handleOnDelete(chat){
@@ -248,14 +246,10 @@ function App() {
 					
 					else{ const newData = [...conversations];
 						if(conversations !== newData){setConversations(newData)}
-					}})
-
-
-			
+					}})		
 
 			
-		}
-	
+	}
 	
 
 	
@@ -264,8 +258,8 @@ function App() {
 	console.log(messages)
 	console.log(allMessages)
 	console.log(received)
-	console.log(filteredChatRoom)
-	console.log(chatsRoom)
+
+	console.log(id)
 	console.log(isEditing)
 	console.log(newId)
 	
@@ -291,7 +285,7 @@ function App() {
 				< Route exact path = "/" element={<Login />} />
 				< Route exact path = "/contacts" element={<Contacts handleOnClick={handleOnClick}/>} />
 				< Route exact path = "/chat_list" element={<ChatList  messages={messages}  handleMessageOnClick={handleMessageOnClick}/>} />
-				< Route exact path = "/chat_room" element={<ChatRoom   chatsRoom={chatsRoom} 
+				< Route exact path = "/chat_room" element={<ChatRoom   id={id} 
 					handleFormSubmit={handleFormSubmit} formBody={formBody} handleOnChange={handleOnChange}
 					handleOnDelete={handleOnDelete} handleOnClickButton={handleOnClickButton} isEditing={isEditing}/>} />
 				< Route exact path = "/user_profile" element={<UserProfile />} />
