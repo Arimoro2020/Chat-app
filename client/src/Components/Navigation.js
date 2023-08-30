@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { NavLink, useNavigate } from "react-router-dom";
 import UserContext from "./UserContext";
 import {useContext} from "react";
+import Login from './Login';
 
 function Navigation() {
+	const [login, setLogIn] = useState(false)
 	const navigate = useNavigate();
 	const {currentUser} = useContext(UserContext);
 
@@ -14,6 +16,7 @@ function Navigation() {
 			"content-type": "application/json",
 		},}).then((res) => {
 			if (res.ok){
+				setLogIn(login=>!login)
 				navigate("/");
 			}
 		});
@@ -40,16 +43,19 @@ function Navigation() {
 				<NavLink className="button" to="/signup" >
 					Sign Up
 				</NavLink>
-				<NavLink className="button" to="/" >
-					Log In
-				</NavLink>
-				{ currentUser ? 
+				
+				{ login? 
 					(<>
 						<button onClick={()=>handleLogout()} className="button">
-							Log Out
+							LogOut
 						</button>
 					</>) : 
-					''
+					<button className="button">
+					<NavLink className="button" to="/" >
+					Log In
+					</NavLink>
+				</button>
+					
 				}		
 			</div>
 		</header>
