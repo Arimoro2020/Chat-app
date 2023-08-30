@@ -32,7 +32,7 @@ export const UserProvider  = ({children}) => {
      
 	if (!initialValues) return;
 	if (initialValues.username === currentUser.username) return;
-	fetch(`/users/`+initialValues.username, {
+	fetch(`http://localhost:5555/users/`+initialValues.username, {
         method: "GET",
         crossDomain: true,
         headers: {

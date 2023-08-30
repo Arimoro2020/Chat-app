@@ -30,12 +30,15 @@ function App() {
 	const [id, setId] = useState(null);
 	const [isEditing, setIsEditing] = useState(false)
 	const [newId, setNewId] = useState(null)
-	const [conversationData, setConversationData] = useState();
+	const [conversationData, setConversationData] = useState(null);
 
-	const {currentUser} = useContext(UserContext);
+	const {currentUser,setCurrentUser} = useContext(UserContext);
 	const formOutline = {"content_type":"String", "content_data": "","conversation_id": parseInt(id), "user_id": parseInt(currentUser.id)
 		}
-	const inviteForm = conversationData && {"content_type":"String", "content_data": "Hi, Let's start chatting!","conversation_id": parseInt(conversationData.id), "user_id": parseInt(currentUser.id)
+	const inviteForm = {"content_type":"String", 
+		"content_data": "Hi, Let's start chatting!",
+		"conversation_id": parseInt(conversationData.id), 
+		"user_id": parseInt(currentUser.id)
 	}
 	const [formBody, setFormBody] = useState(formOutline)
 
@@ -240,41 +243,41 @@ function App() {
 			
 					})
 						.then((r) => r.json())
-						.then((data) =>{
-							const newData = [...userConversations, data];
-							if(userConversations !== newData){setUserConversations(newData)}})
+						.then((another) =>{
+							const newUserData = [...userConversations, another];
+							if(userConversations !== newUserData){setUserConversations(newUserData)}})
 
-							fetch("http://localhost:5555/messages", {
-								method: "POST",
-								crossDomain: true,
-								headers: {
-									"content-type": "application/json",
-									Accept: "application/json",
-									"Access-control-Allow-Origin":"*",
-								},
-								body: JSON.stringify(inviteForm),
-							})
-								.then((r) => r.json())
-								.then((update) =>{ 
-									let updatedMessages = [...messages, [update]]
-									if(messages !== updatedMessages){setMessages(updatedMessages)};	
-											
-							})	
-							.catch(console.error)
-			
+					fetch(`http://localhost:5555/messages`, {
+						method: "POST",
+						crossDomain: true,
+						headers: {
+							"content-type": "application/json",
+							Accept: "application/json",
+							"Access-control-Allow-Origin":"*",
+						},
+						body: JSON.stringify(inviteForm),
+					})
+						.then((r) => r.json())
+						.then((update) =>{ 
+							const updatedMessages = [...messages, [update]]
+							if(messages !== updatedMessages){setMessages(updatedMessages)};	
+									
+					})	
+					.catch(console.error)
+	
 	}
 	
 
 	
 	
 	
-	console.log(messages)
-	console.log(allMessages)
-	console.log(received)
-	console.log(conversationData)
-	console.log(id)
-	console.log(isEditing)
-	console.log(newId)
+	// console.log(messages)
+	// console.log(allMessages)
+	// console.log(received)
+	// console.log(conversationData)
+	// console.log(id)
+	// console.log(isEditing)
+	// console.log(newId)
 	
     
 	if (!currentUser){

@@ -31,10 +31,13 @@ function UserProfile() {
 		},
 		validationSchema: formSchema,
 		onSubmit: (values, actions) => {
-			fetch( `/users/${currentUser.id}`, {
+			fetch( `http://localhost:5555/users/${currentUser.id}`, {
 				method: "PATCH",
+				crossDomain: true,
 				headers: {
 					"content-type": "application/json",
+					Accept: "application/json",
+					"Access-control-Allow-Origin":"*",
 				},
 				body: JSON.stringify(values),
 			}).then((res) => {

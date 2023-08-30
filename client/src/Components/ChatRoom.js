@@ -16,7 +16,7 @@ function ChatRoom({id, handleFormSubmit, handleOnChange, formBody, handleOnDelet
 		.then((res) => res.json())
 		.then((data) =>{
             if(chatsRoom !== data){setChatsRoom(data)}});
-	},[]);
+	},[id, chatsRoom]);
  
     // console.log(formBody);
     const chatName = chatsRoom && [...chatsRoom].map((el)=>el.conversation.conversation_name)[0];
