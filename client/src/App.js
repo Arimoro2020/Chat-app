@@ -33,8 +33,10 @@ function App() {
 	const [conversationData, setConversationData] = useState();
 
 	const {currentUser} = useContext(UserContext);
-	const formOutline = {"content_type":"String", "content_data": "","conversation_id": parseInt(id), "user_id": parseInt(currentUser.id),
+	const formOutline = {"content_type":"String", "content_data": "","conversation_id": parseInt(id), "user_id": parseInt(currentUser.id)
 		}
+	const inviteForm = conversationData && {"content_type":"String", "content_data": "Hi, Let's start chatting!","conversation_id": parseInt(conversationData.id), "user_id": parseInt(currentUser.id)
+	}
 	const [formBody, setFormBody] = useState(formOutline)
 
 	
@@ -241,6 +243,24 @@ function App() {
 						.then((data) =>{
 							const newData = [...userConversations, data];
 							if(userConversations !== newData){setUserConversations(newData)}})
+
+							fetch("http://localhost:5555/messages", {
+								method: "POST",
+								crossDomain: true,
+								headers: {
+									"content-type": "application/json",
+									Accept: "application/json",
+									"Access-control-Allow-Origin":"*",
+								},
+								body: JSON.stringify(inviteForm),
+							})
+								.then((r) => r.json())
+								.then((update) =>{ 
+									let updatedMessages = [...messages, [update]]
+									if(messages !== updatedMessages){setMessages(updatedMessages)};	
+											
+							})	
+							.catch(console.error)
 			
 	}
 	
