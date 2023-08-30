@@ -15,7 +15,7 @@ function ChatList({messages, handleMessageOnClick}) {
 
     
 	
-    const mappedSending = messages && [...messages].map((fresh) => {
+    const mappedSending = messages && [...messages].sort((a, b) => b.created_at.localeCompare(a.created_at)).map((fresh) => {
         return (
 
 	<div key={fresh.id}>

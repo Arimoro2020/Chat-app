@@ -15,7 +15,7 @@ function Home({received, handleNewMessageOnClick}) {
 
     
 	
-    const mappedIncoming = received && [...received].map((freshNew) => {
+    const mappedIncoming = received && [...received].sort((a, b) => b.created_at.localeCompare(a.created_at)).map((freshNew) => {
         return (
 
 	

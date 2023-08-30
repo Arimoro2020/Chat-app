@@ -93,8 +93,9 @@ function App() {
 			return (parseInt(message.user_id) === currentUser.id)})
 
 			if(messages !== getMessages){
-				setMessages(getMessages)};
+				setMessages((messages)=> [...getMessages]);
 
+			}
 			
 			const filteredConversationsId = [...userConversations].filter((el)=>{
 				return (el.user.name === currentUser.name)}).map((another)=>parseInt(another.conversation.id));
