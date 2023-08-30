@@ -76,14 +76,15 @@ class UserConversation(db.Model, SerializerMixin):
     __tablename__ = "user_conversations"
 
     id = db.Column(db.Integer, primary_key=True)
-    conversation_id = db.Column(db.Integer, db.ForeignKey('conversations.id'))
+    conversation_id = db.Column(db.Integer, db.ForeignKey('conversations.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     serialize_rules = ('-conversation.user_conversations',)
 
     def to_dict(self, deep=False):
         serialized = super(UserConversation, self).to_dict(deep)
-        serialized['user'] = self.user.to_dict()  # Add user details to the serialized output
+        if deep:
+            serialized['user'] = self.user.to_dict()
         return serialized
 
    
@@ -122,7 +123,7 @@ class Message(db.Model, SerializerMixin):
     content_data = db.Column(db.String, nullable=False)
     content_type = db.Column(db.String,  nullable=False)
     conversation_id = db.Column(db.Integer, db.ForeignKey('conversations.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     created_at = db.Column(db.DateTime, server_default= db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 

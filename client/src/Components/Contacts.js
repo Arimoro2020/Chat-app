@@ -33,7 +33,7 @@ function Contacts({handleOnClick}) {
 
     const mappedUsers = filteredUsers.map((contact) => {
         return (
-            <ul className="allUsers">
+            <ul className="allUsers" key={contact.id}>
             <img src={contact.avatar} alt={contact.name} width={320} />
             <h4>{contact.name}</h4>
             <p>Background: {contact.background}</p>

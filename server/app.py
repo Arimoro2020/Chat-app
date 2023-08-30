@@ -233,20 +233,20 @@ class UserConversations(Resource):
         data = request.get_json()
 
         try:
-            new = UserConversation(
-                conversation_name = data.get('conversation_id'),
+            new_user_conversation = UserConversation(
+                conversation_id = data.get('conversation_id'),
                 user_id = data.get('user_id')
             )
 
-            db.session.add(new.to_dict())
+            db.session.add(new_user_conversation)
             db.session.commit()
+
+            new_user_conversation_dict = new_user_conversation.to_dict()
+            return make_response(new_user_conversation_dict, 201)
 
         except:
             return make_response({ "errors": ["validation errors"]}, 400)
             
-        response = make_response(data.to_dict(), 201)
-
-        return response
 
 api.add_resource(UserConversations, '/user_conversations')
 
@@ -314,6 +314,27 @@ class Conversations(Resource):
 
         return response
     
+    def post(self):
+
+        data = request.get_json()
+
+        try:
+            new_conversation = Conversation(
+                conversation_name = data.get('conversation_name')
+            )
+
+            db.session.add(new_conversation)
+            db.session.commit()
+
+            new_conversation_dict = new_conversation.to_dict()
+            return make_response(new_conversation_dict, 201)
+
+
+        except:
+            return make_response({ "errors": ["validation errors"]}, 400)
+            
+       
+        
 api.add_resource(Conversations, '/conversations')
 
 

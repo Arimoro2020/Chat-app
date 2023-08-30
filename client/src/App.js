@@ -30,6 +30,7 @@ function App() {
 	const [id, setId] = useState(null);
 	const [isEditing, setIsEditing] = useState(false)
 	const [newId, setNewId] = useState(null)
+	const [conversationData, setConversationData] = useState();
 
 	const {currentUser} = useContext(UserContext);
 	const formOutline = {"content_type":"String", "content_data": "","conversation_id": parseInt(id), "user_id": parseInt(currentUser.id),
@@ -144,7 +145,7 @@ function App() {
 		e.preventDefault();
 			isEditing ? 
 				
-				fetch(`/messages/${parseInt(newId)}`, {
+				fetch(`http://localhost:5555/messages/${parseInt(newId)}`, {
 					method: "PATCH",
 					crossDomain: true,
 					headers: {
@@ -186,7 +187,7 @@ function App() {
 		
 
 		function handleOnDelete(chat){
-			fetch(`/messages/${parseInt(chat.id)}`, {
+			fetch(`http://localhost:5555/messages/${parseInt(chat.id)}`, {
 				method: "DELETE",
 				crossDomain: true,
 				headers: {
@@ -202,7 +203,7 @@ function App() {
 
 		function handleOnClick(contact){
 			
-			fetch(`/conversations`, {
+			fetch(`http://localhost:5555/conversations`, {
 				method: "POST",
 				crossDomain: true,
 				headers: {
@@ -213,16 +214,17 @@ function App() {
 				body: JSON.stringify({"conversation_name": contact.name})
 
 			})
-				.then((r) =>{
-			
-					if (r.ok) {
-						r.json().then((data) =>{ 
-							const newData = [...conversations, data];
-							if(conversations !== newData){setConversations(newData)}});
+				.then((r) => r.json())
+				.then((data) =>{ 
+							if(data !== conversationData){setConversationData(data)}
+							const newData = [...conversations, [data]];
+							if(conversations !== newData){setConversations(newData)}
+							
+						});
 					
-				const filteredName = conversations.filter(el => el.name.toLowerCase().includes(contact.name.toLowerCase()))  ;
+			
 
-					fetch(`/user_conversations`, {
+					fetch(`http://localhost:5555/user_conversations`, {
 						method: "POST",
 						crossDomain: true,
 						headers: {
@@ -230,7 +232,7 @@ function App() {
 							Accept: "application/json",
 							"Access-control-Allow-Origin":"*",
 						},
-						body: JSON.stringify({"conversation_id": parseInt(filteredName.id),
+						body: JSON.stringify({"conversation_id": parseInt(conversationData.id),
 							
 												"user_id": parseInt(contact.id)})
 			
@@ -239,16 +241,6 @@ function App() {
 						.then((data) =>{
 							const newData = [...userConversations, data];
 							if(userConversations !== newData){setUserConversations(newData)}})
-
-					
-					}
-						
-					
-					
-					else{ const newData = [...conversations];
-						if(conversations !== newData){setConversations(newData)}
-					}})		
-
 			
 	}
 	
@@ -259,7 +251,7 @@ function App() {
 	console.log(messages)
 	console.log(allMessages)
 	console.log(received)
-
+	console.log(conversationData)
 	console.log(id)
 	console.log(isEditing)
 	console.log(newId)
