@@ -10,11 +10,15 @@ function Navigation() {
 	const {currentUser} = useContext(UserContext);
 
 	function handleLogout() {
-		fetch("/logout",{
-		method: "DELETE",
-		headers: {
-			"content-type": "application/json",
-		},}).then(() => setLogIn(login=>!login))
+		fetch(`http://localhost:5555/logout`,{
+			method: "DELETE",
+				crossDomain: true,
+				headers: {
+					"content-type": "application/json",
+					Accept: "application/json",
+					"Access-control-Allow-Origin":"*",
+				},
+		}).then(() => setLogIn(login=>!login))
 			.then(()=> navigate("/"))
 				
 	}

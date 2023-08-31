@@ -35,34 +35,16 @@ function App() {
 	const {currentUser,setCurrentUser} = useContext(UserContext);
 	const formOutline = {"content_type":"String", "content_data": "","conversation_id": parseInt(id), "user_id": parseInt(currentUser.id)
 		}
-	const inviteForm = {"content_type":"String", 
+	 const inviteForm = 	
+	 conversationData && {"content_type":"String", 
 		"content_data": "Hi, Let's start chatting!",
 		"conversation_id": parseInt(conversationData.id), 
 		"user_id": parseInt(currentUser.id)
 	}
 	const [formBody, setFormBody] = useState(formOutline)
 
-	
-	
-	
-	// const [chatMate, setChatMate] = useState("");
-
-
-
- 
-    // const [editBody, setEditBody] = useState("")
-   
-    
-
 	const navigate = useNavigate();
 
-
-	// useEffect(() =>{
-
-	// 	setChatsRoom(filteredChatRoom)
-
-	// 	}, [filteredChatRoom]);
-	
 	useEffect(() => {
 
 		fetch(`/user_conversations`)
@@ -78,6 +60,7 @@ function App() {
 		.then((res) => res.json())
 		.then((data) =>{
 			if(conversations !== data){setConversations(data)}});
+	
 	},[]);
 
 
@@ -87,10 +70,7 @@ function App() {
 		.then((data) =>{
 			if(allMessages !== data){setAllMessages(data)}});
 		getList();
-	},[]);
-
-
-	
+	},[allMessages]);
 
 
 
@@ -106,32 +86,28 @@ function App() {
 			const filteredConversationsId = [...userConversations].filter((el)=>{
 				return (el.user.name === currentUser.name)}).map((another)=>parseInt(another.conversation.id));
 			
-			console.log(filteredConversationsId)	
-			
 
 			const incomingMessages = [...allMessages].filter(incoming=>{
 			return (filteredConversationsId.includes(parseInt(incoming.conversation_id)) && (parseInt(incoming.user_id) !== currentUser.id))})
-			console.log(incomingMessages)
-			if(received !== incomingMessages){
-				setReceived(incomingMessages)};
-	}
 		
+			if(received !== incomingMessages){
+				setReceived((received)=>[...incomingMessages])};
+	}
+
 
 	function handleNewMessageOnClick(fresh){
 		
-		setId(fresh.conversation_id);
+		setId((id)=>fresh.conversation_id);
 		navigate("/chat_room")
 			
 		}
 
 
-	function handleMessageOnClick (freshNew){
-		setId(freshNew.conversation_id);
-		navigate("/chat_room")
+	// function handleMessageOnClick (fresh){
+	// 	setId(fresh.conversation_id);
+	// 	navigate("/chat_room")
 
-	}
-
-	
+	// }
 
 
 	function handleOnClickButton(chat){
@@ -229,41 +205,41 @@ function App() {
 					
 			
 
-					fetch(`http://localhost:5555/user_conversations`, {
-						method: "POST",
-						crossDomain: true,
-						headers: {
-							"content-type": "application/json",
-							Accept: "application/json",
-							"Access-control-Allow-Origin":"*",
-						},
-						body: JSON.stringify({"conversation_id": parseInt(conversationData.id),
-							
-												"user_id": parseInt(contact.id)})
-			
-					})
-						.then((r) => r.json())
-						.then((another) =>{
-							const newUserData = [...userConversations, another];
-							if(userConversations !== newUserData){setUserConversations(newUserData)}})
+			fetch(`http://localhost:5555/user_conversations`, {
+				method: "POST",
+				crossDomain: true,
+				headers: {
+					"content-type": "application/json",
+					Accept: "application/json",
+					"Access-control-Allow-Origin":"*",
+				},
+				body: JSON.stringify({"conversation_id": parseInt(conversationData.id),
+					
+										"user_id": parseInt(contact.id)})
+	
+			})
+				.then((r) => r.json())
+				.then((another) =>{
+					const newUserData = [...userConversations, another];
+					if(userConversations !== newUserData){setUserConversations(newUserData)}})
 
-					fetch(`http://localhost:5555/messages`, {
-						method: "POST",
-						crossDomain: true,
-						headers: {
-							"content-type": "application/json",
-							Accept: "application/json",
-							"Access-control-Allow-Origin":"*",
-						},
-						body: JSON.stringify(inviteForm),
-					})
-						.then((r) => r.json())
-						.then((update) =>{ 
-							const updatedMessages = [...messages, [update]]
-							if(messages !== updatedMessages){setMessages(updatedMessages)};	
-									
-					})	
-					.catch(console.error)
+			fetch(`http://localhost:5555/messages`, {
+				method: "POST",
+				crossDomain: true,
+				headers: {
+					"content-type": "application/json",
+					Accept: "application/json",
+					"Access-control-Allow-Origin":"*",
+				},
+				body: JSON.stringify(inviteForm),
+			})
+				.then((r) => r.json())
+				.then((update) =>{ 
+					const updatedMessages = [...messages, [update]]
+					if(messages !== updatedMessages){setMessages(updatedMessages)};	
+							
+			})	
+			.catch(console.error)
 	
 	}
 	
@@ -287,7 +263,7 @@ function App() {
 				<Login />
 			</div>
 		)
-		}
+	}
 	
 	
 
@@ -300,7 +276,7 @@ function App() {
 				< Route exact path = "/signup" element={<Signup />} />
 				< Route exact path = "/" element={<Login />} />
 				< Route exact path = "/contacts" element={<Contacts handleOnClick={handleOnClick}/>} />
-				< Route exact path = "/chat_list" element={<ChatList  messages={messages}  handleMessageOnClick={handleMessageOnClick}/>} />
+				< Route exact path = "/chat_list" element={<ChatList  messages={messages}  handleNewMessageOnClick={handleNewMessageOnClick}/>} />
 				< Route exact path = "/chat_room" element={<ChatRoom   id={id} 
 					handleFormSubmit={handleFormSubmit} formBody={formBody} handleOnChange={handleOnChange}
 					handleOnDelete={handleOnDelete} handleOnClickButton={handleOnClickButton} isEditing={isEditing}/>} />

@@ -33,10 +33,13 @@ function Signup() {
 		},
 		validationSchema: formSchema,
 		onSubmit: (values, actions) => {
-			fetch( "/signup", {
+			fetch( `http://localhost:5555/signup`, {
 				method: "POST",
+				crossDomain: true,
 				headers: {
 					"content-type": "application/json",
+					Accept: "application/json",
+					"Access-control-Allow-Origin":"*",
 				},
 				body: JSON.stringify(values),
 			}).then((res) => {

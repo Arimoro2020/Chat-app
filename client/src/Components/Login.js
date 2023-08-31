@@ -38,7 +38,7 @@ function Login(){
 		initialValues,
 		validationSchema: formSchema,
 		onSubmit:(values, actions) => {
-			fetch( "/login", {
+			fetch( `http://localhost:55556/login`, {
 				method: "POST",
 				crossDomain: true,
 				headers: {

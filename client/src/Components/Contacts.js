@@ -12,7 +12,7 @@ function Contacts({handleOnClick}) {
     }, [])
 
     function getAllUsers() {
-    fetch(`/users`)
+    fetch(`http://localhost:5555/users`)
     .then(resp => resp.json())
     .then(data => setAllUsers(data))
     }

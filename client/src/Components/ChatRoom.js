@@ -12,7 +12,7 @@ function ChatRoom({id, handleFormSubmit, handleOnChange, formBody, handleOnDelet
     const [chatsRoom, setChatsRoom] = useState([])
 
     useEffect(() =>{
-		fetch(`http:/messages/conversations/${parseInt(id)}`)
+		fetch(`http://localhost:5555/messages/conversations/${parseInt(id)}`)
 		.then((res) => res.json())
 		.then((data) =>{
             if(chatsRoom !== data){setChatsRoom(data)}});
