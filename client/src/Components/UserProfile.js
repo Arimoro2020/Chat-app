@@ -58,11 +58,15 @@ function UserProfile() {
     return(
         <div>
         <section>
-			<img src={currentUser.avatar} alt={currentUser.name} width={320} />
-            <p> Name: {currentUser.name}</p>
-            <em> Background: {currentUser.background} </em>
-            <em> Status: {currentUser.online_status}</em>
-            <em> User ID: {currentUser.id}</em>
+			<span role="img">
+				<img src={currentUser.avatar} alt={currentUser.name} width={320} />
+			</span>
+
+            <h4> {currentUser.name}</h4>
+            <p> Background: {currentUser.background} </p>
+			<p> User ID: {currentUser.id}</p>
+            <em> Online status: {currentUser.online_status}</em>
+         
         </section>
         <section style={{
        visibility: visibleForm ? "visible" : "hidden",
@@ -157,9 +161,9 @@ function UserProfile() {
 				</form>
                 </section>
                 <section>
-				<EditSvg className="button" onClick={()=>toggleForm()}>
+				<span role="img"><EditSvg className="button" onClick={()=>toggleForm()} width={"35px"}>
 					{visibleForm? "" : "Edit Profile"}
-				</EditSvg>
+				</EditSvg></span>
 			</section>
 
         </div>

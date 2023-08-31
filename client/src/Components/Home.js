@@ -16,10 +16,10 @@ function Home({received, handleNewMessageOnClick}) {
 
 	
 	<div key={fresh.id}>
-	<h4>{fresh.created_at} From: {fresh.user.name}</h4><img src={fresh.user.avatar} alt={fresh.user.name} width={50} />
+	<h3>{fresh.created_at} From: {fresh.user.name}</h3><img src={fresh.user.avatar} alt={fresh.user.name} width={50} />
 	<h4>Conversation Name: {fresh.conversation.conversation_name}</h4>
 	<em>{fresh.content_data}</em><span role="img">
-		<YourSvg width={ "30px"}  fresh={fresh} 
+		<YourSvg width={ "20px"}  fresh={fresh} 
 		onClick={() => handleNewMessageOnClick(fresh)}/></span>
 
 	
@@ -31,7 +31,7 @@ function Home({received, handleNewMessageOnClick}) {
 	return (
 		<div>
 			 <section> 
-				<h1>Welcome, {currentUser.name} to your Chat App</h1>
+				<h1>Welcome {currentUser.name}, to your Chat-App !</h1>
 			</section>
             <section>
 				<h2> Here are your received Messages!</h2>
