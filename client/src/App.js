@@ -33,7 +33,7 @@ function App() {
 	const [conversationData, setConversationData] = useState(null);
 
 	const {currentUser,setCurrentUser} = useContext(UserContext);
-	const formOutline = {"content_type":"String", "content_data": "","conversation_id": parseInt(id), "user_id": parseInt(currentUser.id)
+	const formOutline = {"content_type":"String", "content_data": "","conversation_id": id, "user_id": parseInt(currentUser.id)
 		}
 	 const inviteForm = 	
 	 conversationData && {"content_type":"String", 
@@ -112,10 +112,10 @@ function App() {
 
 	function handleOnClickButton(chat){
 		setIsEditing(isEditing=>!isEditing);
-		if(parseInt(newId) !== parseInt(chat.id)){setNewId(parseInt(chat.id));
-		console.log(newId)};
+		if(parseInt(newId) !== parseInt(chat.id)){setNewId((newId)=>parseInt(chat.id));
+		// console.log(newId)};
 	}
-
+	}
 
 	function handleOnChange(e){
 		
@@ -134,7 +134,7 @@ function App() {
 						Accept: "application/json",
 						"Access-control-Allow-Origin":"*",
 					},
-					body: JSON.stringify(formBody),
+					body: JSON.stringify( {...formBody, "id":newId}),
 				})
 					.then((r) => r.json())
 					.then(() =>{
@@ -159,7 +159,7 @@ function App() {
 					.then((r) => r.json())
 					.then((update) =>{ 
 
-							console.log(update);
+							// console.log(update);
 							if(formBody.content_data !== ""){setFormBody(formOutline)};	
 								
 				})	
@@ -177,9 +177,9 @@ function App() {
 					"Access-control-Allow-Origin":"*",},
 			});
 
-			const removedDeleted = [...messages].filter(message => parseInt(message.id) !== parseInt(chat.id));
+			const removedDeleted = [...messages].filter((message) => parseInt(message.id) !== parseInt(chat.id));
 			if(messages !== removedDeleted){
-				setMessages(removedDeleted)}; 
+				setMessages((messages)=>removedDeleted)}; 
 		}
 
 		function handleOnClick(contact){
@@ -247,13 +247,13 @@ function App() {
 	
 	
 	
-	// console.log(messages)
-	// console.log(allMessages)
-	// console.log(received)
-	// console.log(conversationData)
-	// console.log(id)
-	// console.log(isEditing)
-	// console.log(newId)
+	console.log(messages)
+	console.log(allMessages)
+	console.log(received)
+	console.log(conversationData)
+	console.log(id)
+	console.log(isEditing)
+	console.log(newId)
 	
     
 	if (!currentUser){
