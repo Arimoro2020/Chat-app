@@ -34,7 +34,7 @@ function Contacts({handleOnClick}) {
 
     const mappedUsers = filteredUsers.map((contact) => {
         return (
-            <ul className="allUsers" key={contact.id}>
+            <ul className="allUsers" key={contact.id} >
             <img src={contact.avatar} alt={contact.name} width={320} />
             <h4>{contact.name}</h4>
             <p>Background: {contact.background}</p>
@@ -46,7 +46,7 @@ function Contacts({handleOnClick}) {
     })   
 
     return (
-        <main className="allUsers">
+        <main className="allUsers" >
             <Search 
             search={search}
             handleSearch={handleSearch}

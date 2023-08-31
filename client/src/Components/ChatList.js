@@ -13,10 +13,15 @@ function ChatList({messages, handleNewMessageOnClick}) {
     const mappedSending = messages && [...messages].sort((a, b) => b.created_at.localeCompare(a.created_at)).map((fresh) => {
         return (
 
-			<div key={fresh.id}>
-			<h3>{fresh.created_at} From: {fresh.user.name}</h3><img src={fresh.user.avatar} alt={fresh.user.name} width={50} />
-			<h4>Conversation Name: {fresh.conversation.conversation_name}</h4>
-			<em>{fresh.content_data}</em><span role="img">
+			<div key={fresh.id}   style={{
+				width: 500,
+				flex: 1,
+				backgroundColor: 'skyblue',
+			  }}>
+			<h3 style={{color:"steelBlue",}}>{fresh.created_at} From: {fresh.user.name}</h3>
+			<h4 style={{color:"steelBlue",}}>Conversation Name: {fresh.conversation.conversation_name}</h4>
+			<img src={fresh.user.avatar} alt={fresh.user.name} width={50} />
+			<em style={{fontSize: 20}}>{fresh.content_data}</em><span role="img">
 				<YourSvg width={ "20px"}  fresh={fresh} 
 				onClick={() => handleNewMessageOnClick(fresh)}/></span>
 			</div>)
@@ -25,12 +30,12 @@ function ChatList({messages, handleNewMessageOnClick}) {
     
  
 	return (
-		<div>
-			 <section> 
-				<h1>Welcome {currentUser.name}, to your Chat-App</h1>
+		<div >
+			 <section > 
+				<h2 style={{color:"royalBlue",}}>{currentUser.name}, here are your sent messages:</h2>
+				
 			</section>
             <section>
-				<h2> Here are your sent messages!</h2>
 				<ul>{mappedSending}</ul>
 			
             </section>

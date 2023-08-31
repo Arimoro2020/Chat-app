@@ -16,7 +16,7 @@ function Navigation() {
         width: "80px",
         padding: "12px",
         margin: "0 6px 6px",
-        background: "#1F6521",
+        background: "steelBlue",
         textDecoration: "none",
         color: "white",
       };
@@ -36,7 +36,9 @@ function Navigation() {
 	}
 
 	return (
-		<header>
+		<header   style={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',}}>
 			<div className="menu">
 				<NavLink className="button" to="/home" end style={linkStyles}
         activeStyle={{

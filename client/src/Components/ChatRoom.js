@@ -25,9 +25,14 @@ function ChatRoom({id, handleFormSubmit, handleOnChange, formBody, handleOnDelet
     const roomChats = chatsRoom && chatsRoom.map((chat)=> {
         return(  
        
-              <div key= {chat.id} id={parseInt(chat.id)}>
-                <h4>{chat.created_at}  {chat.user.name}</h4><img src={chat.user.avatar} alt={chat.user.name} width={30} />
-                <em>{chat.content_data}</em>
+              <div key= {chat.id} id={parseInt(chat.id)}   style={{
+                width: 500,
+                flex:1,
+                backgroundColor: 'skyblue',
+              }}>
+                <h3 style={{color:"steelBlue",}}>{chat.created_at}  {chat.user.name}</h3>
+                <img src={chat.user.avatar} alt={chat.user.name} width={30} />
+                <em style={{fontSize: 20}}>{chat.content_data}</em>
                 {currentUser.id === chat.user_id?
                 <button type="button" className="edit" chat={chat} onClick={()=>handleOnClickButton(chat)}>
                 <Link  to="#editForm" smooth  >
@@ -51,8 +56,8 @@ function ChatRoom({id, handleFormSubmit, handleOnChange, formBody, handleOnDelet
 
 
     return (
-        <div>
-       <h2>Conversation Name: {chatName}</h2>
+        <div >
+       <h3 style={{color:"royalBlue"}}>Conversation Name: {chatName}</h3>
         <section>
         
         <ul>{roomChats}</ul>
