@@ -2,6 +2,7 @@ import UserContext from "./UserContext";
 import {useContext, useState} from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { ReactComponent as EditSvg } from "/Users/yemiarimoro/Development/code/My-App/Chat-app/client/src/Edit.svg";
 
 
 function UserProfile() {
@@ -57,11 +58,11 @@ function UserProfile() {
     return(
         <div>
         <section>
-			<img src={currentUser.avatar} alt={currentUser.name} width={100} />
+			<img src={currentUser.avatar} alt={currentUser.name} width={320} />
             <p> Name: {currentUser.name}</p>
-            <p> Background: {currentUser.background} </p>
-            <p> Status: {currentUser.online_status}</p>
-            <p> User ID: {currentUser.id}</p>
+            <em> Background: {currentUser.background} </em>
+            <em> Status: {currentUser.online_status}</em>
+            <em> User ID: {currentUser.id}</em>
         </section>
         <section style={{
        visibility: visibleForm ? "visible" : "hidden",
@@ -156,9 +157,9 @@ function UserProfile() {
 				</form>
                 </section>
                 <section>
-				<button className="button" onClick={()=>toggleForm()}>
+				<EditSvg className="button" onClick={()=>toggleForm()}>
 					{visibleForm? "" : "Edit Profile"}
-				</button>
+				</EditSvg>
 			</section>
 
         </div>

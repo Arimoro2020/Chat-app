@@ -1,11 +1,13 @@
 
 import {  useContext } from "react";
 import UserContext from "./UserContext";
+import { ReactComponent as YourSvg } from '/Users/yemiarimoro/Development/code/My-App/Chat-app/client/src/chat.svg';
 
 
 
 function Home({received, handleNewMessageOnClick}) {
 
+	
 
 	const {currentUser} = useContext(UserContext)
 
@@ -16,9 +18,11 @@ function Home({received, handleNewMessageOnClick}) {
 	<div key={fresh.id}>
 	<h4>{fresh.created_at} From: {fresh.user.name}</h4><img src={fresh.user.avatar} alt={fresh.user.name} width={50} />
 	<h4>Conversation Name: {fresh.conversation.conversation_name}</h4>
-	<p>{fresh.content_data}</p>
-	<button className="Contacts" fresh={fresh} onClick={() => handleNewMessageOnClick(fresh)}>
-		Go to ChatRoom</button>
+	<em>{fresh.content_data}</em><span role="img">
+		<YourSvg width={ "30px"}  fresh={fresh} 
+		onClick={() => handleNewMessageOnClick(fresh)}/></span>
+
+	
 	</div>)
 
 		})

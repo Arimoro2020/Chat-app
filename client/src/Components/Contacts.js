@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import Search from './Search';
+import { ReactComponent as InviteSvg } from '/Users/yemiarimoro/Development/code/My-App/Chat-app/client/src/inviteToChat.svg';
 
 
 function Contacts({handleOnClick}) {
@@ -37,9 +38,9 @@ function Contacts({handleOnClick}) {
             <img src={contact.avatar} alt={contact.name} width={320} />
             <h4>{contact.name}</h4>
             <p>Background: {contact.background}</p>
-            <p>Online status: {contact.online_status}</p>
-            <button className="Contacts" id={contact.id} contact={contact} onClick={() => handleOnClick(contact)}>
-                Add to ChatList as UserConversation</button>
+            <em>Online status: {contact.online_status}</em>
+            <span role="img"><InviteSvg className="Contacts" id={contact.id} contact={contact} onClick={() => handleOnClick(contact)} width={"35px"}/></span>
+              
           </ul>
         )
     })   

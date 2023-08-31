@@ -27,7 +27,7 @@ function ChatRoom({id, handleFormSubmit, handleOnChange, formBody, handleOnDelet
        
               <div key= {chat.id} id={parseInt(chat.id)}>
                 <h4>{chat.created_at}  {chat.user.name}</h4><img src={chat.user.avatar} alt={chat.user.name} width={30} />
-                <p>{chat.content_data}</p>
+                <em>{chat.content_data}</em>
                 {currentUser.id === chat.user_id?
                 <button type="button" className="edit" chat={chat} onClick={()=>handleOnClickButton(chat)}>
                 <Link  to="#editForm" smooth  >
