@@ -17,7 +17,7 @@ function Home({received, handleNewMessageOnClick}) {
 	
 	<div key={fresh.id}     style={{
 		width: 500,
-		backgroundColor: 'skyBlue',
+		backgroundColor: 'ghostWhite',
 		flex: 1,
 	  }}>
 	<h3 style={{color:"steelBlue",}}>{fresh.created_at} From: {fresh.user.name}</h3>
@@ -37,9 +37,9 @@ function Home({received, handleNewMessageOnClick}) {
 		<div >
 			 <section > 
 				
-				<h2 style={{display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center', color:"royalBlue",}}>{currentUser.name}, here are your received Messages:</h2>
+				<h2 style={{display: 'flex', alignItems: 'center',
+        		justifyContent: 'center',}}>
+					{currentUser.name}, here are your received messages:</h2>
 
 			
 			</section>

@@ -16,7 +16,7 @@ function ChatList({messages, handleNewMessageOnClick}) {
 			<div key={fresh.id}   style={{
 				width: 500,
 				flex: 1,
-				backgroundColor: 'skyblue',
+				backgroundColor: 'ghostWhite',
 			  }}>
 			<h3 style={{color:"steelBlue",}}>{fresh.created_at} From: {fresh.user.name}</h3>
 			<h4 style={{color:"steelBlue",}}>Conversation Name: {fresh.conversation.conversation_name}</h4>
@@ -34,7 +34,7 @@ function ChatList({messages, handleNewMessageOnClick}) {
 			 <section > 
 				<h2  style={{display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center', color:"royalBlue"}}>{currentUser.name}, here are your sent messages:</h2>
+        justifyContent: 'center',}}>{currentUser.name}, here are your sent messages:</h2>
 				
 			</section>
             <section style={{display: 'flex',

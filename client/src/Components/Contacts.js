@@ -52,7 +52,7 @@ function Contacts({handleOnClick}) {
             />
             <h2 style={{display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',}}>Here are a list of possible Contacts:</h2>
+        justifyContent: 'center',}}>Here are a list of possible contacts:</h2>
         <div style={{display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',     flexDirection: 'row',  flexWrap: 'wrap',}}> 

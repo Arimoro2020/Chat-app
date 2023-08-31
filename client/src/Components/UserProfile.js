@@ -57,14 +57,18 @@ function UserProfile() {
 
     return(
         <div >
-        <section>
-			<span role="img">
+        <section >
+			<span role="img" style={{display: 'flex', alignItems: 'center',
+        		justifyContent: 'center', }}>
 				<img src={currentUser.avatar} alt={currentUser.name} width={320} />
 			</span>
-
-            <h4> {currentUser.name}</h4>
+			<div style={{display: 'flex', alignItems: 'center',
+        		justifyContent: 'center', flexDirection: "column"}}>
+					<h4 > {currentUser.name}</h4>
             <p> Background: {currentUser.background} </p>
-            <p> Online status: {currentUser.online_status}</p>
+            <em> Online status: {currentUser.online_status}</em>
+				</div>
+            
          
         </section>
         <section style={{
@@ -159,7 +163,8 @@ function UserProfile() {
 					{/* 8c. use conditional rendering to display the error to user */}
 				</form>
                 </section>
-                <section>
+                <section style={{display: 'flex', alignItems: 'center',
+        		justifyContent: 'center',}}>
 				<span role="img"><EditSvg className="button" onClick={()=>toggleForm()} width={"35px"}>
 					{visibleForm? "" : "Edit Profile"}
 				</EditSvg></span>

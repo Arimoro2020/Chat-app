@@ -28,7 +28,7 @@ function ChatRoom({id, handleFormSubmit, handleOnChange, formBody, handleOnDelet
               <div key= {chat.id} id={parseInt(chat.id)}   style={{
                 width: 500,
                 flex:1,
-                backgroundColor: 'skyblue',
+                backgroundColor: 'ghostWhite',
               }}>
                 <h3 style={{color:"steelBlue",}}>{chat.created_at}  {chat.user.name}</h3>
                 <img src={chat.user.avatar} alt={chat.user.name} width={30} />
@@ -57,9 +57,9 @@ function ChatRoom({id, handleFormSubmit, handleOnChange, formBody, handleOnDelet
 
     return (
         <div >
-       <h3 style={{display: 'flex',
+       <h2 style={{display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center', color:"royalBlue"}}>Conversation Name: {chatName}</h3>
+        justifyContent: 'center', }}>Conversation name: {chatName}</h2>
         <section style={{display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',}}>
