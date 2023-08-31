@@ -57,21 +57,27 @@ function ChatRoom({id, handleFormSubmit, handleOnChange, formBody, handleOnDelet
 
     return (
         <div >
-       <h3 style={{color:"royalBlue"}}>Conversation Name: {chatName}</h3>
-        <section>
+       <h3 style={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center', color:"royalBlue"}}>Conversation Name: {chatName}</h3>
+        <section style={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',}}>
         
         <ul>{roomChats}</ul>
            
       
         </section>
-        <section>
+        <section style={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',}}>
         <form className="new-message" id="editForm" onSubmit={(e)=>handleFormSubmit(e)}>
         <textarea 
             type="text"
             name="content_data"
             autoComplete="off"
             value={formBody.content_data}
-            onChange={(e) => handleOnChange(e)}/>
+            onChange={(e) => handleOnChange(e)} />
         <button type="submit">Send</button>
         </form>
         </section>

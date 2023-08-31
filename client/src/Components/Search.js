@@ -3,7 +3,9 @@ import React from 'react';
 function Search({search, handleSearch}){
 
     return (
-        <div className="searchbar">
+        <div className="searchbar" style={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',}}>
           <label htmlFor="search">Search App Users:</label>
           <input
             type="text"

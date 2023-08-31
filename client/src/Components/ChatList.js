@@ -32,10 +32,14 @@ function ChatList({messages, handleNewMessageOnClick}) {
 	return (
 		<div >
 			 <section > 
-				<h2 style={{color:"royalBlue",}}>{currentUser.name}, here are your sent messages:</h2>
+				<h2  style={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center', color:"royalBlue"}}>{currentUser.name}, here are your sent messages:</h2>
 				
 			</section>
-            <section>
+            <section style={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',}}>
 				<ul>{mappedSending}</ul>
 			
             </section>

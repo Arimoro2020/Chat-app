@@ -64,7 +64,7 @@ function UserProfile() {
 
             <h4> {currentUser.name}</h4>
             <p> Background: {currentUser.background} </p>
-            <em> Online status: {currentUser.online_status}</em>
+            <p> Online status: {currentUser.online_status}</p>
          
         </section>
         <section style={{
