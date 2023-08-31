@@ -20,13 +20,19 @@ function Home({received, handleNewMessageOnClick}) {
 		backgroundColor: 'ghostWhite',
 		flex: 1,
 	  }}>
-	<h3 style={{color:"steelBlue",}}>{fresh.created_at} From: {fresh.user.name}</h3>
-	<h4 style={{color:"steelBlue",}}>Conversation Name: {fresh.conversation.conversation_name}</h4>
+	<h3 style={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center', color:"steelBlue",}}>{fresh.created_at} From: {fresh.user.name}</h3>
+	<h4 style={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center', color:"steelBlue",}}>Conversation Name: {fresh.conversation.conversation_name}</h4>
 	<img src={fresh.user.avatar} alt={fresh.user.name} width={50} />
-	<em style={{fontSize: 20}}>{fresh.content_data}</em><span role="img">
+	<em style={{fontSize: 15}}>{fresh.content_data}</em><div style={{alignContent:"flex-end"}}>
+	<span role="img" >
 		<YourSvg width={ "20px"}  fresh={fresh} 
 		onClick={() => handleNewMessageOnClick(fresh)}/></span>
 
+	</div>
 	
 	</div>)
 

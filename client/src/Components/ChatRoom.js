@@ -30,11 +30,14 @@ function ChatRoom({id, handleFormSubmit, handleOnChange, formBody, handleOnDelet
                 flex:1,
                 backgroundColor: 'ghostWhite',
               }}>
-                <h3 style={{color:"steelBlue",}}>{chat.created_at}  {chat.user.name}</h3>
+                <h3 style={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center', color:"steelBlue",}}>{chat.created_at}  {chat.user.name}</h3>
                 <img src={chat.user.avatar} alt={chat.user.name} width={30} />
-                <em style={{fontSize: 20}}>{chat.content_data}</em>
+                <em style={{fontSize: 15}}>{chat.content_data}</em>
+                <div style={{alignContent:"flex-end"}}>
                 {currentUser.id === chat.user_id?
-                <button type="button" className="edit" chat={chat} onClick={()=>handleOnClickButton(chat)}>
+                <button type="button" className="edit" chat={chat} onClick={()=>handleOnClickButton(chat)} >
                 <Link  to="#editForm" smooth  >
                 <span role="img" aria-label="edit">
                     {isEditing ? "stopEdit" : "edit"}
@@ -43,11 +46,13 @@ function ChatRoom({id, handleFormSubmit, handleOnChange, formBody, handleOnDelet
                 </button> 
                 : null}
               
-                <button chat={chat} onClick={() =>handleOnDelete(chat)}>
+                <button chat={chat} onClick={() =>handleOnDelete(chat)} >
                     <span role="img" aria-label="delete">
                     🗑
                     </span>
                 </button >
+                </div>
+                
                 </div>
       
                
@@ -59,7 +64,7 @@ function ChatRoom({id, handleFormSubmit, handleOnChange, formBody, handleOnDelet
         <div >
        <h2 style={{display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center', }}>Conversation name: {chatName}</h2>
+        justifyContent: 'center', }}>Conversation name is {chatName}</h2>
         <section style={{display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',}}>
@@ -68,17 +73,20 @@ function ChatRoom({id, handleFormSubmit, handleOnChange, formBody, handleOnDelet
            
       
         </section>
-        <section style={{display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',}}>
-        <form className="new-message" id="editForm" onSubmit={(e)=>handleFormSubmit(e)}>
+        <section styles={{ display:'flex', alignItems: 'center',
+            justifyContent: 'center', }}>
+        <form className="new-message" id="editForm" onSubmit={(e)=>handleFormSubmit(e)}   style={{display:'flex',
+            alignItems: 'center', 
+            justifyContent: 'center', 
+       
+           }}>
         <textarea 
             type="text"
             name="content_data"
             autoComplete="off"
             value={formBody.content_data}
-            onChange={(e) => handleOnChange(e)} />
-        <button type="submit">Send</button>
+            onChange={(e) => handleOnChange(e)} styles={{width: 550}} />
+        <button type="submit">send</button>
         </form>
         </section>
         </div>
