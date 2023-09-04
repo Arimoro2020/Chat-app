@@ -16,7 +16,7 @@ function DarkMode(){
 
     return (
         <div className={isDarkMode? 'dark': 'light'} style={{display: 'flex', justifyContent: 'right'}}>
-            <button className="mode" onClick={toggleDarkMode} style={{background: "#808000", color:"white"}}>
+            <button className="mode" onClick={toggleDarkMode} style={{background: "#4682b4", color:"white"}}>
                 {isDarkMode? 'Light' : 'Dark'}
             </button>
         </div>
