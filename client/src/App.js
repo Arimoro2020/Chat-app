@@ -235,7 +235,7 @@ function App() {
 			})
 				.then((r) => r.json())
 				.then((update) =>{ 
-					const updatedMessages = [...messages, [update]]
+					const updatedMessages = [...messages, [update]];
 					if(messages !== updatedMessages){setMessages(updatedMessages)};	
 							
 			})	

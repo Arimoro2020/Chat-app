@@ -32,7 +32,7 @@ function Navigation() {
 					Accept: "application/json",
 					"Access-control-Allow-Origin":"*",
 				},
-		}).then(() => setLogIn(login=>!login))
+		}).then(() => setLogIn((login)=>!login))
 			.then(()=> navigate("/"))
 				
 	}
