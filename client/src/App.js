@@ -26,6 +26,7 @@ function App() {
 	const [conversations, setConversations] = useState([]);
 	const [userConversations, setUserConversations] = useState([]);
 	const [messages, setMessages] = useState([]);
+	const [filteredConversationsId, setFilteredConversationsId] = useState([]);
 	const [received, setReceived] = useState([]);
 	const [id, setId] = useState(null);
 	const [isEditing, setIsEditing] = useState(false)
@@ -83,9 +84,8 @@ function App() {
 
 			}
 			
-			const filteredConversationsId = [...userConversations].filter((el)=>{
-				return (el.user.name === currentUser.name)}).map((another)=>parseInt(another.conversation.id));
-			
+			const filteredConversationsById = [...messages].map((another)=>parseInt(another.conversation.id));
+			if(filteredConversationsId !== filteredConversationsById){setFilteredConversationsId(filteredConversationsById)}
 
 			const incomingMessages = [...allMessages].filter(incoming=>{
 			return (filteredConversationsId.includes(parseInt(incoming.conversation_id)) && (parseInt(incoming.user_id) !== currentUser.id))})
@@ -235,8 +235,8 @@ function App() {
 			})
 				.then((r) => r.json())
 				.then((update) =>{ 
-					const updatedMessages = [...messages, [update]];
-					if(messages !== updatedMessages){setMessages(updatedMessages)};	
+					const updatedMessages = [...allMessages, [update]];
+					if(allMessages !== updatedMessages){setAllMessages(updatedMessages)};	
 							
 			})	
 			.catch(console.error)
@@ -247,7 +247,7 @@ function App() {
 	
 	
 	
-	// console.log(messages)
+	// console.log(filteredConversationsId)
 	// console.log(allMessages)
 	// console.log(received)
 	// console.log(conversationData)

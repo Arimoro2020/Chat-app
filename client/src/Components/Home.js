@@ -27,7 +27,8 @@ function Home({received, handleNewMessageOnClick}) {
         alignItems: 'center',
         justifyContent: 'center', color: "white"}}>Conversation Name: {fresh.conversation.conversation_name}</h4>
 	<img src={fresh.user.avatar} alt={fresh.user.name} width={50} />
-	<p style={{fontSize: 20, color:"white"}}>{fresh.content_data}</p><div style={{alignContent:"flex-end", color:"white"}}>
+	<p style={{fontSize: 20, color:"white"}}>{fresh.content_data}</p>
+	<div style={{alignContent:"flex-end", color:"white"}}>
 	<span role="img" >
 		<YourSvg width={ "20px"}  fresh={fresh} 
 		onClick={() => handleNewMessageOnClick(fresh)}/></span>

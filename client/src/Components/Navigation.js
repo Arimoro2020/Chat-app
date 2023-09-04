@@ -45,45 +45,45 @@ function Navigation() {
 			<div className="menu">
 				<NavLink className="button" to="/home" end style={linkStyles}
         activeStyle={{
-          background: "#4682b4",
+          background: "#f0f8ff",
         }}>
 					Home
 				</NavLink>
 				<NavLink className="button" to="/chat_list" style={linkStyles}
         activeStyle={{
-          background: "#4682b4",
+          background: "#f0f8ff",
         }}>
 					Chat List
 				</NavLink>
 				<NavLink className="button" to="/chat_room" style={linkStyles}
         activeStyle={{
-          background: "#4682b4",
+          background: "#f0f8ff",
         }}>
 					Chat Room
 				</NavLink>
 				<NavLink className="button" to="/contacts" style={linkStyles}
         activeStyle={{
-          background: "#4682b4",
+          background: "#f0f8ff",
         }}>
 					Contacts
 				</NavLink>
                 <NavLink className="button" to="/user_profile"style={linkStyles}
         activeStyle={{
-          background: "#4682b4",
+          background: "#f0f8ff",
         }} >
 					UserProfile
 				</NavLink>
 				<NavLink className="button" to="/signup" style={linkStyles}
         activeStyle={{
-          background: "#4682b4",
+          background: "#f0f8ff",
         }}>
 					Sign Up
 				</NavLink>
-				<NavLink className="button" onClick={handleLogout} style={linkStyles}
+				<NavLink className="button" style={linkStyles}
         activeStyle={{
-          background: "#4682b4",
-        }}>
-							{ currentUser && login ? <LockSvg width={"70px"}  padding={"12px"} fill={"#000"} /> : <UnlockSvg width={"70px"}  padding={"12px"} fill={"#000"}/>}
+          background: "#f0f8ff",
+        }} onClick={handleLogout}>
+							{ currentUser && login ? <LockSvg width={"70px"}  padding={"12px"} fill={"#000"} /> : <UnlockSvg width={"70px"}  padding={"12px"} fill={"#000"}  />}
 				</NavLink>
 						
 			</div>
