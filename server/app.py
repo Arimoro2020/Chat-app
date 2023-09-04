@@ -326,7 +326,7 @@ class Conversations(Resource):
             db.session.add(new_conversation)
             db.session.commit()
 
-            new_conversation_dict = new_conversation.to_dict()
+            new_conversation_dict = new_conversation.to_dict("id", "conversation_name")
             return make_response(new_conversation_dict, 201)
 
 
