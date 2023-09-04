@@ -20,12 +20,12 @@ function ChatList({messages, handleNewMessageOnClick}) {
 			  }}>
 			<h3 style={{display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center', color:"steelBlue",}}>{fresh.created_at} From: {fresh.user.name}</h3>
+        justifyContent: 'center', }}>{fresh.created_at} From: {fresh.user.name}</h3>
 			<h4 style={{display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center', color:"steelBlue",}}>Conversation Name: {fresh.conversation.conversation_name}</h4>
+        justifyContent: 'center', }}>Conversation Name: {fresh.conversation.conversation_name}</h4>
 			<img src={fresh.user.avatar} alt={fresh.user.name} width={50} />
-			<em style={{fontSize: 15}}>{fresh.content_data}</em>
+			<p style={{fontSize: 18}}>{fresh.content_data}</p>
 			<div style={{alignContent:"flex-end"}}>
 			<span role="img" style={{alignContent:"flex-end"}}>
 				<YourSvg width={ "20px"}  fresh={fresh} 

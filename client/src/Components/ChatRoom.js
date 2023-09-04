@@ -32,9 +32,9 @@ function ChatRoom({id, handleFormSubmit, handleOnChange, formBody, handleOnDelet
               }}>
                 <h3 style={{display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center', color:"steelBlue",}}>{chat.created_at}  {chat.user.name}</h3>
+        justifyContent: 'center', }}>{chat.created_at}  {chat.user.name}</h3>
                 <img src={chat.user.avatar} alt={chat.user.name} width={30} />
-                <em style={{fontSize: 15}}>{chat.content_data}</em>
+                <p style={{fontSize: 18}}>{chat.content_data}</p>
                 <div style={{alignContent:"flex-end"}}>
                 {currentUser.id === chat.user_id?
                 <button type="button" className="edit" chat={chat} onClick={()=>handleOnClickButton(chat)} >

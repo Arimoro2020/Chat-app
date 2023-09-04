@@ -247,13 +247,13 @@ function App() {
 	
 	
 	
-	console.log(messages)
-	console.log(allMessages)
-	console.log(received)
-	console.log(conversationData)
-	console.log(id)
-	console.log(isEditing)
-	console.log(newId)
+	// console.log(messages)
+	// console.log(allMessages)
+	// console.log(received)
+	// console.log(conversationData)
+	// console.log(id)
+	// console.log(isEditing)
+	// console.log(newId)
 	
     
 	if (!currentUser){

@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { NavLink, useNavigate } from "react-router-dom";
 import UserContext from "./UserContext";
 import {useContext} from "react";
+import Clock from "./Clock";
+import DarkMode from './DarkMode';
 import { ReactComponent as LockSvg } from "/Users/yemiarimoro/Development/code/My-App/Chat-app/client/src/login_locked.svg";
 import { ReactComponent as UnlockSvg } from "/Users/yemiarimoro/Development/code/My-App/Chat-app/client/src/login_unlocked.svg";
 
@@ -36,6 +38,7 @@ function Navigation() {
 	}
 
 	return (
+		<>
 		<header   style={{display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',}}>
@@ -85,6 +88,9 @@ function Navigation() {
 						
 			</div>
 		</header>
+		<Clock />
+		<DarkMode/>
+		</>
 	);
 }
 

@@ -430,13 +430,17 @@ class Login(Resource):
         try:
             user = User.query.filter_by(username=data.get('username')).first()
             # 7b. check if password is authentic
-            if user.authenticate(data.get('password')):
+            if user.authenticate(data.get('password')) == False:
+
+                return make_response ({'error': 'Invalid password'}, 401)
                 # 7c. set session's user id
-                session['user_id'] = user.id 
-                return make_response(user.to_dict(only=('id', 'name', 'username', 'background', 'online_status', 'avatar')), 200)
+            session['user_id'] = user.id
+
+            return make_response(user.to_dict(only=('id', 'name', 'username', 'background', 'online_status', 'avatar')), 200)
+         
 
         except:
-            return make_response ({'error': 'Invalid username or password'}, 401)
+            return make_response ({'error': 'Invalid username'}, 401)
 
 
 api.add_resource(Login, '/login')
