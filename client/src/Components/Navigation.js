@@ -45,43 +45,43 @@ function Navigation() {
 			<div className="menu">
 				<NavLink className="button" to="/home" end style={linkStyles}
         activeStyle={{
-          background: "#53900F",
+          background: "olive",
         }}>
 					Home
 				</NavLink>
 				<NavLink className="button" to="/chat_list" style={linkStyles}
         activeStyle={{
-          background: "#53900F",
+          background: "olive",
         }}>
 					Chat List
 				</NavLink>
 				<NavLink className="button" to="/chat_room" style={linkStyles}
         activeStyle={{
-          background: "#53900F",
+          background: "olive",
         }}>
 					Chat Room
 				</NavLink>
 				<NavLink className="button" to="/contacts" style={linkStyles}
         activeStyle={{
-          background: "#53900F",
+          background: "olive",
         }}>
 					Contacts
 				</NavLink>
                 <NavLink className="button" to="/user_profile"style={linkStyles}
         activeStyle={{
-          background: "#53900F",
+          background: "olive",
         }} >
 					UserProfile
 				</NavLink>
 				<NavLink className="button" to="/signup" style={linkStyles}
         activeStyle={{
-          background: "#53900F",
+          background: "olive",
         }}>
 					Sign Up
 				</NavLink>
 				<NavLink className="button" onClick={handleLogout} style={linkStyles}
         activeStyle={{
-          background: "#000",
+          background: "olive",
         }}>
 							{ currentUser && login ? <LockSvg width={"70px"}  padding={"12px"} fill={"#000"} /> : <UnlockSvg width={"70px"}  padding={"12px"} fill={"#000"}/>}
 				</NavLink>
