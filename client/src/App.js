@@ -33,7 +33,7 @@ function App() {
 	const [newId, setNewId] = useState(null)
 	const [conversationData, setConversationData] = useState(null);
 
-	const {currentUser,setCurrentUser} = useContext(UserContext);
+	const {currentUser} = useContext(UserContext);
 	const formOutline = {"content_type":"String", "content_data": "","conversation_id": id, "user_id": parseInt(currentUser.id)
 		}
 	 const inviteForm = 	
@@ -80,18 +80,19 @@ function App() {
 			return (parseInt(message.user_id) === currentUser.id)})
 
 			if(messages !== getMessages){
-				setMessages((messages)=> [...getMessages]);
+				setMessages((messages)=> getMessages);
 
 			}
 			
 			const filteredConversationsById = [...messages].map((another)=>parseInt(another.conversation.id));
-			if(filteredConversationsId !== filteredConversationsById){setFilteredConversationsId(filteredConversationsById)}
+			if(filteredConversationsId !== filteredConversationsById){setFilteredConversationsId((filteredConversationsId)=>filteredConversationsById)}
 
 			const incomingMessages = [...allMessages].filter(incoming=>{
-			return (filteredConversationsId.includes(parseInt(incoming.conversation_id)) && (parseInt(incoming.user_id) !== currentUser.id))})
+			return (((filteredConversationsId.includes(parseInt(incoming.conversation_id)) && (parseInt(incoming.user_id) !== currentUser.id)))
+			 || ((incoming.conversation_name === currentUser.name) && (parseInt(incoming.user_id) !== currentUser.id)))});
 		
 			if(received !== incomingMessages){
-				setReceived((received)=>[...incomingMessages])};
+				setReceived((received)=>incomingMessages)};
 	}
 
 
@@ -244,10 +245,12 @@ function App() {
 	}
 	
 
+
 	
 	
+
 	
-	// console.log(filteredConversationsId)
+	// console.log(messages)
 	// console.log(allMessages)
 	// console.log(received)
 	// console.log(conversationData)
@@ -286,6 +289,8 @@ function App() {
 		
 	);
 }
+
+
 
 
 export default App;

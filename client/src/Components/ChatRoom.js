@@ -19,7 +19,7 @@ function ChatRoom({id, handleFormSubmit, handleOnChange, formBody, handleOnDelet
 	},[id, chatsRoom]);
  
     // console.log(formBody);
-    const chatName = chatsRoom && [...chatsRoom].map((el)=>el.conversation.conversation_name)[0];
+    const chatName = id && chatsRoom && [...chatsRoom].map((el)=>el.conversation.conversation_name)[0];
     const {currentUser} = useContext(UserContext)
 
     const roomChats = chatsRoom && chatsRoom.map((chat)=> {

@@ -46,7 +46,7 @@ function Home({received, handleNewMessageOnClick}) {
 				
 				<h2 style={{display: 'flex', alignItems: 'center',
         		justifyContent: 'center',}}>
-					{currentUser.name}, here are your received messages:</h2>
+					Hey {currentUser.name}, here are your received messages:</h2>
 
 			
 			</section>
