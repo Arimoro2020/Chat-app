@@ -56,9 +56,11 @@ if __name__ == '__main__':
         
         conversations = [
         Conversation(
-            conversation_name="John Doe",
+            conversation_name="Jerry Jones",
                 ),  Conversation(
-            conversation_name='Mel Needle')]
+            conversation_name='Mel Needle'),
+            Conversation(
+            conversation_name='Ian Smith')]
         
         db.session.add_all(conversations)
         db.session.commit()
@@ -67,10 +69,13 @@ if __name__ == '__main__':
         user_conversations = [
         UserConversation(
             conversation_id=1,
-            user_id = 3
-                ),  UserConversation(
-            conversation_id=1,
+            user_id = 1
+                ), UserConversation(
+            conversation_id=2,
             user_id = 4
+                ), UserConversation(
+            conversation_id=3,
+            user_id = 5
                 )]
         
         db.session.add_all(user_conversations)
@@ -83,7 +88,7 @@ if __name__ == '__main__':
             content_data=fake.sentence(),
             content_type= 'String',
             conversation_id = 1,
-            user_id = 3
+            user_id = 1
                 ),   Message(
             content_data=fake.sentence(),
             content_type= 'String',
@@ -93,7 +98,7 @@ if __name__ == '__main__':
             content_data=fake.sentence(),
             content_type= 'String',
             conversation_id = 1,
-            user_id = 3
+            user_id = 1
                 ),
                   Message(
             content_data=fake.sentence(),
@@ -109,32 +114,17 @@ if __name__ == '__main__':
             content_data=fake.sentence(),
             content_type= 'String',
             conversation_id = 1,
-            user_id = 3
-                ),  Message(
-            content_data=fake.sentence(),
-            content_type= 'String',
-            conversation_id = 1,
-            user_id = 3
+            user_id = 1
                 ),  Message(
             content_data=fake.sentence(),
             content_type= 'String',
             conversation_id = 1,
             user_id = 4
-                ), Message(
-            content_data=fake.sentence(),
-            content_type= 'String',
-            conversation_id = 1,
-            user_id = 3,
                 ),  Message(
             content_data=fake.sentence(),
             content_type= 'String',
             conversation_id = 1,
-            user_id = 4,
-                ), Message(
-            content_data=fake.sentence(),
-            content_type= 'String',
-            conversation_id = 1,
-            user_id = 3,
+            user_id = 1
                 ), Message(
             content_data=fake.sentence(),
             content_type= 'String',
@@ -144,7 +134,106 @@ if __name__ == '__main__':
             content_data=fake.sentence(),
             content_type= 'String',
             conversation_id = 1,
+            user_id = 1,
+                ), Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 1,
+            user_id = 4,
+                ), Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 1,
+            user_id = 1,
+                ),  Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 1,
+            user_id = 4,
+                ),
+                 Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 2,
             user_id = 3,
+                ),
+                 Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 2,
+            user_id = 4,
+                ),
+                 Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 2,
+            user_id = 3,
+                ),
+                 Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 2,
+            user_id = 4,
+                ),
+                 Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 2,
+            user_id = 3,
+                ),
+                 Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 2,
+            user_id = 4,
+                ),
+                     Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 2,
+            user_id = 3,
+                ),
+                     Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 2,
+            user_id = 4,
+                ),
+                     Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 3,
+            user_id = 3,
+                ),
+                     Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 3,
+            user_id = 5,
+                ),
+                     Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 3,
+            user_id = 3,
+                ),
+                     Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 3,
+            user_id = 5,
+                ),
+                     Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 3,
+            user_id = 3,
+                ),
+                     Message(
+            content_data=fake.sentence(),
+            content_type= 'String',
+            conversation_id = 3,
+            user_id = 5,
                 )
             ]
 
