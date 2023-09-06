@@ -1,16 +1,13 @@
 
 Description: 
 
-Real-time Chat application for private or group messaging of text type built on React and Flask-SQLAlchemy Python.
+Chat application for private messaging of text type built on React and Flask-SQLAlchemy Python.
 
 User stories:
 
 - As a user, I'm able to register and/or login
-- As a user, I can search through users of app, see their profiles and add a user as a contact
-- As a user, I can send, read, update and delete messages between me and users of the app (private option)
-- As a user, I can send, read, update and delete messages between me and group of users of the app (multiple users option)
-- As a user, I have the ability to send and receive photos and documents
-- As a user, I can receive push notification alerts
+- As a user, I can search through users of the app, see their profiles, and add a user as a contact
+- As a user, I can send, read, update, and delete messages between me and users in a conversation 
 - As a user, I can update my user profile.
 
 
