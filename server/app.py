@@ -6,6 +6,7 @@ from flask_restful import Api, Resource
 from models import User, UserConversation, Conversation, Message
 from config import app, db, api, cors
 
+
 class Users(Resource):
     def get(self):
         q = User.query.all()
