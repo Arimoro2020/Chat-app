@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import Search from './Search';
-import { ReactComponent as InviteSvg } from '/Users/yemiarimoro/Development/code/My-App/Chat-app/client/src/inviteToChat.svg';
+import { ReactComponent as InviteSvg } from '../assets/inviteToChat.svg';
 
 
 function Contacts({handleOnClick}) {

@@ -13,6 +13,7 @@ flask-cors = "*"
 flask-migrate = "*"
 flask = "*"
 gunicorn = "*"
+python-dotenv = "*"
 psycopg2-binary = "*"
 bcrypt = "*"
 faker = "*"
@@ -21,4 +22,4 @@ jsonify = "*"
 [dev-packages]
 
 [requires]
-python_version = "3.8"
+python_version = "3.8.13"

@@ -4,8 +4,8 @@ import UserContext from "./UserContext";
 import {useContext} from "react";
 import Clock from "./Clock";
 import DarkMode from './DarkMode';
-import { ReactComponent as LockSvg } from "/Users/yemiarimoro/Development/code/My-App/Chat-app/client/src/login_locked.svg";
-import { ReactComponent as UnlockSvg } from "/Users/yemiarimoro/Development/code/My-App/Chat-app/client/src/login_unlocked.svg";
+import { ReactComponent as LockSvg } from "../assets/login_locked.svg";
+import { ReactComponent as UnlockSvg } from "../assets/login_unlocked.svg";
 
 
 function Navigation() {

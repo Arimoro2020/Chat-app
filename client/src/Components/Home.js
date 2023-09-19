@@ -1,7 +1,7 @@
 
 import {  useContext } from "react";
 import UserContext from "./UserContext";
-import { ReactComponent as YourSvg } from '/Users/yemiarimoro/Development/code/My-App/Chat-app/client/src/chat.svg';
+import { ReactComponent as YourSvg } from "../assets/chat.svg";
 
 
 

@@ -17,7 +17,7 @@ if __name__ == '__main__':
         Conversation.query.delete()
 
         names = ['Jerry Jones', 'Peter Duck', 'John Doe', 'Mel Needle', 'Ian Smith']
-        status = ['online', 'offline', 'Busy']
+        status = ['online', 'offline', 'busy']
         pictures = [ "https://img.freepik.com/free-photo/worldface-spanish-guy-white-background_53876-137665.jpg",
                 
         "https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg"

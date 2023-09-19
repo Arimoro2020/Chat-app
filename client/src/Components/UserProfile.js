@@ -2,7 +2,7 @@ import UserContext from "./UserContext";
 import {useContext, useState} from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { ReactComponent as EditSvg } from "/Users/yemiarimoro/Development/code/My-App/Chat-app/client/src/Edit.svg";
+import { ReactComponent as EditSvg } from "../assets/Edit.svg";
 
 
 function UserProfile() {

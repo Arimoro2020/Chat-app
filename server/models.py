@@ -34,10 +34,12 @@ class User(db.Model, SerializerMixin):
     def validate_username(self, key, username):
         if username == '':
             raise ValueError("username cannot be empty")
-        elif username in User.username:
+        existing_user = User.query.filter_by(username=username).first()
+    
+        if existing_user:
             raise ValueError('username must be unique')
-        else:
-            return username 
+        
+        return username
         
 
     @validates('avatar')
@@ -53,8 +55,8 @@ class User(db.Model, SerializerMixin):
     def validate_online_status(self, key, status):
         if status not in ['online', 'offline', 'busy']:
             raise ValueError('status must be one of online, offline, or busy')
-        else:
-            return status 
+        return status
+
 
     @hybrid_property
     def password_hash(self):
