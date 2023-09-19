@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.da03d55f.css","mappings":"AAAA,MACE,qBAAyB,CACzB,UACA,CAEA,OAEI,qBAAsB,CACtB,UACJ","sources":["index.css"],"sourcesContent":[".dark{\n  background-color: #000000;\n  color: #fff;\n  }\n  \n  .light{\n  \n      background-color: #fff;\n      color: #000000;\n  }\n  "],"names":[],"sourceRoot":""}
