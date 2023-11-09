@@ -381,11 +381,13 @@ class ConversationById(Resource):
         try:
             db.session.delete(conversation)
             db.session.commit()
+            response = make_response({}, 204)
 
-        except:
-            pass
+        except Exception as e:
+            db.session.rollback()  # Rollback the session in case of an exception to avoid leaving the session in an inconsistent state
+            response = make_response({'error': 'An error occurred while deleting the conversation'}, 500)  # Return a 500 status code for server errors
 
-        response = make_response({}, 204)
+       
         return response 
 
 
@@ -471,7 +473,7 @@ api.add_resource(Logout, '/logout')
 
 
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+    app.run(port=5555, debug=False)
 
 
 
