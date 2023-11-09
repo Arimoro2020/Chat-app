@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: server
+Version: 0.1.0
+Summary: Chat/Messaging App
+Home-page: http://physics.codes
+Author: Adeyemi Arimoro
+Author-email: arimoro71@gmail.com
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3
