@@ -14,7 +14,6 @@ setup(
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
     ],
-    license='BSD-3-Clause',
     python_requires='>=3',
     zip_safe=False,
     packages=find_packages(),
