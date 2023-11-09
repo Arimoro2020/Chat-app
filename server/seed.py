@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from faker import Faker
-import random
+import secrets
 from config import bcrypt
 from app import app
 from models import db, User, UserConversation, Message, Conversation
@@ -36,17 +36,17 @@ if __name__ == '__main__':
         "https://img.freepik.com/free-photo/worldface-australian-girl-white-background_53876-139752.jpg",
 
         "https://img.freepik.com/free-photo/worldface-british-guy-white-background_53876-14467.jpg"]
-        password = random.choice(status)
+        password = secretes.choice(status)
         users = [
         User(
             
             name=name,
             username=fake.word(),
-            avatar=random.choice(pictures),
+            avatar=secrets.choice(pictures),
             _password_hash= bcrypt.generate_password_hash(
             password.encode('utf-8')).decode('utf-8'),
             background= fake.sentence(),
-            online_status=random.choice(status)
+            online_status=secrets.choice(status)
             )
             for name in names]
         
