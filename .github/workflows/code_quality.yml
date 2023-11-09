@@ -15,4 +15,4 @@ jobs:
       - name: Install dependencies
         run: pip install flake8 && pip install mccabe
       - name: Run flake8
-        run: flake8 -r --max-complexity 10 server
+        run: flake8 --max-complexity 10 server
