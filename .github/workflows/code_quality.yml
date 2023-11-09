@@ -1,0 +1,18 @@
+name: code_quality
+
+on: [push]
+
+jobs:
+  flake8:
+    runs-on: ubuntu-latest
+    name: "flake8"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: pip install flake8 && pip install mccabe
+      - name: Run flake8
+        run: flake8 --max-complexity 10 server
