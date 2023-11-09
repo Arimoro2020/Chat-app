@@ -15,21 +15,23 @@ class Users(Resource):
 
         if not q:
 
-            return make_response({'error':'User not found'}, 404)
+            return make_response({'error': 'User not found'}, 404)
 
-        q_dict = [user.to_dict(only=('id', 'name', 'username', 
-                 'background', 'online_status', 'avatar')) for user in q]
+        q_dict=[user.to_dict(
+            only=('id', 'name', 'username', 
+            'background', 'online_status', 'avatar')
+            ) for user in q]
 
-        response = make_response(q_dict, 200)
+        response=make_response(q_dict, 200)
 
         return response
     
     def post(self):
     
-        data = request.get_json()
+        data=request.get_json()
 
         try:
-            new = User(
+            new=User(
                 name=data.get('name'),
                 username=data.get('username'),
                 background=data.get('background'),
@@ -43,8 +45,10 @@ class Users(Resource):
         except Exception as e:
             return make_response({"errors": ["validation errors"]}, 400)
             
-        response=make_response(data.to_dict(only=('id', 'name', 
-                  'username', 'background', 'online_status', 'avatar')), 201)
+        response=make_response(
+            data.to_dict(only=('id', 'name', 
+            'username', 'background', 'online_status', 'avatar')), 201
+            )
 
         return response
     
@@ -59,9 +63,12 @@ class UserById(Resource):
 
         if not user:
 
-            return make_response({'error':'User not found'}, 404)
+            return make_response({'error': 'User not found'}, 404)
         
-        response=make_response(user.to_dict(only=('id', 'name', 'username', 'background', 'online_status', 'avatar', '_password_hash')), 200)
+        response=make_response(
+            user.to_dict(only=('id', 'name', 'username', 
+            'background', 'online_status', 'avatar', '_password_hash')), 200
+            )
 
         return response
     
@@ -71,9 +78,9 @@ class UserById(Resource):
 
             if not user:
 
-                return make_response({'error':'User not found'}, 404)
+                return make_response({'error': 'User not found'}, 404)
 
-            data = request.get_json()
+            data=request.get_json()
 
             try:
 
@@ -89,8 +96,11 @@ class UserById(Resource):
 
                 return make_response({ "errors": ["validation errors"]}, 400)
             
-            response=make_response(user.to_dict(only=('id', 
-                     'name', 'username', 'background', 'online_status', 'avatar')), 202)
+            response=make_response(
+                user.to_dict(only=('id', 
+                'name', 'username', 'background', 'online_status', 
+                'avatar')), 202
+                )
 
             return response
     
@@ -100,7 +110,7 @@ class UserById(Resource):
 
         if not user:
 
-            return make_response({'error':'User not found'}, 404)
+            return make_response({'error': 'User not found'}, 404)
         
         db.session.delete(user)
 
@@ -117,14 +127,17 @@ class UserByUsername(Resource):
 
     def get(self, username):
 
-        user=User.query.filter(User.username== username).first()
+        user=User.query.filter(User.username==username).first()
 
         if not user:
 
-            return make_response({'error':'User not found'}, 404)
+            return make_response({'error': 'User not found'}, 404)
         
-        response=make_response(user.to_dict(only=('id', 'name',
-                     'username', 'background', 'online_status', 'avatar', '_password_hash')), 200)
+        response=make_response(
+            user.to_dict(only=('id', 'name',
+            'username', 'background', 'online_status', 
+            'avatar', '_password_hash')), 200
+            )
 
         return response
     
@@ -182,7 +195,7 @@ class MessageById(Resource):
 
         if not message:
 
-            return make_response({'error':'Message not found'}, 404)
+            return make_response({'error': 'Message not found'}, 404)
         
         response=make_response(message.to_dict(), 200)
 
@@ -194,7 +207,7 @@ class MessageById(Resource):
 
         if not message:
 
-            return make_response({'error':'Message not found'}, 404)
+            return make_response({'error': 'Message not found'}, 404)
 
         data=request.get_json()
 
@@ -222,7 +235,7 @@ class MessageById(Resource):
 
         if not message:
 
-            return make_response({'error':'Message not found'}, 404)
+            return make_response({'error': 'Message not found'}, 404)
 
         db.session.delete(message)
 
@@ -241,7 +254,7 @@ class UserConversations(Resource):
 
         if not q:
 
-            return make_response({'error':'UserConversation not found'}, 404)
+            return make_response({'error': 'UserConversation not found'}, 404)
 
         q_dict=[user_conversation.to_dict() for user_conversation in q]
 
@@ -294,7 +307,7 @@ class UserConversationById(Resource):
 
         if not user_conversation:
 
-            return make_response({'error':'UserConversation not found'}, 404)
+            return make_response({'error': 'UserConversation not found'}, 404)
 
         try:
 
@@ -322,7 +335,7 @@ class UserConversationById(Resource):
 
         if not user_conversation:
 
-            return make_response({'error':'UserConversation not found'}, 404)
+            return make_response({'error': 'UserConversation not found'}, 404)
 
         db.session.delete(user_conversation)
 
@@ -382,7 +395,7 @@ class ConversationById(Resource):
 
         if not conversation:
 
-            return make_response({'error':'Conversation not found'}, 404)
+            return make_response({'error': 'Conversation not found'}, 404)
         
         response=make_response(conversation.to_dict(only=('id', 'conversation_name')), 200)
 
@@ -394,7 +407,7 @@ class ConversationById(Resource):
 
         if not conversation:
 
-            return make_response({'error':'Conversation not found'}, 404)
+            return make_response({'error': 'Conversation not found'}, 404)
 
         try:
             data=request.get_json()
@@ -421,7 +434,7 @@ class ConversationById(Resource):
 
         if not conversation:
 
-            return make_response({'error':'Conversation not found'}, 404)
+            return make_response({'error': 'Conversation not found'}, 404)
 
         try:
 
@@ -448,7 +461,7 @@ def get_conversations(id):
 
     if not q:
 
-        return make_response({'error':'Message not found'}, 404)
+        return make_response({'error': 'Message not found'}, 404)
     
     q_dict=[message.to_dict() for message in q]
     
