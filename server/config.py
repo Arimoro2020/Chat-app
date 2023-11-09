@@ -7,6 +7,7 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 app = Flask(
@@ -30,10 +31,12 @@ migrate = Migrate(app, db)
 
 db.init_app(app)
 
+
 @app.errorhandler(404)
 def not_found(e):
 
     return render_template("index.html")
+
 
 bcrypt = Bcrypt(app)
 
