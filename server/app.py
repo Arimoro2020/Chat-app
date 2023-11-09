@@ -11,6 +11,7 @@ class Users(Resource):
 
     def get(self):
 
+
         q = User.query.all()
 
         if not q:
@@ -27,8 +28,9 @@ class Users(Resource):
 
         return response
     
-    def post(self):
     
+    def post(self):
+
         data = request.get_json()
 
         try:
@@ -45,6 +47,7 @@ class Users(Resource):
             db.session.commit()
 
         except Exception as e:
+
             return make_response({"errors": ["validation errors"]}, 400)
             
         response = make_response(
@@ -53,6 +56,7 @@ class Users(Resource):
                                )
 
         return response
+    
     
 api.add_resource(Users, '/users')
 
@@ -73,6 +77,7 @@ class UserById(Resource):
         )
 
         return response
+    
     
     def patch(self,id):
             
@@ -106,6 +111,7 @@ class UserById(Resource):
 
             return response
     
+    
     def delete(self,id):
 
         user = User.query.filter(User.id == id).first()
@@ -121,6 +127,7 @@ class UserById(Resource):
         response = make_response({}, 204)
 
         return response 
+    
 
 api.add_resource(UserById, '/users/<int:id>')
 
@@ -143,7 +150,9 @@ class UserByUsername(Resource):
 
         return response
     
+    
 api.add_resource(UserByUsername, '/users/<string:username>')
+
 
 class Messages(Resource):
 
@@ -162,7 +171,6 @@ class Messages(Resource):
         return response
     
 
-    
     def post(self):
         
         data = request.get_json()
@@ -186,8 +194,10 @@ class Messages(Resource):
         except Exception as e:
 
             return make_response({"errors": ["validation errors"]}, 400)
-            
+
+
 api.add_resource(Messages, '/messages')
+
 
 class MessageById(Resource):
 
@@ -203,6 +213,7 @@ class MessageById(Resource):
 
         return response
     
+
     def patch(self,id):
 
         message = Message.query.filter(Message.id == id).first()
@@ -231,6 +242,7 @@ class MessageById(Resource):
 
         return response
     
+
     def delete(self,id):
 
         message = Message.query.filter(Message.id == id).first()
@@ -246,7 +258,9 @@ class MessageById(Resource):
         response = make_response({}, 204)
         return response 
   
+
 api.add_resource(MessageById, '/messages/<int:id>')
+
 
 class UserConversations(Resource):
 
@@ -264,6 +278,7 @@ class UserConversations(Resource):
 
         return response
     
+
     def post(self):
 
         data = request.get_json()
@@ -286,8 +301,10 @@ class UserConversations(Resource):
         except Exception as e:
 
             return make_response({"errors": ["validation errors"]}, 400)
-            
+
+
 api.add_resource(UserConversations, '/user_conversations')
+
 
 class UserConversationById(Resource):
 
@@ -303,6 +320,7 @@ class UserConversationById(Resource):
 
         return response
    
+
     def patch(self,id):
 
         user_conversation = UserConversation.query.filter(UserConversation.id == id).first()
@@ -331,6 +349,7 @@ class UserConversationById(Resource):
 
         return response
 
+
     def delete(self,id):
 
         user_conversation = UserConversation.query.filter(UserConversation.id == id).first()
@@ -347,7 +366,9 @@ class UserConversationById(Resource):
 
         return response 
  
+
 api.add_resource(UserConversationById, '/user_conversations/<int:id>')
+
 
 class Conversations(Resource):
 
@@ -365,6 +386,7 @@ class Conversations(Resource):
 
         return response
     
+
     def post(self):
 
         data=request.get_json()
@@ -386,8 +408,10 @@ class Conversations(Resource):
         except Exception as e:
 
             return make_response({"errors": ["validation errors"]}, 400)
-                  
+
+
 api.add_resource(Conversations, '/conversations')
+
 
 class ConversationById(Resource):
 
@@ -403,6 +427,7 @@ class ConversationById(Resource):
 
         return response
     
+
     def patch(self,id):
 
         conversation = Conversation.query.filter(Conversation.id == id).first()
@@ -430,6 +455,7 @@ class ConversationById(Resource):
 
         return response
     
+
     def delete(self,id):
 
         conversation = Conversation.query.filter(Conversation.id == id).first()
@@ -457,7 +483,9 @@ class ConversationById(Resource):
 
         return response 
   
+
 api.add_resource(ConversationById, '/conversations/<int:id>')
+
 
 @app.route('/messages/conversations/<int:id>', methods = ['GET'])
 def get_conversations(id):
@@ -473,6 +501,7 @@ def get_conversations(id):
     response = make_response(jsonify(q_dict), 200)
 
     return response
+
         
 class Signup(Resource):
 
@@ -491,7 +520,10 @@ class Signup(Resource):
         session['user_id'] = new_user.id
         #return response
         return make_response(new_user.to_dict(rules=('-_password_hash', )), 201)
+
+
 api.add_resource(Signup, '/signup')
+
 
 class Login(Resource):
 
@@ -517,8 +549,10 @@ class Login(Resource):
 
             return make_response ({'error': 'Invalid username'}, 401)
 
+
 api.add_resource(Login, '/login')
  
+
 class CheckSession(Resource):
 
     def get(self):
@@ -539,7 +573,9 @@ class CheckSession(Resource):
 
             return make_response({'message': '401: Not Authorized'}, 401)
 
+
 api.add_resource(CheckSession, '/check_session')
+
 
 class Logout(Resource):
 
@@ -549,7 +585,9 @@ class Logout(Resource):
 
         return make_response({'message': '204: No Content'}, 204)
 
+
 api.add_resource(Logout, '/logout')
+  
     
 if __name__ == '__main__':
 

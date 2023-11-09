@@ -40,6 +40,7 @@ class User(db.Model, SerializerMixin):
         
         return background 
         
+
     @validates('username')
     def validate_username(self, key, username):
 
@@ -71,6 +72,7 @@ class User(db.Model, SerializerMixin):
         
         return avatar 
         
+
     @validates('online_status')
     def validate_online_status(self, key, status):
 
@@ -79,6 +81,7 @@ class User(db.Model, SerializerMixin):
             raise ValueError('status must be one of online, offline, or busy')
         
         return status
+
 
     @hybrid_property
     def password_hash(self):
@@ -93,6 +96,7 @@ class User(db.Model, SerializerMixin):
         )
 
         self._password_hash=password_hash.decode('utf-8')
+
 
     def authenticate(self, password):
 
@@ -114,6 +118,7 @@ class UserConversation(db.Model, SerializerMixin):
 
     serialize_rules = ('-conversation.user_conversations',)
 
+
     def to_dict(self, deep=False):
 
         serialized = super(UserConversation, self).to_dict(deep)
@@ -123,6 +128,7 @@ class UserConversation(db.Model, SerializerMixin):
             serialized['user']=self.user.to_dict()
 
         return serialized
+
 
 class Conversation(db.Model, SerializerMixin):
 
@@ -146,6 +152,7 @@ class Conversation(db.Model, SerializerMixin):
 
     serialize_rules = ('-user_conversations.conversation', '-messages')
     
+
     @validates('conversation_name')
     def validate_conversation_name(self, key, conversation_name):
 
@@ -160,6 +167,7 @@ class Conversation(db.Model, SerializerMixin):
         
         return conversation_name 
     
+
 class Message(db.Model, SerializerMixin):
 
     __tablename__ = "messages"
@@ -180,6 +188,7 @@ class Message(db.Model, SerializerMixin):
 
     serialize_rules = ('-conversation.messages', '-updated_at',)
 
+
     def to_dict(self, deep=False):
 
         serialized = super(Message, self).to_dict(deep)
@@ -189,6 +198,7 @@ class Message(db.Model, SerializerMixin):
             serialized['user'] = self.user.to_dict()
 
         return serialized
+
 
     @validates('content_data')
     def validate_content_data(self, key, content):

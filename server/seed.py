@@ -63,7 +63,7 @@ if __name__ == '__main__':
                         conversation_name='Mel Needle'),
                         Conversation(
                         conversation_name='Ian Smith')
-    ]
+        ]
         
         db.session.add_all(conversations)
 
@@ -234,22 +234,22 @@ if __name__ == '__main__':
                     user_id=3,
                     ),
                     Message(
-                    content_data = fake.sentence(),
-                    content_type = 'String',
-                    conversation_id = 3,
+                    content_data=fake.sentence(),
+                    content_type='String',
+                    conversation_id=3,
                     user_id=5,
                     ),
                     Message(
-                    content_data = fake.sentence(),
-                    content_type = 'String',
-                    conversation_id = 3,
-                    user_id = 3,
+                    content_data=fake.sentence(),
+                    content_type='String',
+                    conversation_id=3,
+                    user_id=3,
                     ),
                     Message(
-                    content_data = fake.sentence(),
-                    content_type = 'String',
-                    conversation_id = 3,
-                    user_id = 5,
+                    content_data=fake.sentence(),
+                    content_type='String',
+                    conversation_id=3,
+                    user_id=5,
                     )
         ]
 
