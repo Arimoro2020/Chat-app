@@ -42,7 +42,7 @@ if __name__ == '__main__':
         users = [
                 User(
                 name=name,
-                username=fake.word(),
+                username=fake.email(),
                 avatar=secrets.choice(pictures),
                 _password_hash=bcrypt.generate_password_hash(
                 password.encode('utf-8')).decode('utf-8'),
