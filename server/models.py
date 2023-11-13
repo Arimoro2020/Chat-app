@@ -1,8 +1,14 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates, backref
 from sqlalchemy.ext.hybrid import hybrid_property
-# from sqlalchemy.dialects.postgresql import JSONB
 from config import db, bcrypt
+import gnupg
+from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
+
+
+# Initialize GPG
+gpg = gnupg.GPG()
 
 
 class User(db.Model, SerializerMixin):
@@ -10,7 +16,7 @@ class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, unique=True, nullable=False)
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
     background = db.Column(db.String, nullable=True)
@@ -21,7 +27,7 @@ class User(db.Model, SerializerMixin):
 
     user_conversations = db.relationship(
                        'UserConversation', 
-                        backref=backref("user"), cascade="all, delete-orphan"
+                       backref=backref("user"), cascade="all, delete-orphan"
     )
     
     messages = db.relationship(
@@ -189,27 +195,55 @@ class Message(db.Model, SerializerMixin):
     serialize_rules = ('-conversation.messages', '-updated_at',)
 
 
+    @validates('content_data')
+    def validate_content_data(self, key, content):
+        if len(content) > 2000:
+            raise ValueError('content must be less than 2000 characters')
+        return content 
+
+    def encrypt_message(self, recipient_email):
+        # Generate a random AES256 key
+        key = get_random_bytes(32)
+
+        # Encrypt the key using GPG
+        encrypted_key = gpg.encrypt(str(key), recipients=[self.username])
+
+        # Encrypt the message using AES256
+        cipher = AES.new(key, AES.MODE_EAX)
+        nonce = cipher.nonce
+        ciphertext, tag = cipher.encrypt_and_digest(self.content_data.encode('utf-8'))
+
+        # Update the message with the encrypted content and key information
+        self.content_data = ciphertext.hex()
+        self.content_type = 'encrypted'
+        self.encrypted_key = str(encrypted_key)
+        self.nonce = nonce.hex()
+        self.tag = tag.hex()
+
+    def decrypt_message(self, passphrase):
+        # Decrypt the key using GPG
+        decrypted_key = gpg.decrypt(self.encrypted_key, passphrase=self._password_hash)
+
+        # Decrypt the message using AES256
+        cipher = AES.new(decrypted_key.data, AES.MODE_EAX, nonce=bytes.fromhex(self.nonce))
+        plaintext = cipher.decrypt_and_verify(bytes.fromhex(self.content_data), bytes.fromhex(self.tag))
+
+        # Update the message with the decrypted content
+        self.content_data = plaintext.decode('utf-8')
+        self.content_type = 'text'
+
     def to_dict(self, deep=False):
-
         serialized = super(Message, self).to_dict(deep)
-
         if deep:
-
             serialized['user'] = self.user.to_dict()
+
+        # Remove sensitive information before serialization
+        serialized.pop('encrypted_key', None)
+        serialized.pop('nonce', None)
+        serialized.pop('tag', None)
 
         return serialized
 
 
-    @validates('content_data')
-    def validate_content_data(self, key, content):
-
-        if len(content) > 2000:
-
-            raise ValueError('content must be less than 2000 characters')
-        
-        return content 
-
     
-
-
 
