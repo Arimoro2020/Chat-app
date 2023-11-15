@@ -9,7 +9,7 @@ from models import db, User, UserConversation, Message, Conversation
 fake = Faker()
 
 if __name__ == '__main__':
-    
+
     with app.app_context():
 
         User.query.delete()
@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
         names = ['Jerry Jones', 'Peter Duck', 
             'John Doe', 'Mel Needle', 'Ian Smith']
-        
+
         status = ['online', 'offline', 'busy']
 
         pictures = [
@@ -37,7 +37,7 @@ if __name__ == '__main__':
             "https://img.freepik.com/free-photo/worldface-australian-girl-white-background_53876-139752.jpg", 
             "https://img.freepik.com/free-photo/worldface-british-guy-white-background_53876-14467.jpg" 
         ]
-                
+
         password=secretes.choice(status)
 
         users = [ 
@@ -52,27 +52,27 @@ if __name__ == '__main__':
                 ) 
                 for name in names 
         ]
-        
+
         db.session.add_all(users)
 
         db.session.commit()
-        
+
         conversations = [ 
             Conversation(conversation_name="Jerry Jones"), 
             Conversation(conversation_name='Mel Needle'), 
             Conversation(conversation_name='Ian Smith') 
         ]
-        
+
         db.session.add_all(conversations)
 
         db.session.commit()
- 
+
         user_conversations = [   
         UserConversation(conversation_id=1, user_id=1),  
         UserConversation(conversation_id=2, user_id=4), 
         UserConversation(conversation_id=3, user_id=5) 
         ]
-        
+
         db.session.add_all(user_conversations)
 
         db.session.commit()

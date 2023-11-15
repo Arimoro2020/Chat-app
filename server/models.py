@@ -32,7 +32,7 @@ class User(db.Model, SerializerMixin):
         backref=backref("user"), 
         cascade="all, delete-orphan"
     )
-    
+
     messages = db.relationship(
         'Message', 
         backref=backref("user"), 
@@ -49,9 +49,9 @@ class User(db.Model, SerializerMixin):
         if len(background) > 800:
 
             raise ValueError('background must not be more than 800 characters')
-        
+
         return background 
-        
+
 
     @validates('username')
 
@@ -60,15 +60,15 @@ class User(db.Model, SerializerMixin):
         if not username:
 
             raise ValueError("username cannot be empty")
-        
+
         existing_user = User.query.filter_by(username=username).first()
-    
+
         if existing_user:
 
             raise ValueError('username must be unique')
-        
+
         return username
-        
+
 
     @validates('avatar')
     def validate_avatar(self, key, avatar):
@@ -76,13 +76,13 @@ class User(db.Model, SerializerMixin):
         if avatar == '':
 
             raise ValueError("avatar cannot be empty")
-        
+
         elif('jpg' not in avatar and 'png' not in avatar and 'jpeg' not in avatar):
-            
+
             raise ValueError('avatar must be png or jpg')
-        
+
         return avatar 
-        
+
 
     @validates('online_status')
 
@@ -91,7 +91,7 @@ class User(db.Model, SerializerMixin):
         if status not in ['online', 'offline', 'busy']:
 
             raise ValueError('status must be one of online, offline, or busy')
-        
+
         return status
 
 
@@ -119,7 +119,7 @@ class User(db.Model, SerializerMixin):
             self._password_hash, 
             password.encode('utf-8') 
         )
-    
+
 
 class UserConversation(db.Model, SerializerMixin):
 
@@ -158,7 +158,7 @@ class Conversation(db.Model, SerializerMixin):
         backref=backref("conversation"), 
         cascade="all, delete-orphan" 
     )
-    
+
     messages = db.relationship( 
         'Message', 
         backref=backref("conversation"), 
@@ -166,7 +166,7 @@ class Conversation(db.Model, SerializerMixin):
     )
 
     serialize_rules = ('-user_conversations.conversation', '-messages')
-    
+
 
     @validates('conversation_name')
 
@@ -175,14 +175,14 @@ class Conversation(db.Model, SerializerMixin):
         if  not conversation_name:
 
             raise ValueError("conversation_name cannot be empty")
-        
+
         elif len(conversation_name) > 20:
 
             raise ValueError('conversation_name must be less than 20 characters')
-        
-        
+
+
         return conversation_name 
-    
+
 
 class Message(db.Model, SerializerMixin):
 
@@ -217,16 +217,16 @@ class Message(db.Model, SerializerMixin):
 
 
     @validates('content_data')
-    
+
     def validate_content_data(self, key, content):
 
         if len(content) > 2000:
 
             raise ValueError('content must be less than 2000 characters')
-        
+
         return content 
 
-    
+
 
 
 
