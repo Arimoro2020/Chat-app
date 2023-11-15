@@ -70,7 +70,7 @@ class UserById(Resource):
 
         response = make_response(
             user.to_dict(only=('id', 'name', 'username', 'background',
-                        'online_status', 'avatar', '_password_hash')),
+                'online_status', 'avatar', '_password_hash')),
             200
         )
 
@@ -102,7 +102,7 @@ class UserById(Resource):
 
         response = make_response(
             user.to_dict(only=('id', 'name', 'username',
-                        'background', 'online_status', 'avatar')),
+                'background', 'online_status', 'avatar')),
             202
         )
 
@@ -469,7 +469,7 @@ class ConversationById(Resource):
             response = make_response({}, 204)
 
         except Exception:
-            # Rollback the session in case of an exception to avoid leaving the session in an inconsistent state
+            
             db.session.rollback()
 
             response = make_response(
@@ -514,9 +514,9 @@ class Signup(Resource):
         db.session.commit()
         # 6c. save the user_id in session
         session['user_id'] = new_user.id
-        #return response
+        # return response
         return make_response(
-            new_user.to_dict(rules=('-_password_hash', )), 
+            new_user.to_dict(rules=('-_password_hash',)), 
             201
         )
 
@@ -532,7 +532,7 @@ class Login(Resource):
         try:
             user = User.query.filter_by(username=data.get('username')).first()
             # 7b. check if password is authentic
-            if user.authenticate(data.get('password')) == False:
+            if not user.authenticate(data.get('password')):
 
                 return make_response({'error': 'Invalid password'}, 401)
                 # 7c. set session's user id
