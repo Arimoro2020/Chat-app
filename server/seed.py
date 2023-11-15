@@ -27,9 +27,11 @@ if __name__ == '__main__':
 
         url = "https://img.freepik.com/free-photo"
 
-        path1 = "/happy-woman-gray-polo-shirt-with-pink-pin-button_53876-102858.jpg"
+        path1A = "/happy-woman-gray-polo-shirt"
+        path1B = "-with-pink-pin-button_53876-102858.jpg"
 
-        path = "/smiling-stubble-young-man-white-t-shirt-against-plain-wall_23-2148213411.jpg"
+        path2A = "/smiling-stubble-young-man-white-"
+        path2B = "t-shirt-against-plain-wall_23-2148213411.jpg"
 
         pictures = [
             url + "/worldface-spanish-guy-white-background_53876-137665.jpg",
@@ -37,8 +39,8 @@ if __name__ == '__main__':
             url + "/worldface-british-guy-white-background_53876-14467.jpg",
             url + "/handsome-adult-male-posing_23-2148729713.jpg",
             url + "/front-view-handsome-man-posing_23-2148692174.jpg",
-            url + path1,
-            url + path,
+            url + path1A + path1B,
+            url + path2A + path2B,
             url + "/portrait-young-african-american-man_23-2148932869.jpg",
             url + "/worldface-australian-girl-white-background_53876-139752.jpg",
             url + "/worldface-british-guy-white-background_53876-14467.jpg"
