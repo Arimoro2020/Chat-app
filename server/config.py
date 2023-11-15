@@ -10,16 +10,16 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-app = Flask( \
-    __name__, \
-    static_url_path='', \
-    static_folder='../client/build', \
-    template_folder='../client/build' \
+app = Flask( 
+    __name__, 
+    static_url_path='', 
+    static_folder='../client/build', 
+    template_folder='../client/build' 
 )
 
 cors = CORS(app, resources={r'*':{'origins':'*'}})
 
-app.secret_key = b'Y\xf1Xz\x00\xad|eQ\x80t \xca\x1a\x10K'
+app.secret_key = b'Yxf1Xzx00xad|eQx80t xcax1ax10K'
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL')
 
@@ -33,6 +33,7 @@ db.init_app(app)
 
 
 @app.errorhandler(404)
+
 def not_found(e):
 
     return render_template("index.html")
