@@ -70,7 +70,7 @@ class UserById(Resource):
 
         response = make_response(
             user.to_dict(only=('id', 'name', 'username', 'background',
-                'online_status', 'avatar', '_password_hash')),
+                               'online_status', 'avatar', '_password_hash')),
             200
         )
 
@@ -102,8 +102,8 @@ class UserById(Resource):
 
         response = make_response(
             user.to_dict(only=('id', 'name', 'username',
-                'background', 'online_status', 'avatar')
-            ),
+                               'background', 'online_status', 'avatar')
+                         ),
             202
         )
 
@@ -470,7 +470,7 @@ class ConversationById(Resource):
             response = make_response({}, 204)
 
         except Exception:
-            
+
             db.session.rollback()
 
             response = make_response(
@@ -517,10 +517,10 @@ class Signup(Resource):
         session['user_id'] = new_user.id
         # return response
         return make_response(
-            new_user.to_dict(rules=('-_password_hash',)), 
+            new_user.to_dict(rules=('-_password_hash',)),
             201
         )
-    
+
 
 api.add_resource(Signup, '/signup')
 
@@ -541,7 +541,7 @@ class Login(Resource):
 
             return make_response(
                 user.to_dict(only=('id', 'name', 'username',
-                    'background', 'online_status', 'avatar')),
+                                   'background', 'online_status', 'avatar')),
                 200
             )
 
@@ -563,7 +563,7 @@ class CheckSession(Resource):
 
             response = make_response(
                 user.to_dict(only=('id', 'name', 'username',
-                    'background', 'online_status', 'avatar')),
+                                   'background', 'online_status', 'avatar')),
                 200
             )
 

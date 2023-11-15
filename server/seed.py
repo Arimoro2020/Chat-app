@@ -33,6 +33,9 @@ if __name__ == '__main__':
         path2A = "/smiling-stubble-young-man-white-"
         path2B = "t-shirt-against-plain-wall_23-2148213411.jpg"
 
+        path3A = "/worldface-australian-girl"
+        path3B = "-white-background_53876-139752.jpg"
+
         pictures = [
             url + "/worldface-spanish-guy-white-background_53876-137665.jpg",
             url + "/free-photo/portrait-man-laughing_23-2148859448.jpg",
@@ -42,7 +45,7 @@ if __name__ == '__main__':
             url + path1A + path1B,
             url + path2A + path2B,
             url + "/portrait-young-african-american-man_23-2148932869.jpg",
-            url + "/worldface-australian-girl-white-background_53876-139752.jpg",
+            url + path3A + path3B,
             url + "/worldface-british-guy-white-background_53876-14467.jpg"
         ]
 
