@@ -28,14 +28,14 @@ class User(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     user_conversations = db.relationship(
-        'UserConversation', 
-        backref=backref("user"), 
+        'UserConversation',
+        backref=backref("user"),
         cascade="all, delete-orphan"
     )
 
     messages = db.relationship(
-        'Message', 
-        backref=backref("user"), 
+        'Message',
+        backref=backref("user"),
         cascade="all, delete-orphan"
     )
 
@@ -50,7 +50,7 @@ class User(db.Model, SerializerMixin):
 
             raise ValueError('background must not be more than 800 characters')
 
-        return background 
+        return background
 
 
     @validates('username')
@@ -81,7 +81,7 @@ class User(db.Model, SerializerMixin):
 
             raise ValueError('avatar must be png or jpg')
 
-        return avatar 
+        return avatar
 
 
     @validates('online_status')
@@ -106,8 +106,8 @@ class User(db.Model, SerializerMixin):
 
     def password_hash(self, password):
         # utf-8 encoding and decoding is required in python 3
-        password_hash = bcrypt.generate_password_hash( 
-            password.encode('utf-8') 
+        password_hash = bcrypt.generate_password_hash(
+            password.encode('utf-8')
         )
 
         self._password_hash = password_hash.decode('utf-8')
@@ -115,9 +115,9 @@ class User(db.Model, SerializerMixin):
 
     def authenticate(self, password):
 
-        return bcrypt.check_password_hash( 
-            self._password_hash, 
-            password.encode('utf-8') 
+        return bcrypt.check_password_hash(
+            self._password_hash,
+            password.encode('utf-8')
         )
 
 
@@ -153,16 +153,16 @@ class Conversation(db.Model, SerializerMixin):
 
     conversation_name = db.Column(db.String, nullable=False)
 
-    user_conversations = db.relationship( 
-        'UserConversation', 
-        backref=backref("conversation"), 
-        cascade="all, delete-orphan" 
+    user_conversations = db.relationship(
+        'UserConversation',
+        backref=backref("conversation"),
+        cascade="all, delete-orphan"
     )
 
-    messages = db.relationship( 
-        'Message', 
-        backref=backref("conversation"), 
-        cascade="all, delete-orphan" 
+    messages = db.relationship(
+        'Message',
+        backref=backref("conversation"),
+        cascade="all, delete-orphan"
     )
 
     serialize_rules = ('-user_conversations.conversation', '-messages')
@@ -181,7 +181,7 @@ class Conversation(db.Model, SerializerMixin):
             raise ValueError('conversation_name must be less than 20 characters')
 
 
-        return conversation_name 
+        return conversation_name
 
 
 class Message(db.Model, SerializerMixin):
@@ -224,7 +224,7 @@ class Message(db.Model, SerializerMixin):
 
             raise ValueError('content must be less than 2000 characters')
 
-        return content 
+        return content
 
 
 
