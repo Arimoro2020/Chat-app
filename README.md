@@ -5,6 +5,9 @@ Chat application for private messaging of text type built on React and Flask-SQL
 
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/arimoro2020/Chat-app/security_scan.yml?logo=github&label=GitHub%20Action%20Security%20Scan%20Workflow%20Status)
 
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/Arimoro2020/Chat-app/code_quality.yml?logo=GitHub&label=GitHub%20Actions%20Code%20Quality%20Scan%20Workflow%20Status)
+
+
 
 
 
