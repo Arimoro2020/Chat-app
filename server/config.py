@@ -17,9 +17,9 @@ app = Flask(
     template_folder='../client/build'
 )
 
-cors = CORS(app, resources={r'*':{'origins':'*'}})
+cors = CORS(app, resources={r'*': {'origins': '*'}})
 
-app.secret_key = b'Y\xf1Xz\x00\xad|eQ\x80t \xca\x1a\x10K'
+app.secret_key = b'Yxf1Xzx00xad|eQx80t xcax1ax10K'
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL')
 
@@ -41,5 +41,3 @@ def not_found(e):
 bcrypt = Bcrypt(app)
 
 api = Api(app)
-
-

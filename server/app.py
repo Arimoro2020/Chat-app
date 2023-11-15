@@ -1,7 +1,5 @@
 
 from flask import jsonify, make_response, request, session
-# 1b. import bcrypt
-
 from flask_restful import Resource
 from models import User, UserConversation, Conversation, Message
 from config import app, db, api
@@ -11,7 +9,6 @@ class Users(Resource):
 
     def get(self):
 
-
         q = User.query.all()
 
         if not q:
@@ -19,22 +16,21 @@ class Users(Resource):
             return make_response({'error': 'User not found'}, 404)
 
         q_dict = [
-               user.to_dict(
-               only=('id', 'name', 'username', 
-               'background', 'online_status', 'avatar')) for user in q
+            user.to_dict(only=('id', 'name', 'username',
+                         'background', 'online_status', 'avatar'))
+            for user in q
         ]
 
         response = make_response(q_dict, 200)
 
         return response
-    
-    
+
     def post(self):
 
         data = request.get_json()
 
         try:
-            
+
             new = User(
                 name=data.get('name'),
                 username=data.get('username'),
@@ -46,18 +42,19 @@ class Users(Resource):
             db.session.add(new.to_dict())
             db.session.commit()
 
-        except Exception as e:
+        except Exception:
 
             return make_response({"errors": ["validation errors"]}, 400)
-            
+
         response = make_response(
-                               data.to_dict(only=('id', 'name', 
-                               'username', 'background', 'online_status', 'avatar')), 201
-                               )
+            data.to_dict(only=('id', 'name', 'username',
+                         'background', 'online_status', 'avatar')),
+            201
+        )
 
         return response
-    
-    
+
+
 api.add_resource(Users, '/users')
 
 
@@ -70,64 +67,64 @@ class UserById(Resource):
         if not user:
 
             return make_response({'error': 'User not found'}, 404)
-        
+
         response = make_response(
-                user.to_dict(only=('id', 'name', 'username', 
-                'background', 'online_status', 'avatar', '_password_hash')), 200
+            user.to_dict(only=('id', 'name', 'username', 'background',
+                               'online_status', 'avatar', '_password_hash')),
+            200
         )
 
         return response
-    
-    
-    def patch(self,id):
-            
-            user = User.query.filter(User.id == id).first()
 
-            if not user:
-
-                return make_response({'error': 'User not found'}, 404)
-
-            data = request.get_json()
-
-            try:
-
-                for attr in data:
-
-                    setattr(user, attr, data.get(attr))
-
-                db.session.add(user)
-
-                db.session.commit()
-
-            except Exception as e:
-
-                return make_response({ "errors": ["validation errors"]}, 400)
-            
-            response=make_response(
-                    user.to_dict(only=('id', 
-                    'name', 'username', 'background', 'online_status', 
-                    'avatar')), 202
-            )
-
-            return response
-    
-    
-    def delete(self,id):
+    def patch(self, id):
 
         user = User.query.filter(User.id == id).first()
 
         if not user:
 
             return make_response({'error': 'User not found'}, 404)
-        
+
+        data = request.get_json()
+
+        try:
+
+            for attr in data:
+
+                setattr(user, attr, data.get(attr))
+
+            db.session.add(user)
+
+            db.session.commit()
+
+        except Exception:
+
+            return make_response({"errors": ["validation errors"]}, 400)
+
+        response = make_response(
+            user.to_dict(only=('id', 'name', 'username',
+                               'background', 'online_status', 'avatar')
+                         ),
+            202
+        )
+
+        return response
+
+    def delete(self, id):
+
+        user = User.query.filter(User.id == id).first()
+
+        if not user:
+
+            return make_response({'error': 'User not found'}, 404)
+
         db.session.delete(user)
 
         db.session.commit()
 
         response = make_response({}, 204)
 
-        return response 
-    
+        return response
+
 
 api.add_resource(UserById, '/users/<int:id>')
 
@@ -141,16 +138,16 @@ class UserByUsername(Resource):
         if not user:
 
             return make_response({'error': 'User not found'}, 404)
-        
-        response=make_response(
-                user.to_dict(only=('id', 'name',
-                'username', 'background', 'online_status', 
-                'avatar', '_password_hash')), 200
+
+        response = make_response(
+            user.to_dict(only=('id', 'name', 'username', 'background',
+                         'online_status', 'avatar', '_password_hash')),
+            200
         )
 
         return response
-    
-    
+
+
 api.add_resource(UserByUsername, '/users/<string:username>')
 
 
@@ -169,19 +166,18 @@ class Messages(Resource):
         response = make_response(q_dict, 200)
 
         return response
-    
 
     def post(self):
-        
+
         data = request.get_json()
-    
+
         try:
 
             new_message = Message(
-                        content_data=data.get('content_data'),
-                        content_type=data.get('content_type'),
-                        conversation_id=data.get('conversation_id'),
-                        user_id=data.get('user_id')
+                content_data=data.get('content_data'),
+                content_type=data.get('content_type'),
+                conversation_id=data.get('conversation_id'),
+                user_id=data.get('user_id')
             )
 
             db.session.add(new_message)
@@ -189,9 +185,10 @@ class Messages(Resource):
             db.session.commit()
 
             new_message_dict = new_message.to_dict()
+
             return make_response(new_message_dict, 201)
 
-        except Exception as e:
+        except Exception:
 
             return make_response({"errors": ["validation errors"]}, 400)
 
@@ -208,13 +205,12 @@ class MessageById(Resource):
         if not message:
 
             return make_response({'error': 'Message not found'}, 404)
-        
+
         response = make_response(message.to_dict(), 200)
 
         return response
-    
 
-    def patch(self,id):
+    def patch(self, id):
 
         message = Message.query.filter(Message.id == id).first()
 
@@ -222,7 +218,7 @@ class MessageById(Resource):
 
             return make_response({'error': 'Message not found'}, 404)
 
-        data=request.get_json()
+        data = request.get_json()
 
         try:
 
@@ -234,16 +230,15 @@ class MessageById(Resource):
 
             db.session.commit()
 
-        except Exception as e:
-               
-               return make_response({"errors": ["validation errors"]}, 400)
-        
-        response=make_response(message.to_dict(), 202)
+        except Exception:
+
+            return make_response({"errors": ["validation errors"]}, 400)
+
+        response = make_response(message.to_dict(), 202)
 
         return response
-    
 
-    def delete(self,id):
+    def delete(self, id):
 
         message = Message.query.filter(Message.id == id).first()
 
@@ -256,8 +251,9 @@ class MessageById(Resource):
         db.session.commit()
 
         response = make_response({}, 204)
-        return response 
-  
+
+        return response
+
 
 api.add_resource(MessageById, '/messages/<int:id>')
 
@@ -266,7 +262,7 @@ class UserConversations(Resource):
 
     def get(self):
 
-        q=UserConversation.query.all()
+        q = UserConversation.query.all()
 
         if not q:
 
@@ -274,10 +270,9 @@ class UserConversations(Resource):
 
         q_dict = [user_conversation.to_dict() for user_conversation in q]
 
-        response=make_response(q_dict, 200)
+        response = make_response(q_dict, 200)
 
         return response
-    
 
     def post(self):
 
@@ -286,8 +281,8 @@ class UserConversations(Resource):
         try:
 
             new_user_conversation = UserConversation(
-                                  conversation_id=data.get('conversation_id'),
-                                  user_id=data.get('user_id')
+                conversation_id=data.get('conversation_id'),
+                user_id=data.get('user_id')
             )
 
             db.session.add(new_user_conversation)
@@ -298,7 +293,7 @@ class UserConversations(Resource):
 
             return make_response(new_user_conversation_dict, 201)
 
-        except Exception as e:
+        except Exception:
 
             return make_response({"errors": ["validation errors"]}, 400)
 
@@ -310,20 +305,21 @@ class UserConversationById(Resource):
 
     def get(self, id):
 
-        user_conversation = UserConversation.query.filter(UserConversation.id == id).first()
+        user_conversation = UserConversation.query.filter(
+            UserConversation.id == id).first()
 
         if not user_conversation:
 
-            return make_response({'error':'UserConversation not found'}, 404)
-        
+            return make_response({'error': 'UserConversation not found'}, 404)
+
         response = make_response(user_conversation.to_dict(), 200)
 
         return response
-   
 
-    def patch(self,id):
+    def patch(self, id):
 
-        user_conversation = UserConversation.query.filter(UserConversation.id == id).first()
+        user_conversation = UserConversation.query.filter(
+            UserConversation.id == id).first()
 
         if not user_conversation:
 
@@ -331,7 +327,7 @@ class UserConversationById(Resource):
 
         try:
 
-            data=request.get_json()
+            data = request.get_json()
 
             for attr in data:
 
@@ -341,18 +337,18 @@ class UserConversationById(Resource):
 
             db.session.commit()
 
-        except Exception as e:
-               
-               return make_response({"errors": ["validation errors"]}, 400)
-        
-        response=make_response(user_conversation.to_dict(), 202)
+        except Exception:
+
+            return make_response({"errors": ["validation errors"]}, 400)
+
+        response = make_response(user_conversation.to_dict(), 202)
 
         return response
 
+    def delete(self, id):
 
-    def delete(self,id):
-
-        user_conversation = UserConversation.query.filter(UserConversation.id == id).first()
+        user_conversation = UserConversation.query.filter(
+            UserConversation.id == id).first()
 
         if not user_conversation:
 
@@ -364,8 +360,8 @@ class UserConversationById(Resource):
 
         response = make_response({}, 204)
 
-        return response 
- 
+        return response
+
 
 api.add_resource(UserConversationById, '/user_conversations/<int:id>')
 
@@ -374,38 +370,39 @@ class Conversations(Resource):
 
     def get(self):
 
-        q=Conversation.query.all()
+        q = Conversation.query.all()
 
         if not q:
 
             return make_response({'error': 'Conversation not found'}, 404)
-        
-        q_dict = [conversation.to_dict(only=('id', 'conversation_name')) for conversation in q]
+
+        q_dict = [conversation.to_dict(
+            only=('id', 'conversation_name')) for conversation in q]
 
         response = make_response(q_dict, 200)
 
         return response
-    
 
     def post(self):
 
-        data=request.get_json()
+        data = request.get_json()
 
         try:
 
             new_conversation = Conversation(
-                             conversation_name=data.get('conversation_name')
+                conversation_name=data.get('conversation_name')
             )
 
             db.session.add(new_conversation)
 
             db.session.commit()
 
-            new_conversation_dict = new_conversation.to_dict("id", "conversation_name")
+            new_conversation_dict = new_conversation.to_dict(
+                "id", "conversation_name")
 
             return make_response(new_conversation_dict, 201)
 
-        except Exception as e:
+        except Exception:
 
             return make_response({"errors": ["validation errors"]}, 400)
 
@@ -422,13 +419,13 @@ class ConversationById(Resource):
         if not conversation:
 
             return make_response({'error': 'Conversation not found'}, 404)
-        
-        response = make_response(conversation.to_dict(only=('id', 'conversation_name')), 200)
+
+        response = make_response(conversation.to_dict(
+            only=('id', 'conversation_name')), 200)
 
         return response
-    
 
-    def patch(self,id):
+    def patch(self, id):
 
         conversation = Conversation.query.filter(Conversation.id == id).first()
 
@@ -447,16 +444,16 @@ class ConversationById(Resource):
 
             db.session.commit()
 
-        except Exception as e:
-               
-               return make_response({"errors": ["validation errors"]}, 400)
-        
-        response = make_response(conversation.to_dict(only=('id', 'conversation_name')), 202)
+        except Exception:
+
+            return make_response({"errors": ["validation errors"]}, 400)
+
+        response = make_response(conversation.to_dict(
+            only=('id', 'conversation_name')), 202)
 
         return response
-    
 
-    def delete(self,id):
+    def delete(self, id):
 
         conversation = Conversation.query.filter(Conversation.id == id).first()
 
@@ -472,22 +469,22 @@ class ConversationById(Resource):
 
             response = make_response({}, 204)
 
-        except Exception as e:
+        except Exception:
 
-            db.session.rollback()  # Rollback the session in case of an exception to avoid leaving the session in an inconsistent state
-            
+            db.session.rollback()
+
             response = make_response(
-                     {'error': 'An error occurred while deleting the conversation'}, 
-                     500
+                {'error': 'An error occurred while deleting the conversation'},
+                500
             )  # Return a 500 status code for server errors
 
-        return response 
-  
+        return response
+
 
 api.add_resource(ConversationById, '/conversations/<int:id>')
 
 
-@app.route('/messages/conversations/<int:id>', methods = ['GET'])
+@app.route('/messages/conversations/<int:id>', methods=['GET'])
 def get_conversations(id):
 
     q = Message.query.filter(Message.conversation_id == id).all()
@@ -495,14 +492,14 @@ def get_conversations(id):
     if not q:
 
         return make_response({'error': 'Message not found'}, 404)
-    
+
     q_dict = [message.to_dict() for message in q]
-    
+
     response = make_response(jsonify(q_dict), 200)
 
     return response
 
-        
+
 class Signup(Resource):
 
     def post(self):
@@ -518,8 +515,11 @@ class Signup(Resource):
         db.session.commit()
         # 6c. save the user_id in session
         session['user_id'] = new_user.id
-        #return response
-        return make_response(new_user.to_dict(rules=('-_password_hash', )), 201)
+        # return response
+        return make_response(
+            new_user.to_dict(rules=('-_password_hash',)),
+            201
+        )
 
 
 api.add_resource(Signup, '/signup')
@@ -533,25 +533,25 @@ class Login(Resource):
         try:
             user = User.query.filter_by(username=data.get('username')).first()
             # 7b. check if password is authentic
-            if user.authenticate(data.get('password')) == False:
+            if not user.authenticate(data.get('password')):
 
-                return make_response ({'error': 'Invalid password'}, 401)
+                return make_response({'error': 'Invalid password'}, 401)
                 # 7c. set session's user id
             session['user_id'] = user.id
 
             return make_response(
-                                user.to_dict(only=('id', 'name', 
-                                'username', 'background', 'online_status',
-                                'avatar')), 200
+                user.to_dict(only=('id', 'name', 'username',
+                                   'background', 'online_status', 'avatar')),
+                200
             )
-         
-        except Exception as e:
 
-            return make_response ({'error': 'Invalid username'}, 401)
+        except Exception:
+
+            return make_response({'error': 'Invalid username'}, 401)
 
 
 api.add_resource(Login, '/login')
- 
+
 
 class CheckSession(Resource):
 
@@ -560,16 +560,16 @@ class CheckSession(Resource):
         try:
 
             user = User.query.filter(User.id == session.get('user_id')).first()
-            
+
             response = make_response(
-                     user.to_dict(only=('id', 'name', 
-                     'username', 'background', 'online_status',
-                     'avatar')), 200
+                user.to_dict(only=('id', 'name', 'username',
+                                   'background', 'online_status', 'avatar')),
+                200
             )
-            
+
             return response
 
-        except Exception as e:
+        except Exception:
 
             return make_response({'message': '401: Not Authorized'}, 401)
 
@@ -579,7 +579,7 @@ api.add_resource(CheckSession, '/check_session')
 
 class Logout(Resource):
 
-    def delete(self): # just add this line!
+    def delete(self):  # just add this line!
 
         session['user_id'] = None
 
@@ -587,28 +587,8 @@ class Logout(Resource):
 
 
 api.add_resource(Logout, '/logout')
-  
-    
+
+
 if __name__ == '__main__':
 
     app.run(port=5555, debug=False)
-
-
-
-
-
- 
-
-
-
-    
-
-
-
-
-
-
-    
- 
-
-
