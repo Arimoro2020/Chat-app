@@ -158,7 +158,7 @@ class Conversation(db.Model, SerializerMixin):
     @validates('conversation_name')
     def validate_conversation_name(self, key, conversation_name):
 
-        if  not conversation_name:
+        if not conversation_name:
 
             raise ValueError("conversation_name cannot be empty")
 

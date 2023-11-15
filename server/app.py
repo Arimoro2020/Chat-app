@@ -576,7 +576,7 @@ api.add_resource(CheckSession, '/check_session')
 
 class Logout(Resource):
 
-    def delete(self): # just add this line!
+    def delete(self):  # just add this line!
 
         session['user_id'] = None
 

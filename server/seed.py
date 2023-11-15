@@ -21,7 +21,7 @@ if __name__ == '__main__':
         Conversation.query.delete()
 
         names = ['Jerry Jones', 'Peter Duck',
-            'John Doe', 'Mel Needle', 'Ian Smith']
+                 'John Doe', 'Mel Needle', 'Ian Smith']
 
         status = ['online', 'offline', 'busy']
 
@@ -50,7 +50,7 @@ if __name__ == '__main__':
                 background=fake.sentence(),
                 online_status=secrets.choice(status)
                 )
-                for name in names
+            for name in names
         ]
 
         db.session.add_all(users)
@@ -138,7 +138,7 @@ if __name__ == '__main__':
                 conversation_id=1,
                 user_id=1,
             ),
-                Message(
+            Message(
                 content_data=fake.sentence(),
                 content_type='String',
                 conversation_id=1,
