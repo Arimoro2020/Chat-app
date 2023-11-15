@@ -38,7 +38,7 @@ if __name__ == '__main__':
             "https://img.freepik.com/free-photo/worldface-british-guy-white-background_53876-14467.jpg"
         ]
 
-        password=secretes.choice(status)
+        password = secretes.choice(status)
 
         users = [
             User(
@@ -46,7 +46,7 @@ if __name__ == '__main__':
                 username=fake.word(),
                 avatar=secrets.choice(pictures),
                 _password_hash=bcrypt.generate_password_hash(
-                password.encode('utf-8')).decode('utf-8'),
+                    password.encode('utf-8')).decode('utf-8'),
                 background=fake.sentence(),
                 online_status=secrets.choice(status)
                 )
@@ -68,9 +68,9 @@ if __name__ == '__main__':
         db.session.commit()
 
         user_conversations = [
-        UserConversation(conversation_id=1, user_id=1),
-        UserConversation(conversation_id=2, user_id=4),
-        UserConversation(conversation_id=3, user_id=5)
+            UserConversation(conversation_id=1, user_id=1),
+            UserConversation(conversation_id=2, user_id=4),
+            UserConversation(conversation_id=3, user_id=5)
         ]
 
         db.session.add_all(user_conversations)
@@ -104,8 +104,8 @@ if __name__ == '__main__':
             ),
             Message(
                 content_data=fake.sentence(),
-                content_type= 'String',
-                conversation_id = 1,
+                content_type='String',
+                conversation_id=1,
                 user_id=4
             ),
             Message(
@@ -245,5 +245,3 @@ if __name__ == '__main__':
         db.session.add_all(messages)
 
         db.session.commit()
-
-

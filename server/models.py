@@ -115,7 +115,8 @@ class UserConversation(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    conversation_id = db.Column(db.Integer, db.ForeignKey('conversations.id'), nullable=False)
+    conversation_id = db.Column(db.Integer, db.ForeignKey(
+        'conversations.id'), nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
@@ -163,7 +164,8 @@ class Conversation(db.Model, SerializerMixin):
 
         elif len(conversation_name) > 20:
 
-            raise ValueError('conversation_name must be less than 20 characters')
+            raise ValueError(
+                'conversation_name must be less than 20 characters')
 
         return conversation_name
 
@@ -178,11 +180,12 @@ class Message(db.Model, SerializerMixin):
 
     content_type = db.Column(db.String,  nullable=False)
 
-    conversation_id = db.Column(db.Integer, db.ForeignKey('conversations.id'), nullable=False)
+    conversation_id = db.Column(db.Integer, db.ForeignKey(
+        'conversations.id'), nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    created_at = db.Column(db.DateTime, server_default = db.func.now())
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
@@ -206,8 +209,3 @@ class Message(db.Model, SerializerMixin):
             raise ValueError('content must be less than 2000 characters')
 
         return content
-
-
-
-
-
