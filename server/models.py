@@ -72,7 +72,10 @@ class User(db.Model, SerializerMixin):
 
             raise ValueError("avatar cannot be empty")
 
-        elif('jpg' not in avatar and 'png' not in avatar and 'jpeg' not in avatar):
+        elif (
+            'jpg' not in avatar and 'png' not in avatar
+            and 'jpeg' not in avatar
+        ):
 
             raise ValueError('avatar must be png or jpg')
 

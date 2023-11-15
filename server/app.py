@@ -42,7 +42,7 @@ class Users(Resource):
             db.session.add(new.to_dict())
             db.session.commit()
 
-        except Exception as e:
+        except Exception:
 
             return make_response({"errors": ["validation errors"]}, 400)
 
@@ -69,9 +69,9 @@ class UserById(Resource):
             return make_response({'error': 'User not found'}, 404)
 
         response = make_response(
-                user.to_dict(only=('id', 'name', 'username', 'background',
-                             'online_status', 'avatar', '_password_hash')),
-                200
+            user.to_dict(only=('id', 'name', 'username', 'background',
+                        'online_status', 'avatar', '_password_hash')),
+            200
         )
 
         return response
@@ -96,13 +96,13 @@ class UserById(Resource):
 
             db.session.commit()
 
-        except Exception as e:
+        except Exception:
 
             return make_response({"errors": ["validation errors"]}, 400)
 
         response = make_response(
             user.to_dict(only=('id', 'name', 'username',
-                         'background', 'online_status', 'avatar')),
+                        'background', 'online_status', 'avatar')),
             202
         )
 
@@ -187,7 +187,7 @@ class Messages(Resource):
 
             return make_response(new_message_dict, 201)
 
-        except Exception as e:
+        except Exception:
 
             return make_response({"errors": ["validation errors"]}, 400)
 
@@ -229,7 +229,7 @@ class MessageById(Resource):
 
             db.session.commit()
 
-        except Exception as e:
+        except Exception:
 
             return make_response({"errors": ["validation errors"]}, 400)
 
@@ -292,7 +292,7 @@ class UserConversations(Resource):
 
             return make_response(new_user_conversation_dict, 201)
 
-        except Exception as e:
+        except Exception:
 
             return make_response({"errors": ["validation errors"]}, 400)
 
@@ -336,7 +336,7 @@ class UserConversationById(Resource):
 
             db.session.commit()
 
-        except Exception as e:
+        except Exception:
 
             return make_response({"errors": ["validation errors"]}, 400)
 
@@ -401,7 +401,7 @@ class Conversations(Resource):
 
             return make_response(new_conversation_dict, 201)
 
-        except Exception as e:
+        except Exception:
 
             return make_response({"errors": ["validation errors"]}, 400)
 
@@ -443,7 +443,7 @@ class ConversationById(Resource):
 
             db.session.commit()
 
-        except Exception as e:
+        except Exception:
 
             return make_response({"errors": ["validation errors"]}, 400)
 
@@ -468,8 +468,7 @@ class ConversationById(Resource):
 
             response = make_response({}, 204)
 
-        except Exception as e:
-
+        except Exception:
             # Rollback the session in case of an exception to avoid leaving the session in an inconsistent state
             db.session.rollback()
 
@@ -516,7 +515,10 @@ class Signup(Resource):
         # 6c. save the user_id in session
         session['user_id'] = new_user.id
         #return response
-        return make_response(new_user.to_dict(rules=('-_password_hash', )), 201)
+        return make_response(
+            new_user.to_dict(rules=('-_password_hash', )), 
+            201
+        )
 
 
 api.add_resource(Signup, '/signup')
@@ -542,7 +544,7 @@ class Login(Resource):
                 200
             )
 
-        except Exception as e:
+        except Exception:
 
             return make_response({'error': 'Invalid username'}, 401)
 
@@ -566,7 +568,7 @@ class CheckSession(Resource):
 
             return response
 
-        except Exception as e:
+        except Exception:
 
             return make_response({'message': '401: Not Authorized'}, 401)
 
