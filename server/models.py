@@ -41,9 +41,7 @@ class User(db.Model, SerializerMixin):
 
     serialize_rules = ('-user_conversations.user', '-messages', '-updated_at',)
 
-
     @validates('background')
-
     def validate_background(self, key, background):
 
         if len(background) > 800:
@@ -52,9 +50,7 @@ class User(db.Model, SerializerMixin):
 
         return background
 
-
     @validates('username')
-
     def validate_username(self, key, username):
 
         if not username:
@@ -69,7 +65,6 @@ class User(db.Model, SerializerMixin):
 
         return username
 
-
     @validates('avatar')
     def validate_avatar(self, key, avatar):
 
@@ -83,9 +78,7 @@ class User(db.Model, SerializerMixin):
 
         return avatar
 
-
     @validates('online_status')
-
     def validate_online_status(self, key, status):
 
         if status not in ['online', 'offline', 'busy']:
@@ -94,16 +87,12 @@ class User(db.Model, SerializerMixin):
 
         return status
 
-
     @hybrid_property
-
     def password_hash(self):
 
         return self._password_hash
 
-
     @password_hash.setter
-
     def password_hash(self, password):
         # utf-8 encoding and decoding is required in python 3
         password_hash = bcrypt.generate_password_hash(
@@ -111,7 +100,6 @@ class User(db.Model, SerializerMixin):
         )
 
         self._password_hash = password_hash.decode('utf-8')
-
 
     def authenticate(self, password):
 
@@ -132,7 +120,6 @@ class UserConversation(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     serialize_rules = ('-conversation.user_conversations',)
-
 
     def to_dict(self, deep=False):
 
@@ -167,9 +154,7 @@ class Conversation(db.Model, SerializerMixin):
 
     serialize_rules = ('-user_conversations.conversation', '-messages')
 
-
     @validates('conversation_name')
-
     def validate_conversation_name(self, key, conversation_name):
 
         if  not conversation_name:
@@ -179,7 +164,6 @@ class Conversation(db.Model, SerializerMixin):
         elif len(conversation_name) > 20:
 
             raise ValueError('conversation_name must be less than 20 characters')
-
 
         return conversation_name
 
@@ -204,7 +188,6 @@ class Message(db.Model, SerializerMixin):
 
     serialize_rules = ('-conversation.messages', '-updated_at',)
 
-
     def to_dict(self, deep=False):
 
         serialized = super(Message, self).to_dict(deep)
@@ -215,9 +198,7 @@ class Message(db.Model, SerializerMixin):
 
         return serialized
 
-
     @validates('content_data')
-
     def validate_content_data(self, key, content):
 
         if len(content) > 2000:

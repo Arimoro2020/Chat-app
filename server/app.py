@@ -7,7 +7,6 @@ from config import app, db, api
 
 class Users(Resource):
 
-
     def get(self):
 
         q = User.query.all()
@@ -59,7 +58,6 @@ api.add_resource(Users, '/users')
 
 class UserById(Resource):
 
-
     def get(self, id):
 
         user = User.query.filter(User.id == id).first()
@@ -106,7 +104,6 @@ class UserById(Resource):
 
             return response
 
-
     def delete(self,id):
 
         user = User.query.filter(User.id == id).first()
@@ -129,7 +126,6 @@ api.add_resource(UserById, '/users/<int:id>')
 
 class UserByUsername(Resource):
 
-
     def get(self, username):
 
         user = User.query.filter(User.username == username).first()
@@ -151,7 +147,6 @@ api.add_resource(UserByUsername, '/users/<string:username>')
 
 class Messages(Resource):
 
-
     def get(self):
 
         q = Message.query.all()
@@ -165,7 +160,6 @@ class Messages(Resource):
         response = make_response(q_dict, 200)
 
         return response
-
 
     def post(self):
 
@@ -198,7 +192,6 @@ api.add_resource(Messages, '/messages')
 
 class MessageById(Resource):
 
-
     def get(self, id):
 
         message = Message.query.filter(Message.id == id).first()
@@ -210,7 +203,6 @@ class MessageById(Resource):
         response = make_response(message.to_dict(), 200)
 
         return response
-
 
     def patch(self,id):
 
@@ -240,7 +232,6 @@ class MessageById(Resource):
 
         return response
 
-
     def delete(self,id):
 
         message = Message.query.filter(Message.id == id).first()
@@ -263,7 +254,6 @@ api.add_resource(MessageById, '/messages/<int:id>')
 
 class UserConversations(Resource):
 
-
     def get(self):
 
         q = UserConversation.query.all()
@@ -277,7 +267,6 @@ class UserConversations(Resource):
         response = make_response(q_dict, 200)
 
         return response
-
 
     def post(self):
 
@@ -308,7 +297,6 @@ api.add_resource(UserConversations, '/user_conversations')
 
 class UserConversationById(Resource):
 
-
     def get(self, id):
 
         user_conversation = UserConversation.query.filter(UserConversation.id == id).first()
@@ -320,7 +308,6 @@ class UserConversationById(Resource):
         response = make_response(user_conversation.to_dict(), 200)
 
         return response
-
 
     def patch(self,id):
 
@@ -349,7 +336,6 @@ class UserConversationById(Resource):
         response = make_response(user_conversation.to_dict(), 202)
 
         return response
-
 
     def delete(self,id):
 
@@ -386,7 +372,6 @@ class Conversations(Resource):
         response = make_response(q_dict, 200)
 
         return response
-
 
     def post(self):
 
@@ -428,7 +413,6 @@ class ConversationById(Resource):
 
         return response
 
-
     def patch(self,id):
 
         conversation = Conversation.query.filter(Conversation.id == id).first()
@@ -455,7 +439,6 @@ class ConversationById(Resource):
         response = make_response(conversation.to_dict(only=('id', 'conversation_name')), 202)
 
         return response
-
 
     def delete(self,id):
 
@@ -489,7 +472,6 @@ api.add_resource(ConversationById, '/conversations/<int:id>')
 
 
 @app.route('/messages/conversations/<int:id>', methods = ['GET'])
-
 def get_conversations(id):
 
     q = Message.query.filter(Message.conversation_id == id).all()
@@ -506,7 +488,6 @@ def get_conversations(id):
 
 
 class Signup(Resource):
-
 
     def post(self):
 
@@ -529,7 +510,6 @@ api.add_resource(Signup, '/signup')
 
 
 class Login(Resource):
-
 
     def post(self):
         # 7a. check if user exists
@@ -558,7 +538,6 @@ api.add_resource(Login, '/login')
 
 class CheckSession(Resource):
 
-
     def get(self):
 
         try:
@@ -581,7 +560,6 @@ api.add_resource(CheckSession, '/check_session')
 
 
 class Logout(Resource):
-
 
     def delete(self): # just add this line!
 
