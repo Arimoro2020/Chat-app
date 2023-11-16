@@ -22,12 +22,7 @@ User stories:
 
 Wireframe:
 
-![Alt text](Home.drawio.png)
-![Alt text](ChatList.drawio.png)
-![Alt text](Chatroom.drawio.png)
-![Alt text](Contacts.drawio.png)
-![Alt text](Userprofile.drawio.png)
-
+![image](https://github.com/Arimoro2020/Chat-app/assets/73043768/a0616482-062a-4853-ba78-438b2a8d9126)
 
 
 
