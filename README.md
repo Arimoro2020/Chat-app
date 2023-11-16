@@ -22,7 +22,8 @@ Chat application for private messaging of text type built on React and Flask-SQL
 
 # Wireframe:
 
-![image](https://github.com/Arimoro2020/Chat-app/assets/73043768/a0616482-062a-4853-ba78-438b2a8d9126)
+![image](https://github.com/Arimoro2020/Chat-app/assets/73043768/20d065cd-aaa5-4253-81bd-7e8026f6d854)
+
 
 
 
