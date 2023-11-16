@@ -1,5 +1,5 @@
 
-Description: 
+# Description: 
 
 Chat application for private messaging of text type built on React and Flask-SQLAlchemy Python.
 
@@ -12,7 +12,7 @@ Chat application for private messaging of text type built on React and Flask-SQL
 
 
 
-User stories:
+# User stories:
 
 - As a user, I'm able to register and/or login
 - As a user, I can search through users of the app, see their profiles, and add a user as a contact
@@ -20,13 +20,13 @@ User stories:
 - As a user, I can update my user profile.
 
 
-Wireframe:
+# Wireframe:
 
 ![image](https://github.com/Arimoro2020/Chat-app/assets/73043768/a0616482-062a-4853-ba78-438b2a8d9126)
 
 
 
-React tree:
+# React tree:
 
 ![Alt text](Tree.drawio.png)
 
@@ -35,18 +35,18 @@ React tree:
 
 
 
-Client side routes:
+# Client-side routes:
 
 ![Alt text](client_new.drawio.png)
 
 
-Entity Relationship Diagram:
+# Entity Relationship Diagram:
 
 ![Alt text](new.drawio.png)
 
 
 
-API Routes:
+# API Routes:
 | **Name** | **API endpoint**   | **HTTP verb** | **Purpose**                                                                          |
 |----------|--------------------|---------------|--------------------------------------------------------------------------------------|
 | RETRIEVE | /users             | **GET**       | [{...}, {...}, ...]                                                                  |
@@ -70,13 +70,13 @@ API Routes:
 | DELETE   | /conversations/:id | **DELETE**    | {}                                                                                   |
 | RETRIEVE | /conversations/:id | **GET**       | {'id', 'conversation_name'}                                                          |
 
-Stretch Goals:
+# Stretch Goals:
 - Extend message types to media and document types
 -Encryption of messages
 -Read Receipts
 -Message reactions
 
-Board:
+# Board:
 
 ![Alt text](image-2.png)
 
