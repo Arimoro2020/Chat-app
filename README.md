@@ -40,7 +40,8 @@ Chat application for private messaging of text type built on React and Flask-SQL
 
 # Client-side routes:
 
-![Route](https://github.com/Arimoro2020/Chat-app/assets/73043768/fed08792-9185-4ad4-bf33-18c9985d4231)
+![New_routes](https://github.com/Arimoro2020/Chat-app/assets/73043768/1a3cf199-9a54-4153-b7ca-55fd5f383231)
+
 
 
 
