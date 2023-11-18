@@ -28,8 +28,9 @@ Chat application for private messaging of text type built on React and Flask-SQL
 
 
 # React tree:
+![Tree](https://github.com/Arimoro2020/Chat-app/assets/73043768/b4e77fda-a006-4b60-874d-fbd810f1d798)
 
-![Alt text](Tree.drawio.png)
+
 
 
 
