@@ -48,7 +48,8 @@ Chat application for private messaging of text type built on React and Flask-SQL
 
 # Entity Relationship Diagram:
 
-![Alt text](new.drawio.png)
+![ERD2](https://github.com/Arimoro2020/Chat-app/assets/73043768/a31fd0c4-1e55-459c-b984-cad47bcffa59)
+
 
 
 
