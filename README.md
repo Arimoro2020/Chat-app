@@ -88,6 +88,6 @@ Chat application for private messaging of text type built on React and Flask-SQL
 ![Alt text](image-2.png)
 
 # Frontend Icons:
-![login_locked](client/src/assets/login_locked.svg){alt="icon
-show a locked padlock implying you are currently logged out"}
+![login_locked](client/src/assets/login_locked.svg){alt='icon
+show a locked padlock implying you are currently logged out'}
 
