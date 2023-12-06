@@ -56,26 +56,26 @@ Chat application for private messaging of text type built on React and Flask-SQL
 # API Routes:
 | **Name** | **API endpoint**   | **COLOR** | **HTTP verb** | **Purpose**                                                                          |
 |----------| ----------------------:|:--:|-------------------:|--------------------------------------------------------------------------------------|
-| RETRIEVE | /users             |:🟩: | **GET** | [{...}, {...}, ...]                                                                  |
-| CREATE   | /users             |:🟧: | **POST**      | {'id', 'username','password', 'avatar'}                                              |
-| RETRIEVE | /users/:id         | :🟩: |**GET**       | {'id', 'username', 'password', 'avatar'}                                             |
-| DELETE   | /users/:id         |:🟥: | **DELETE**    | {}                                                                                   |
-| UPDATE   | /users/:id         |:🟦: | **PATCH**     | {'id', 'username', 'password', 'avatar'}                                             |
-| RETRIEVE | /messages          |:🟩: | **GET**       | [{...}, {...}, ...]                                                                  |
-| CREATE   | /messages          |:🟧: | **POST**      | {'id','content_data', 'content_type', 'conversation_id', 'sender_id', 'created_at'}  |
-| RETRIEVE | /messages/:id      |:🟩: | **GET**       | {'id', 'content_data', 'content_type', 'conversation_id', 'sender_id', 'created_at'} |
-| UPDATE   | /messages/:id      |:🟦: | **PATCH**     | {'id','content_data', 'content_type', 'conversation_id', 'sender_id', 'created_at'}  |
-| DELETE   | /messages/:id      |:🟥: | **DELETE**    | {}                                                                                   |
-| RETRIEVE | /user_conversations      |:🟩: | **GET**       | [{...},{...},...]                                                                    |
-| CREATE   | /user_conversations/:id  |:🟧: |  **POST**      | {'id','conversation_id', 'user_id'}                                                  |
-| RETRIEVE | /user_conversations/:id  |:🟩: | **GET**       | {'id', 'conversation_id', 'user_id'}                                                 |
-| UPDATE   | /user_conversations/:id  |:🟦: | **PATCH**     | {'id','conversation_id', 'user_id'}                                                  |
-| DELETE   | /user_conversations/:id  |:🟥: | **DELETE**    | {}                                                                                   |
-| RETRIEVE | /conversations     |:🟩: | **GET**       | [{...},{...},...]                                                                    |
-| CREATE   | /conversations     |:🟧: |  **POST**      | {'id', 'conversation_name'}                                                          |
-| PATCH    | /conversations/:id |:🟦: | **PATCH**     | {'id', 'conversation_name'}                                                          |
-| DELETE   | /conversations/:id |:🟥: | **DELETE**    | {}                                                                                   |
-| RETRIEVE | /conversations/:id |:🟩: | **GET**       | {'id', 'conversation_name'}                                                          |
+| RETRIEVE | /users             |🟩 | **GET** | [{...}, {...}, ...]                                                                  |
+| CREATE   | /users             |🟧 | **POST**      | {'id', 'username','password', 'avatar'}                                              |
+| RETRIEVE | /users/:id         |🟩 |**GET**       | {'id', 'username', 'password', 'avatar'}                                             |
+| DELETE   | /users/:id         |🟥 | **DELETE**    | {}                                                                                   |
+| UPDATE   | /users/:id         |🟦 | **PATCH**     | {'id', 'username', 'password', 'avatar'}                                             |
+| RETRIEVE | /messages          |🟩 | **GET**       | [{...}, {...}, ...]                                                                  |
+| CREATE   | /messages          |🟧 | **POST**      | {'id','content_data', 'content_type', 'conversation_id', 'sender_id', 'created_at'}  |
+| RETRIEVE | /messages/:id      |🟩 | **GET**       | {'id', 'content_data', 'content_type', 'conversation_id', 'sender_id', 'created_at'} |
+| UPDATE   | /messages/:id      |🟦 | **PATCH**     | {'id','content_data', 'content_type', 'conversation_id', 'sender_id', 'created_at'}  |
+| DELETE   | /messages/:id      |🟥 | **DELETE**    | {}                                                                                   |
+| RETRIEVE | /user_conversations      |🟩 | **GET**       | [{...},{...},...]                                                                    |
+| CREATE   | /user_conversations/:id  |🟧 |  **POST**      | {'id','conversation_id', 'user_id'}                                                  |
+| RETRIEVE | /user_conversations/:id  |🟩 | **GET**       | {'id', 'conversation_id', 'user_id'}                                                 |
+| UPDATE   | /user_conversations/:id  |🟦 | **PATCH**     | {'id','conversation_id', 'user_id'}                                                  |
+| DELETE   | /user_conversations/:id  |🟥| **DELETE**    | {}                                                                                   |
+| RETRIEVE | /conversations     |🟩 | **GET**       | [{...},{...},...]                                                                    |
+| CREATE   | /conversations     |🟧 |  **POST**      | {'id', 'conversation_name'}                                                          |
+| PATCH    | /conversations/:id |🟦 | **PATCH**     | {'id', 'conversation_name'}                                                          |
+| DELETE   | /conversations/:id |🟥 | **DELETE**    | {}                                                                                   |
+| RETRIEVE | /conversations/:id |🟩 | **GET**       | {'id', 'conversation_name'}                                                          |
 
 # Stretch Goals:
 - Extend message types to media and document types
