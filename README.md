@@ -93,9 +93,9 @@ Chat application for private messaging of text type built on React and Flask-SQL
 
 ![login_unlocked](client/src/assets/login_unlocked.svg){alt:'icon showing an open padlock implying you are currently logged in.'}
 
-![inviteToChat](client/src/assets/inviteToChat.svg){alt:'icon implying you are inviting the contact to chat.', width=50%, heigth=50%}
+![inviteToChat](client/src/assets/inviteToChat.svg){alt:'icon implying you are inviting the contact to chat.', height:50px, width:50px}
 
-![chat](client/src/assets/chat.svg){alt:'icon implying that you are going to a chat-room to compose a message to the contact.', width=50%, heigth=50%}
+![chat](client/src/assets/chat.svg){alt:'icon implying that you are going to a chat-room to compose a message to the contact.', height:50px, width:50px}
 
 ![Edit](client/src/assets/Edit.svg){alt:'icon implying you are about to edit a message or information'}
 
