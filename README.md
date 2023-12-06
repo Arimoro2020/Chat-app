@@ -55,7 +55,7 @@ Chat application for private messaging of text type built on React and Flask-SQL
 
 # API Routes:
 | **Name** | **API endpoint**   | **HTTP verb** | **Purpose**                                                                          |
-|----------|--------------------|---------------|--------------------------------------------------------------------------------------|
+|----------|------------------------:|-------------------:|--------------------------------------------------------------------------------------|
 | RETRIEVE | /users             | **GET**       | [{...}, {...}, ...]                                                                  |
 | CREATE   | /users             | **POST**      | {'id', 'username','password', 'avatar'}                                              |
 | RETRIEVE | /users/:id         | **GET**       | {'id', 'username', 'password', 'avatar'}                                             |
