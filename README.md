@@ -89,15 +89,19 @@ Chat application for private messaging of text type built on React and Flask-SQL
 
 # Frontend Icons:
 
-![login_locked](client/src/assets/login_locked.svg){alt:'icon showing a locked padlock implying you are currently logged out.'}
+![login_locked icon showing a locked padlock implying you are currently logged out.](client/src/assets/login_locked.svg 'loged_in icon showing a locked padlock implying you are currently logged out.')
 
-![login_unlocked](client/src/assets/login_unlocked.svg){alt:'icon showing an open padlock implying you are currently logged in.'}
 
-![Edit](client/src/assets/Edit.svg){alt:'icon implying you are about to edit a message or information'}
+![login_unlocked icon showing an open padlock implying you are currently logged in](client/src/assets/login_unlocked.svg 'login_unlocked icon showing an open padlock implying you are currently logged in')
 
-![inviteToChat](client/src/assets/inviteToChat.svg){alt:'icon implying you are inviting the contact to chat.'}
 
-![chat](client/src/assets/chat.svg){alt:'icon implying that you are going to a chat-room to compose a message to the contact.'}
+![Edit icon implying you are about to edit a message or information](client/src/assets/Edit.svg 'Edit icon implying you are about to edit a message or information')
+
+
+![inviteToChat icon implying you are inviting the contact to chat](client/src/assets/inviteToChat.svg 'inviteToChat icon implying you are inviting the contact to chat')
+
+
+![chat icon implying that you are going to a chat-room to compose a message to the contact.](client/src/assets/chat.svg 'chat icon implying that you are going to a chat-room to compose a message to the contact.')
 
 
 
